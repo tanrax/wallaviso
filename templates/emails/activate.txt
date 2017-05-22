@@ -1,0 +1,6 @@
+Hi {{ username }}!,
+thank you for registering you in our example. Activate your account by clicking on the link below.
+
+{{ token }}
+
+Example team.

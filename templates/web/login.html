@@ -1,0 +1,17 @@
+{% extends 'layouts/master.html' %}
+{% block title %}Login{% endblock %}
+{% block body %}
+<h1>Login</h1>
+<p>
+<form action="" method="post">
+	{{ generate_fields(form) }}
+	<input type="submit" class="btn btn-success" value="Enter">				
+</form>
+</p>
+<p>
+	<a href="{{ url_for('signup') }}" class="btn btn-primary">Signup</a>
+</p>
+<p>
+	<a href="{{ url_for('forgot_password') }}" class="btn btn-warning">Forgot password</a>
+</p>
+{% endblock %}

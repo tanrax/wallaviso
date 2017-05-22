@@ -1,0 +1,166 @@
+@import 'colors';
+@import 'fonts';
+@import 'mediaquery';
+@import 'bootstrap';
+@import 'font-awesome/main';
+
+body {
+	font-family: fuente_contenido;
+}
+
+.container .jumbotron, .container-fluid .jumbotron {
+	border-radius: 0;
+}
+
+.container-fluid {
+	padding: 0;
+	.row {
+		margin: 0;
+	}
+}
+
+.btn {
+	background-color: $color_azul;
+	border: 0;
+	padding: .7em;
+	font-size: 1.5em;
+	border-radius: 23px;
+	&:hover {
+		background-color: darken($color_azul, 10%);
+	}
+}
+
+header {
+	.navbar {
+		background: transparentize($color_negro, 0.9);
+	}
+	#collapse-main {
+		border-bottom: 1px solid $color_blanco;
+	}
+	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+		margin-left: 0;
+	}
+	.navbar-right {
+		margin-right: 0;
+	}
+	.navbar-toggle .icon-bar {
+		border: 1px solid $color_azul;
+	}
+	.navbar-brand {
+		font-family: fuente_logo;
+		text-transform: uppercase;
+		color: $color_blanco;
+		&:hover {
+			color: darken($color_blanco, 10%);
+		}
+	}
+	.navbar-collapse.collapse.in {
+		transition: 1s all;
+		background: $color_azul;
+		text-align: center;
+	}
+	.navbar-nav a {
+		color: $color_blanco;
+		text-align: center;
+		&:hover {
+			color: darken($color_blanco, 10%);
+		}
+	}
+	.nav>li>a:focus, .nav>li>a:hover {
+		background-color: initial;
+	}
+	.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+		background-color: initial;
+	}
+}
+
+#home {
+	#portada {
+		height: 100vh;
+		background-image: url(../img/background.jpg);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		color: $color_blanco;
+		text-align: center;
+		margin-bottom: 0;
+		
+	}
+	section#informacion {
+		text-align: center;
+		padding: 2em 0;
+		background: $color_azul;
+		color: $color_blanco;
+		i {
+			padding-top: .5em;
+			font-size: 3em;
+		}
+	}
+	section#nosotros {
+		padding: 3em 0;
+		@include mobile {
+			text-align: center;
+		}
+		h2 {
+			margin-top: 3em;
+		}
+	}
+	section#competencia {
+		padding: 3em 0;
+		background: $color_negro;
+		color: $color_blanco;
+		h2 {
+			margin-top: 3em;
+		}
+		@include mobile {
+			text-align: center;
+		}
+		img {
+			@include mobile {
+				margin-top: 5em;
+			}
+		}
+	}
+	section#portafolio {
+		div {
+			padding: 0;
+		}
+		#apps {
+			background-image: url(../img/ciudad3.jpg);
+		}
+		#webs {
+			background-image: url(../img/ciudad4.jpg);
+		}
+		#newsletters {
+			background-image: url(../img/ciudad5.jpg);
+		}
+		.fondo {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 200px;
+			background: {
+				size: cover;
+				image: url(../img/ciudad4.jpg);
+				repeat: no-repeat;
+			}
+			text-decoration: none;
+			color: $color_blanco;
+			font-size: 2em;
+			.texto {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				height: 100%;
+				background-color: transparentize($color_negro, .9);
+				transition: 1s background-color;
+				&:hover {
+					background-color: transparentize($color_negro, .2);
+				}
+			}
+		}
+	}
+}

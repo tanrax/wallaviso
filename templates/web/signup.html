@@ -1,0 +1,9 @@
+{% extends 'layouts/master.html' %}
+{% block title %}Signup{% endblock %}
+{% block body %}
+<h1>Signup</h1>
+<form action="" method="post">
+	{{ generate_fields(form) }}
+	<input type="submit" class="btn btn-success" value="Signup">
+</form>
+{% endblock %}

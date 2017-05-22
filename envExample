@@ -1,0 +1,7 @@
+export DOMAIN='example.com'
+export SECRET_KEY='my secret'
+export DEBUG=True
+export SQLALCHEMY_DATABASE_URI='sqlite:///database.sqlite'
+export MAIL_SERVER=''
+export MAIL_USERNAME=''
+export MAIL_PASSWORD=''

@@ -1,0 +1,79 @@
+{% extends 'layouts/master.html' %}
+{% block title %}Inicio{% endblock %}
+{% block body %}
+<div class="jumbotron" id="portada">
+	<h1>Dramatically Engage</h1>
+	<p>
+		Consectetur doloremque necessitatibus quibusdam officia provident?
+	</p>
+	<button class="btn btn-primary">Engage now</button>
+</div>
+<section id="informacion">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-1 col-sm-3"></div>
+			<div class="col-xs-10 col-sm-6">
+				<i class="fa fa-apple" aria-hidden="true"></i>	
+				<h2>Sit blanditiis magnam harum?</h2>
+				<p>
+					Elit minima exercitationem soluta soluta est? Culpa provident placeat sapiente quos in! Illo molestiae eveniet voluptatibus autem pariatur ipsum! Doloremque quis asperiores quam quam laborum Amet maxime cum cumque excepturi
+				</p>
+			</div>
+			<div class="col-xs-1 col-sm-3"></div>
+		</div>
+	</div>
+</section>
+<section id="nosotros">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 text-center">
+				<img class="img-thumbnail" src="{{ url_for('static', filename='img/ciudad2.jpg') }}" alt="Ciudad">
+			</div>
+			<div class="col-sm-6">
+				<h2>Nosotros somos muy guays y modestos</h2>
+				<p>
+					Dolor odio earum dolorem aut cupiditate. Ex sequi illum expedita tempore repellendus reprehenderit Quis placeat ipsum reprehenderit provident veritatis? Impedit doloribus iste mollitia voluptatem odit. Perferendis id debitis laudantium illo
+				</p>
+				<button class="btn btn-primary">Únete</button>
+			</div>
+		</div>
+	</div>
+</section>
+<section id="competencia">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<h2>Nuestra competencia es mejor que nosotros</h2>
+				<p>
+					Dolor odio earum dolorem aut cupiditate. Ex sequi illum expedita tempore repellendus reprehenderit Quis placeat ipsum reprehenderit provident veritatis? Impedit doloribus iste mollitia voluptatem odit. Perferendis id debitis laudantium illo
+				</p>
+				<button class="btn btn-primary">Únete</button>
+			</div>
+			<div class="col-sm-6 text-center">
+				<img class="img-thumbnail" src="{{ url_for('static', filename='img/ciudad1.jpg') }}" alt="Ciudad">
+			</div>
+		</div>
+	</div>
+</section>
+<section id="portafolio">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-4">
+				<a href="#" id="webs" class="fondo">
+					<div class="texto"><span>Webs</span></div>
+				</a>
+			</div>
+			<div class="col-sm-4">
+				<a href="#" id="apps" class="fondo">
+					<div class="texto"><span>Apps</span></div>
+				</a>
+			</div>
+			<div class="col-sm-4">
+				<a href="#" id="newsletters" class="fondo">
+					<div class="texto"><span>Newsletters</span></div>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

@@ -4,6 +4,7 @@ let browserSync = require('browser-sync').create();
 let reload = browserSync.reload;
 let concat = require('gulp-concat');
 let sourcemaps = require('gulp-sourcemaps');
+var sass = require('gulp-sass');
 
 // letiables
 let sURLResources = 'static/';
@@ -22,6 +23,13 @@ gulp.task('scripts', function () {
 		.pipe(gulp.dest(sURLResources + 'js/all.js'));
 });
 
+gulp.task('sass', function() {
+    return gulp.src(sURLResources + 'css/main.scss')
+        .pipe(sass())
+        .pipe(gulp.dest(sURLResources + 'css'))
+        .pipe(browserSync.stream());
+});
+
 gulp.task('browser-sync', function() {
     browserSync.init({
 		proxy: proxy,
@@ -31,10 +39,10 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(sURLResources + '*.html').on('change', browserSync.reload);
     gulp.watch(sURLResources + '**/*.html').on('change', browserSync.reload);
-    gulp.watch(sURLResources + 'css/*.css').on('change', browserSync.reload);
-    gulp.watch(sURLResources + 'css/**/*.css').on('change', browserSync.reload);
+    gulp.watch(sURLResources + '**/*.jpg').on('change', browserSync.reload);
+    gulp.watch(sURLResources + '**/*.png').on('change', browserSync.reload);
+    gulp.watch(sURLResources + 'css/main.scss', ['sass']);
 });
 
-gulp.task('default', ['watch', 'scripts', 'browser-sync']);
+gulp.task('default', ['watch', 'scripts', 'sass', 'browser-sync']);

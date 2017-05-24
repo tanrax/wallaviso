@@ -3,9 +3,12 @@
 <html lang="es">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>{% block title %}{% endblock %} | Wallapop notificador</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>{% block title %}{% endblock %}Wallaviso</title>
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+		<meta name="author" content="Andros Fenollosa">			
+		<meta name="description" content="Recibe un email cuando un producto sea publicado en Wallapop. Se el primero en comprarlo.">
 	</head>
 	<body id="home">
 		<div class="container-fluid">
@@ -20,26 +23,14 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					  </button>
-					  <a class="navbar-brand" href="#">
-						  <span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-						Logo</a>
+					  <a class="navbar-brand" href="/">
+						<i class="fa fa-bell" aria-hidden="true"></i>
+					   Wallaviso</a>
 					</div>
 					<div class="collapse navbar-collapse" id="collapse-main">
 					  <ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Products</a></li>
-						<li class="dropdown">
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
-						  <ul class="dropdown-menu">
-							<li role="separator" class="divider"></li>
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li><a href="#">Separated link</a></li>
-							<li role="separator" class="divider"></li>
-						  </ul>
-						</li>
-						<li><a href="#">Contact</a></li>
+						  <li><a href="{{ url_for('index') }}">Inicio</a></li>
+						<li><a href="{{ url_for('login') }}">Entrar</a></li>
 					  </ul>
 					</div><!-- /.navbar-collapse -->
 				  </div><!-- /.container-fluid -->

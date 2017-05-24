@@ -39,6 +39,10 @@ body {
 	}
 }
 
+.color_wallapop {
+	color: $color_wallapop;
+}
+
 header {
 	.navbar {
 		background: transparentize($color_wallapop, 0.4);

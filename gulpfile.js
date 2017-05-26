@@ -5,6 +5,7 @@ let reload = browserSync.reload;
 let concat = require('gulp-concat');
 let sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
+var purify = require('gulp-purifycss');
 
 // letiables
 let sURLResources = 'static/';
@@ -20,12 +21,13 @@ gulp.task('scripts', function () {
 		.pipe(sourcemaps.init())
 		.pipe(concat('all.js'))
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest(sURLResources + 'js/all.js'));
+		.pipe(gulp.dest(sURLResources + 'js'));
 });
 
 gulp.task('sass', function() {
     return gulp.src(sURLResources + 'css/main.scss')
         .pipe(sass())
+		.pipe(purify([sURLResources + 'js/all.js', sURLResources + '../templates/**/*.html']))
         .pipe(gulp.dest(sURLResources + 'css'))
         .pipe(browserSync.stream());
 });
@@ -39,7 +41,7 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(sURLResources + '**/*.html').on('change', browserSync.reload);
+    gulp.watch(sURLResources + '../templates/**/*.html').on('change', browserSync.reload);
     gulp.watch(sURLResources + '**/*.jpg').on('change', browserSync.reload);
     gulp.watch(sURLResources + '**/*.png').on('change', browserSync.reload);
     gulp.watch(sURLResources + 'css/main.scss', ['sass']);

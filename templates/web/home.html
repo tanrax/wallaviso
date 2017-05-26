@@ -1,7 +1,8 @@
 {% extends 'layouts/master.html' %}
+{% block page %}home{% endblock %}
 {% block body %}
 <div class="jumbotron" id="portada">
-	<h1>Se el primero en <span class="color_wallapop">Wallapop</span></h1>
+	<h1>Se el primero en <span id="titulo_wallapop">Wallapop</span></h1>
 	<p>
 		Programa tus busquedas y recibe un email cuando se venda el artículo en Wallapop.
 	</p>
@@ -38,39 +39,28 @@
 		</div>
 	</div>
 </section>
-<section id="competencia">
+<section id="pasos">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">
-				<h2>Nuestra competencia es mejor que nosotros</h2>
+				<h2>Busca, programa y descansa</h2>
 				<p>
-					Dolor odio earum dolorem aut cupiditate. Ex sequi illum expedita tempore repellendus reprehenderit Quis placeat ipsum reprehenderit provident veritatis? Impedit doloribus iste mollitia voluptatem odit. Perferendis id debitis laudantium illo
+					Tan sencillamente sencillo que te preguntarás como has podido vivir antes sin él.	
 				</p>
-				<button class="btn btn-primary">Únete</button>
+				<ul>
+					<li>Realiza la busqueda que deseas</li>
+					<li>Pulsa en el botón: <strong>Wallaviso</strong></li>
+				</ul>
+				<h3>Pasos opcionales</h3>
+				<ul>
+					<li>Pide un Martini revuelto, no agitado.</li>
+					<li>Túmbate en un hamaca.</li>
+					<li>Ponte unas gafas de Sol.</li>
+					<li>Espera el sonido de nuevo email.</li>
+				</ul>
 			</div>
 			<div class="col-sm-6 text-center">
-				<img class="img-thumbnail" src="{{ url_for('static', filename='img/ciudad1.jpg') }}" alt="Ciudad">
-			</div>
-		</div>
-	</div>
-</section>
-<section id="portafolio">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-4">
-				<a href="#" id="webs" class="fondo">
-					<div class="texto"><span>Webs</span></div>
-				</a>
-			</div>
-			<div class="col-sm-4">
-				<a href="#" id="apps" class="fondo">
-					<div class="texto"><span>Apps</span></div>
-				</a>
-			</div>
-			<div class="col-sm-4">
-				<a href="#" id="newsletters" class="fondo">
-					<div class="texto"><span>Newsletters</span></div>
-				</a>
+				<img class="img-responsive" src="{{ url_for('static', filename='img/easy.jpg') }}" alt="Fácil">
 			</div>
 		</div>
 	</div>

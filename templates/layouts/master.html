@@ -10,7 +10,7 @@
 		<meta name="author" content="Andros Fenollosa">			
 		<meta name="description" content="Recibe un email cuando un producto sea publicado en Wallapop. Se el primero en comprarlo.">
 	</head>
-	<body id="home">
+	<body id="{% block page %}{% endblock %}">
 		<div class="container-fluid">
 			<header>
 				<nav class="navbar navbar-fixed-top">
@@ -46,6 +46,9 @@
 			{% endwith %}
 			{# End Flashed messages #}
 			{% block body %}{% endblock %}
+			<footer>
+				2017 - Autor: <a href="https://programadorwebvalencia.com">Andros Fenollosa</a>
+			</footer>
 		</div>
 		<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

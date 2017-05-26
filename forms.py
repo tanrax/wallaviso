@@ -27,40 +27,33 @@ class SignupForm(FlaskForm):
     Form signup
     '''
     username = StringField(
-        'Username',
+        'Nombre de usuario',
         validators=[
-            DataRequired(),
+            DataRequired('Campo obligatorio'),
             Length(5, 30, '''
-            You can not have less than 5 characters or more 30.
+                Debe tener entre 5 y 30 carácteres.
             ''')
             ]
         )
     email = StringField(
         'Email',
         validators=[
-            DataRequired(),
-            Email(),
-            Length(1, 254, 'Too long.')
+            DataRequired('Campo obligatorio'),
+            Email('No tiene un formato válido.'),
+            Length(1, 254, 'Demasiado largo.')
             ]
         )
     password = PasswordField(
-        'Password',
+        'Contraseña',
         validators=[
-            DataRequired(),
+            DataRequired('Campo obligatorio'),
             EqualTo(
                 'password_confirm',
-                'Passwords are not the same.'
+                'Las contraseñas no coinciden.'
                 )
             ]
         )
-    password_confirm = PasswordField('Repeat password')
-    accept_tos = BooleanField(
-        'I accept the terms and conditions.',
-        validators=[
-            DataRequired('Please accept the terms and conditions.')
-            ]
-        )
-
+    password_confirm = PasswordField('Repite la contraseña')
 
 class EmailResetPasswordForm(FlaskForm):
     '''

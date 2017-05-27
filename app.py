@@ -25,6 +25,8 @@ db.init_app(app)
 app.config['MAIL_SERVER'] = getenv('MAIL_SERVER')
 app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD')
+app.config['MAIL_PASSWORD'] = getenv('MAIL_PORT')
+
 mail = Mail(app)
 
 # END CONFIGURATIONS
@@ -63,6 +65,8 @@ def signup():
     form = SignupForm()
     if form.validate_on_submit():
         if not User.query.filter_by(email=form.email.data).all():
+            import pdb
+            pdb.set_trace()
             my_user = User()
             form.populate_obj(my_user)
             # Encrypt password

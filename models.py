@@ -31,16 +31,6 @@ class User(db.Model):
     token = db.Column(db.String(32), nullable=False, unique=False)
     create_at = db.Column(db.DateTime, nullable=False, unique=False)
 
-    search_id = db.Column(
-        db.Integer,
-        db.ForeignKey('search.id'),
-        nullable=False
-        )
-    search = db.relationship(
-        'Search',
-        backref=db.backref('users', lazy=True)
-        )
-
     def __init__(self):
         self.is_active = False
         self.token = str(uuid4()).replace('-', '')
@@ -54,11 +44,21 @@ class Search(db.Model):
     '''
     Table search
     '''
-    __tablename__ = 'search'
+    __tablename__ = 'searchs'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, unique=False)
     create_at = db.Column(db.DateTime, nullable=False, unique=False)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id'),
+        nullable=False
+        )
+    user = db.relationship(
+        'users',
+        backref=db.backref('searchs', lazy=True)
+        )
 
     def __init__(self):
         self.create_at = datetime.utcnow()

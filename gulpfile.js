@@ -5,7 +5,6 @@ let reload = browserSync.reload;
 let concat = require('gulp-concat');
 let sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
-var purify = require('gulp-purifycss');
 
 // letiables
 let sURLResources = 'static/';
@@ -26,8 +25,7 @@ gulp.task('scripts', function () {
 
 gulp.task('sass', function() {
     return gulp.src(sURLResources + 'css/main.scss')
-        .pipe(sass())
-		.pipe(purify([sURLResources + 'js/all.js', sURLResources + '../templates/**/*.html']))
+        .pipe(sass({outputStyle: 'compressed'}))
         .pipe(gulp.dest(sURLResources + 'css'))
         .pipe(browserSync.stream());
 });

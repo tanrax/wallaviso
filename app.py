@@ -22,10 +22,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Email
-app.config['MAIL_SERVER'] = getenv('MAIL_SERVER')
-app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD')
-app.config['MAIL_PASSWORD'] = getenv('MAIL_PORT')
+app.config['MAIL_SERVER'] = getenv('MAIL_SERVER', 'localhost')
+app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME', None)
+app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD', None)
+app.config['MAIL_PORT'] = getenv('MAIL_PORT')
 
 mail = Mail(app)
 
@@ -65,8 +65,6 @@ def signup():
     form = SignupForm()
     if form.validate_on_submit():
         if not User.query.filter_by(email=form.email.data).all():
-            import pdb
-            pdb.set_trace()
             my_user = User()
             form.populate_obj(my_user)
             # Encrypt password
@@ -78,7 +76,10 @@ def signup():
                 sender='no-repy@' + getenv('DOMAIN'),
                 recipients=[my_user.email]
                 )
-            link = 'http://' + getenv('DOMAIN') + url_for('activate_account', token=my_user.token)
+            link = 'http://' + getenv('DOMAIN') + url_for(
+                'activate_account',
+                token=my_user.token
+                )
             msg.body = render_template(
                 'emails/activate.txt', username=my_user.username,
                 token=link

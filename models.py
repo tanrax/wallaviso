@@ -56,8 +56,8 @@ class Search(db.Model):
         nullable=False
         )
     user = db.relationship(
-        'users',
-        backref=db.backref('searchs', lazy=True)
+        'User',
+        backref=db.backref('Search', lazy=True)
         )
 
     def __init__(self):

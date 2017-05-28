@@ -29,30 +29,30 @@
 					</div>
 					<div class="collapse navbar-collapse" id="collapse-main">
 					  <ul class="nav navbar-nav navbar-right">
-						  <li><a href="{{ url_for('index') }}">Inicio</a></li>
+						<li><a href="{{ url_for('index') }}">Inicio</a></li>
+						<li><a href="{{ url_for('signup') }}">Registro</a></li>
 						<li><a href="{{ url_for('login') }}">Entrar</a></li>
 					  </ul>
 					</div><!-- /.navbar-collapse -->
 				  </div><!-- /.container-fluid -->
 				</nav>
 			  </header>
-			{# Flashed messages #}
-			{% with messages = get_flashed_messages(with_categories=true) %}
-			  {% if messages %}
-				{% for category, message in messages %}
-				  <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
-				{% endfor %}
-			  {% endif %}
-			{% endwith %}
-			{# End Flashed messages #}
-			{% block body %}{% endblock %}
+				{% block body %}{% endblock %}
 			<footer>
 				2017 - Autor: <a href="https://programadorwebvalencia.com">Andros Fenollosa</a>
 			</footer>
 		</div>
-		<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/jquery.bootstrap-autohidingnavbar.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/all.js') }}"></script>
+		{# Flashed messages #}
+			{% with messages = get_flashed_messages(with_categories=true) %}
+			  {% if messages %}
+			  	<script>
+				{% for category, message in messages %}
+					vex.dialog.alert({message: '{{ message }}', className: 'vex-theme-os {{ category }}'});
+				{% endfor %}
+				</script>
+			  {% endif %}
+			{% endwith %}
+		{# End Flashed messages #}
 	</body>
 </html>

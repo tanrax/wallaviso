@@ -6,7 +6,6 @@ Documentation:
 * https://docs.python.org/3/library/unittest.html
 * http://flask.pocoo.org/docs/latest/testing/
 """
-from os import remove
 import unittest
 from app import app, db
 from models import User
@@ -25,8 +24,10 @@ class FlaskTestCase(unittest.TestCase):
         db.create_all()
 
     def tearDown(self):
-        db.session.remove()
-        db.drop_all()
+        my_user = User.query.filter_by(email='test@test.com')
+        db.session.delete(my_user)
+        db.session.commit()
+        pass
 
     def test_route_home(self):
         res = self.app.get('/')
@@ -41,17 +42,77 @@ class FlaskTestCase(unittest.TestCase):
         print('Route Signup ok')
 
     def test_signup(self):
-        post = self.app.post('/sign', data=dict(
+        post = self.app.post('/signup', data=dict(
+            username='',
+            email='',
+            password='',
+            password_confirm=''
+        ), follow_redirects=True)
+        assert b'Campo obligatorio' in post.data
+
+        post = self.app.post('/signup', data=dict(
+            username='te',
+            email='',
+            password='',
+            password_confirm=''
+        ), follow_redirects=True)
+        assert b'Debe tener entre 5 y 30' in post.data
+
+        post = self.app.post('/signup', data=dict(
+            username='qwertyuiopasdfghjklzxcvbnmqwertyu',
+            email='',
+            password='',
+            password_confirm=''
+        ), follow_redirects=True)
+        assert b'Debe tener entre 5 y 30' in post.data
+
+        post = self.app.post('/signup', data=dict(
+            username='user_test',
+            email='test@test',
+            password='',
+            password_confirm=''
+        ), follow_redirects=True)
+        assert b'No tiene un formato' in post.data
+
+        post = self.app.post('/signup', data=dict(
+            username='user_test',
+            email='test@test',
+            password='',
+            password_confirm=''
+        ), follow_redirects=True)
+        assert b'Campo obligatorio' in post.data
+
+        post = self.app.post('/signup', data=dict(
+            username='user_test',
+            email='test@test.com',
+            password='123',
+            password_confirm=''
+        ), follow_redirects=True)
+        assert b'as no coinciden' in post.data
+
+        post = self.app.post('/signup', data=dict(
             username='user_test',
             email='test@test.test',
             password='123',
             password_confirm='123'
         ), follow_redirects=True)
-        assert b'Cuenta creada!' in post.data
+        assert b'Te hemos enviado un email' in post.data
+        print(User.query.all())
+
+        post = self.app.post('/signup', data=dict(
+            username='user_test',
+            email='test@test.test',
+            password='123',
+            password_confirm='123'
+        ), follow_redirects=True)
+        assert b'El email ya esta siendo utilizado' in post.data
+
         print('Signup ok')
 
 
     def test_login(self):
+
+        db.create_all()
         post = self.app.post('/login', data=dict(
             email='test@test.test',
             password='123'

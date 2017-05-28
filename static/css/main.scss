@@ -4,6 +4,8 @@
 @import 'mediaquery';
 @import 'bootstrap';
 @import 'font-awesome/main';
+@import 'vendor/vex';
+@import 'vendor/vex-theme-os';
 
 @keyframes vibrate
 {
@@ -58,6 +60,31 @@ a {
    		outline: none;
    		background: lighten($color_wallapop, 10%);
 	}
+	&.btn-danger {
+		background: $color_rojo;
+		&:focus, &:active, &:hover {
+			background: lighten($color_rojo, 10%);
+		}
+	}
+}
+
+.vex.vex-theme-os {
+	&.danger {
+		.vex-content {
+			border-top-color: $color_rojo;
+		}
+	}
+	.vex-content {
+		border-top-color: $color_wallapop;
+	}
+	.vex-dialog-message {
+		font-family: fuente_contenido;
+	}
+	.vex-dialog-button.vex-dialog-button-primary {
+		font-family: fuente_contenido;
+		background: $color_wallapop;
+		text-transform: capitalize;
+	}
 }
 
 header {
@@ -107,7 +134,7 @@ header {
 	}
 }
 
-#home {
+body#home {
 	padding-top: 0;
 	#portada {
 		height: 100vh;
@@ -164,6 +191,12 @@ header {
 				margin-top: 5em;
 			}
 		}
+	}
+}
+
+body#login {
+	.btn.btn-danger {
+		margin-top: 1em;
 	}
 }
 

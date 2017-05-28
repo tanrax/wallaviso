@@ -12,9 +12,10 @@ let proxy = 'http://localhost:5000'
 
 gulp.task('scripts', function () {
 	return gulp.src([
-		sURLResources + 'js/' + 'jquery-3.2.1.min.js',
-		sURLResources + 'js/' + 'bootstrap.min.js',
-		sURLResources + 'js/' + 'jquery.bootstrap-autohidingnavbar.min.js',
+		sURLResources + 'js/vendor/' + 'jquery-3.2.1.min.js',
+		sURLResources + 'js/vendor/' + 'bootstrap.min.js',
+		sURLResources + 'js/vendor/' + 'jquery.bootstrap-autohidingnavbar.min.js',
+		sURLResources + 'js/vendor/' + 'vex.min.js',
 		sURLResources + 'js/' + 'main.js'
 		])
 		.pipe(sourcemaps.init())

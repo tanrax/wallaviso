@@ -95,18 +95,18 @@ def signup():
                 # Send confirmation email
                 mail.send(msg)
                 # Informamos al usuario
-                flash('Account created successfully.', 'success')
-                flash('We have sent you a confirmation email.', 'warning')
+                flash('¡Cuenta creada!', 'success')
+                flash('Te hemos enviado un email para activar la cuenta. Si no lo encuentras, revisa tu bandeja de Spam.', 'warning')
                 return redirect(url_for('login'))
             except:
                 db.session.rollback()
                 flash(
-                    '''We're sorry, an internal error has occurred.
-                    Please, try again.''',
+                    '''¡Ups! Algo ha pasado.
+                    ¿Puedes volver a intentarlo?.''',
                     'danger'
                     )
         else:
-            flash('Email exists.', 'danger')
+            flash('El email ya esta siendo utilizado.', 'danger')
     return render_template('web/signup.html', form=form)
 
 
@@ -123,7 +123,7 @@ def activate_account(token):
         db.session.add(my_user)
         db.session.commit()
         # Mostramos mensaje
-        flash('Your account has been activated.', 'success')
+        flash('¡Su cuenta ya esta activada!', 'success')
     return redirect(url_for('login'))
 
 
@@ -164,12 +164,12 @@ def forgot_password():
                 )
             mail.send(msg)
             flash('''
-            We have sent an email to change your password.
-            Please check your Spam folder if not found.
+            Le acabamos de enviar un email para resetear la contraseña.
+            Si no lo encuentra, busque en su carpeta de Spam.
             ''', 'success')
             return redirect(url_for('login'))
         else:
-            flash('Email is not registered.', 'danger')
+            flash('El email no esta registrado.', 'danger')
 
     return render_template('web/forgot_password.html', form=form)
 
@@ -213,7 +213,7 @@ def login():
             session['user'] = my_user.id
             return redirect(url_for('dashboard'))
         else:
-            flash('Your email or password is not valid.', 'danger')
+            flash('El email o la contraseña es incorrecto. Por favor, vuelva a intentarlo.', 'danger')
     return render_template('web/login.html', form=form)
 
 

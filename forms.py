@@ -10,14 +10,14 @@ class LoginForm(FlaskForm):
     email = StringField(
         'Email',
         validators=[
-            DataRequired(),
-            Email()
+            DataRequired('Campo obligatorio'),
+            Email('Formato no válido')
             ]
         )
     password = PasswordField(
-        'Password',
+        'Contraseña',
         validators=[
-            DataRequired()
+            DataRequired('Campo obligatorio')
             ]
         )
 
@@ -62,8 +62,8 @@ class EmailResetPasswordForm(FlaskForm):
     email = StringField(
         'Email',
         validators=[
-            DataRequired(),
-            Email()
+            DataRequired('Campo obligatorio'),
+            Email('Formato no válido')
             ]
         )
 

@@ -1,6 +1,7 @@
-Hi {{ username }}!,
-thank you for registering you in our example. Activate your account by clicking on the link below.
+Hola {{ username }}!,
+
+gracias por crear una cuenta en Wallaviso. Pulsa en el siguiente enlace para activarla.
 
 {{ token }}
 
-Example team.
+Un saludo

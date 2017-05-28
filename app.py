@@ -72,7 +72,7 @@ def signup():
             db.session.add(my_user)
             # Prepare the account activation email
             msg = Message(
-                'Activate account',
+                'Activar cuenta',
                 sender='no-repy@' + getenv('DOMAIN'),
                 recipients=[my_user.email]
                 )
@@ -87,7 +87,8 @@ def signup():
             msg.html = render_template(
                 'emails/activate.html',
                 username=my_user.username,
-                token=link
+                token=link,
+                domain=getenv('DOMAIN')
                 )
             try:
                 # Save new User
@@ -95,8 +96,8 @@ def signup():
                 # Send confirmation email
                 mail.send(msg)
                 # Informamos al usuario
+                flash('Te acabamos de enviado un email para activar la cuenta. Si no lo encuentras, revisa tu bandeja de Spam.', 'warning')
                 flash('¡Cuenta creada!', 'success')
-                flash('Te hemos enviado un email para activar la cuenta. Si no lo encuentras, revisa tu bandeja de Spam.', 'warning')
                 return redirect(url_for('login'))
             except:
                 db.session.rollback()
@@ -160,7 +161,8 @@ def forgot_password():
             msg.html = render_template(
                 'emails/forgot_password.html',
                 username=my_user.username,
-                token=link
+                token=link,
+                domain=getenv('DOMAIN')
                 )
             mail.send(msg)
             flash('''
@@ -236,6 +238,15 @@ def dashboard():
     Protected area. Only accessible with login.
     '''
     return render_template('web/dashboard.html')
+
+@app.route('/email')
+def email():
+    '''
+    Page dashboard.
+    Protected area. Only accessible with login.
+    '''
+    return render_template('emails/activate.html', domain=getenv('DOMAIN'))
+
 
 # END VIEWS
 

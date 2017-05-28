@@ -14,7 +14,7 @@
         max-width: 100%; }
 
       body {
-        background-color: #f6f6f6;
+        background-color: #13c1ac;
         font-family: sans-serif;
         -webkit-font-smoothing: antialiased;
         font-size: 14px;
@@ -39,7 +39,7 @@
       ------------------------------------- */
 
       .body {
-        background-color: #f6f6f6;
+        background-color: #13c1ac;
         width: 100%; }
 
       /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
@@ -119,7 +119,7 @@
           margin-left: 5px; }
 
       a {
-        color: #3498db;
+        color: #13c1ac;
         text-decoration: underline; }
 
       /* -------------------------------------
@@ -137,11 +137,11 @@
           border-radius: 5px;
           text-align: center; }
         .btn a {
-          background-color: #ffffff;
+          background-color: #13c1ac;
           border: solid 1px #3498db;
           border-radius: 5px;
           box-sizing: border-box;
-          color: #3498db;
+          color: white;
           cursor: pointer;
           display: inline-block;
           font-size: 14px;
@@ -155,8 +155,8 @@
         background-color: #3498db; }
 
       .btn-primary a {
-        background-color: #3498db;
-        border-color: #3498db;
+        background-color: #13c1ac;
+        border-color: #13c1ac;
         color: #ffffff; }
 
       /* -------------------------------------
@@ -277,7 +277,6 @@
           <div class="content">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
             <table class="main">
 
               <!-- START MAIN CONTENT AREA -->
@@ -286,16 +285,17 @@
                   <table border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-						  <p>Hi {{ username }}!,</p>
-                        <p>Thank you for registering you in our example. Activate your account by clicking on the button below.</p>
+						  <p align="center"><img src="{{ domain }}/img/favicon.png" alt="Wallaviso"></p>
+						  <p>Hola {{ username }}!,</p>
+                        <p>Gracias por crear una cuenta en Wallaviso. Estas a un paso de ser el más rápido. Pulsa en el siguiente botón para activar tu cuenta.</p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
-                              <td align="left">
+                              <td align="center">
                                 <table border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-										<td> <a href="{{ token }}" target="_blank">Activate</a> </td>
+										<td> <a href="{{ token }}" target="_blank">Activar</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -303,8 +303,8 @@
                             </tr>
                           </tbody>
                         </table>
-                        <p>In the event that the button will not work, click the following link.</p>
-						<p>{{ token }}</p>
+                        <p align="center">¿No funciona? Pulsa en el siguente enlace.</p>
+						<p align="center">{{ token }}</p>
                       </td>
                     </tr>
                   </table>

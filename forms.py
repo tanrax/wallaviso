@@ -73,13 +73,13 @@ class ResetPasswordForm(FlaskForm):
     Form update password
     '''
     password = PasswordField(
-        'Password',
+        'Nueva contraseña',
         validators=[
-            DataRequired(),
+            DataRequired('Campo obligatorio'),
             EqualTo(
                 'password_confirm',
-                'Passwords are not the same.'
+                'No son iguales.'
                 )
             ]
         )
-    password_confirm = PasswordField('Repeat password')
+    password_confirm = PasswordField('Repetir contraseña')

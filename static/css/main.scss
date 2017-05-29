@@ -54,7 +54,7 @@ a {
 	background-color: $color_wallapop;
 	border: 0;
 	padding: .7em;
-	font-size: 1.5em;
+	font-size: 1em;
 	border-radius: 23px;
 	&:focus, &:active, &:hover {
    		outline: none;
@@ -136,6 +136,9 @@ header {
 
 body#home {
 	padding-top: 0;
+	.btn {
+		font-size: 1.5em;
+	}
 	#portada {
 		height: 100vh;
 		background: {

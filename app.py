@@ -150,7 +150,7 @@ def forgot_password():
                     email=my_user.email, token=token
                     )
             msg = Message(
-                'Recover password',
+                'Recuperar contraseña',
                 sender='no-repy@' + getenv('DOMAIN'),
                 recipients=[form.email.data]
                 )
@@ -188,10 +188,11 @@ def update_password(email, token):
         if form.validate_on_submit():
             # Encrypt password
             my_user.password = generate_password_hash(form.password.data)
+            my_user.token = str(uuid4()).replace('-', '')
             # Update password
             db.session.add(my_user)
             db.session.commit()
-            flash('Your password has been updated successfully.', 'success')
+            flash('¡Su contraseña se ha actualizado correctamente!', 'success')
             return redirect(url_for('login'))
     else:
         return redirect(url_for('index'))
@@ -207,15 +208,18 @@ def login():
     if form.validate_on_submit():
         # Validate email and password
         email = form.email.data
-        my_user = User.query.filter_by(email=email).first()
-        if my_user and check_password_hash(
-                my_user.password,
-                form.password.data):
-            # Login de usuario
-            session['user'] = my_user.id
-            return redirect(url_for('dashboard'))
+        my_user = User.query.filter_by(email=email).filter_by(is_active=1).first()
+        if not my_user:
+            flash('No ha activado todavía su cuenta. Verifique su buzón.', 'danger')
         else:
-            flash('El email o la contraseña es incorrecto. Por favor, vuelva a intentarlo.', 'danger')
+            if my_user and check_password_hash(
+                    my_user.password,
+                    form.password.data):
+                # Login de usuario
+                session['user'] = my_user.id
+                return redirect(url_for('dashboard'))
+            else:
+                flash('El email o la contraseña es incorrecto. Por favor, vuelva a intentarlo.', 'danger')
     return render_template('web/login.html', form=form)
 
 

@@ -3,7 +3,8 @@ from ast import literal_eval
 from flask import Flask, redirect, url_for, render_template, flash, session
 from functools import wraps
 from forms import LoginForm, SignupForm, \
-        EmailResetPasswordForm, ResetPasswordForm
+        EmailResetPasswordForm, ResetPasswordForm, \
+        SearchForm
 from models import db, User
 from flask_mail import Mail, Message
 from uuid import uuid4
@@ -204,6 +205,9 @@ def login():
     '''
     Page login
     '''
+    # Redirigue to login if these logged in
+    if 'user' in session:
+        return redirect(url_for('dashboard'))
     form = LoginForm()
     if form.validate_on_submit():
         # Validate email and password
@@ -216,7 +220,11 @@ def login():
                     my_user.password,
                     form.password.data):
                 # Login de usuario
-                session['user'] = my_user.id
+                session['user'] = {
+                    'id': my_user.id,
+                    'username': my_user.username,
+                    'email': my_user.email
+                }
                 return redirect(url_for('dashboard'))
             else:
                 flash('El email o la contraseña es incorrecto. Por favor, vuelva a intentarlo.', 'danger')
@@ -234,14 +242,15 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/dashboard')
+@app.route('/panel/busquedas')
 @login_required
 def dashboard():
     '''
     Page dashboard.
     Protected area. Only accessible with login.
     '''
-    return render_template('web/dashboard.html')
+    form = SearchForm()
+    return render_template('web/dashboard/searchs.html', form=form)
 
 @app.route('/email')
 def email():

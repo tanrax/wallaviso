@@ -83,3 +83,16 @@ class ResetPasswordForm(FlaskForm):
             ]
         )
     password_confirm = PasswordField('Repetir contraseña')
+
+class SearchForm(FlaskForm):
+    '''
+    Form search item
+    '''
+    name = StringField(
+        'Nombre',
+        validators=[
+            DataRequired('Campo obligatorio')
+            ]
+        )
+
+

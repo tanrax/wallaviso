@@ -28,11 +28,19 @@
 					   Wallaviso</a>
 					</div>
 					<div class="collapse navbar-collapse" id="collapse-main">
-					  <ul class="nav navbar-nav navbar-right">
-						<li><a href="{{ url_for('index') }}">Inicio</a></li>
-						<li><a href="{{ url_for('signup') }}">Registro</a></li>
-						<li><a href="{{ url_for('login') }}">Entrar</a></li>
-					  </ul>
+						<ul class="nav navbar-nav navbar-right">
+						{% if 'user' not in session %}
+							<li><a href="{{ url_for('index') }}">Inicio</a></li>
+							<li><a href="{{ url_for('signup') }}">Registro</a></li>
+							<li><a href="{{ url_for('login') }}">Entrar</a></li>
+						{% else %}
+							<li><a href="{{ url_for('dashboard') }}">Busquedas</a></li>
+							<li><a href="{{ url_for('logout') }}">Salir</a></li>
+						{% endif %}
+					  	</ul>
+						{% if 'user' in session %}
+							<p class="navbar-text navbar-right" id="username">Bienvenido {{ session['user']['username'] }}</p>
+						{% endif %}
 					</div><!-- /.navbar-collapse -->
 				  </div><!-- /.container-fluid -->
 				</nav>

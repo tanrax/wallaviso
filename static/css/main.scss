@@ -56,7 +56,7 @@ a {
 	padding: .7em;
 	font-size: 1em;
 	border-radius: 23px;
-	&:focus, &:active, &:hover {
+	&:focus, &:active, &:hover, &:active:hover {
    		outline: none;
    		background: lighten($color_wallapop, 10%);
 	}
@@ -132,6 +132,10 @@ header {
 	.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
 		background-color: initial;
 	}
+	#username {
+		font-weight: bold;
+    	margin-right: 1em;
+	}
 }
 
 body#home {
@@ -200,6 +204,25 @@ body#home {
 body#login {
 	.btn.btn-danger {
 		margin-top: 1em;
+	}
+}
+
+body#searchs {
+	form .btn {
+		width: 3em;
+		border-radius: .3em;
+
+	}
+	
+	.list-group-item {
+		padding: {
+			top: 2em;
+			bottom: 2em;
+		}
+		.btn {
+			margin-top: -10px;
+			border-radius: .3em;
+		}
 	}
 }
 

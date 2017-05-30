@@ -30,7 +30,9 @@
 					<div class="collapse navbar-collapse" id="collapse-main">
 						<ul class="nav navbar-nav navbar-right">
 						{% if 'user' not in session %}
-							<li><a href="{{ url_for('index') }}">Inicio</a></li>
+							{% if request.path != url_for('index') %}
+								<li><a href="{{ url_for('index') }}">Inicio</a></li>
+							{% endif %}
 							<li><a href="{{ url_for('signup') }}">Registro</a></li>
 							<li><a href="{{ url_for('login') }}">Entrar</a></li>
 						{% else %}

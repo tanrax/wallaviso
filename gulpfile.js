@@ -14,16 +14,15 @@ gulp.task('scripts', function () {
 	return gulp.src([
 		sURLResources + 'js/vendor/' + 'jquery-3.2.1.min.js',
 		sURLResources + 'js/vendor/' + 'bootstrap.min.js',
-		sURLResources + 'js/vendor/' + 'vue.min.js',
 		sURLResources + 'js/vendor/' + 'jquery.bootstrap-autohidingnavbar.min.js',
 		sURLResources + 'js/vendor/' + 'vex.min.js',
-		sURLResources + 'js/' + 'search.js',
 		sURLResources + 'js/' + 'main.js'
 		])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all.js'))
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest(sURLResources + 'js'));
+		.pipe(gulp.dest(sURLResources + 'js'))
+        .pipe(browserSync.stream());
 });
 
 gulp.task('sass', function() {
@@ -45,6 +44,7 @@ gulp.task('browser-sync', function() {
 
 gulp.task('watch', function() {
     gulp.watch(sURLResources + '../templates/**/*.html').on('change', browserSync.reload);
+    gulp.watch(sURLResources + 'js/**/*.js', ['scripts']);
     gulp.watch(sURLResources + '**/*.jpg').on('change', browserSync.reload);
     gulp.watch(sURLResources + '**/*.png').on('change', browserSync.reload);
     gulp.watch(sURLResources + 'css/main.scss', ['sass']);

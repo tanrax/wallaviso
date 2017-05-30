@@ -10,6 +10,8 @@ from flask_mail import Mail, Message
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
      check_password_hash
+from urllib3 import PoolManager
+import json
 
 # CONFIGURATIONS
 # Flask
@@ -250,7 +252,15 @@ def dashboard():
     Protected area. Only accessible with login.
     '''
     form = SearchForm()
-    return render_template('web/dashboard/searchs.html', form=form)
+    http = PoolManager()
+    url_api = 'http://es.wallapop.com/rest/items?minPrice=&maxPrice=&dist=0_&order=creationDate-des&lat=41.398077&lng=2.170432&kws=gameboy'
+    results = http.request('GET', url_api)
+    results = json.loads(results.data.decode('utf-8'))['items'][:10]
+    return render_template(
+        'web/dashboard/searchs.html',
+        form=form,
+        results=results
+    )
 
 @app.route('/email')
 def email():

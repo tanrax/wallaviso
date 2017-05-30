@@ -10,29 +10,42 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-6">
-		<ul class="list-group">
-			<li class="list-group-item">
-				<strong>Cras justo odio</strong>
-				<button class="btn btn-danger pull-right">
-					<i class="fa fa-trash" aria-hidden="true"></i>
-				</button>
-		  </li>
-		</ul>
+			<h2>Avisos activos <span class="badge">{{ searchs_len }}</span></h2>
+			<ul class="list-group">
+				{% if searchs %}
+					<form method="post">
+					{% for item in searchs %}
+					<li class="list-group-item">
+						<strong>{{ item.name }}</strong>
+						<input type="hidden" name="id" value="{{ item.id }}">
+						<button type="submit" name="delete" class="btn btn-danger pull-right">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</button>
+					</li>
+					{% endfor %}
+					</form>
+				{% endif %}
+			</ul>
 		</div>
 		<div class="col-sm-6">
-			<form action="" method="post">
+			<form method="post" class="form-inline">
 				{{ generate_fields(form) }}
-				<button class="btn btn-success pull-left">
-					<i class="fa fa-plus" aria-hidden="true"></i>
-				</button>
-				<button v-on:click="search" type="button" class="btn btn-success pull-right">
+				<button type="submit" name="search" class="btn btn-success">
 					<i class="fa fa-search" aria-hidden="true"></i>
 				</button>
 			</form>
 		</div>
 	</div>
+	{% if results %}
 	<div class="row">
 		<div class="col-xs-12">
+			<form method="post">
+				<input type="hidden" name="name" value="{{ form.name.data }}">
+				<input type="hidden" name="last_id" value="{{ results[0].itemId }}">
+				<button name="add" class="btn btn-success pull-right" data-toggle="tooltip" data-placement="left" title="Programa la busqueda">
+					<i class="fa fa-plus" aria-hidden="true"></i>
+				</button>
+			</form>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -40,7 +53,6 @@
 						<th>Título</th>
 						<th>Descripción</th>
 						<th>Precio</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -50,12 +62,18 @@
 						<td>{{ item.title }}</td>
 						<td>{{ item.description }}</td>
 						<td>{{ item.price }}</td>
-						<td><a class="btn btn-success" href="{{ item.itemId }}">Anyadir</a></td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
 	</div>
+	{% else %}
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h2>No hay resultados</h2>
+			</div>
+		</div>
+	{% endif %}
 </div>
 {% endblock %}

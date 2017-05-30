@@ -91,8 +91,10 @@ class SearchForm(FlaskForm):
     name = StringField(
         'Nombre',
         validators=[
-            DataRequired('Campo obligatorio')
-            ]
+            DataRequired('Campo obligatorio'),
+            Length(1, 100, 'Demasiado largo.')
+            ],
+        render_kw={"placeholder": "Buscar..."}
         )
 
 

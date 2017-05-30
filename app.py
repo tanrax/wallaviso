@@ -1,16 +1,17 @@
 from os import getenv
 from ast import literal_eval
-from flask import Flask, redirect, url_for, render_template, flash, session
+from flask import Flask, redirect, url_for, render_template, flash, session, request
 from functools import wraps
 from forms import LoginForm, SignupForm, \
         EmailResetPasswordForm, ResetPasswordForm, \
         SearchForm
-from models import db, User
+from models import db, User, Search
 from flask_mail import Mail, Message
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
      check_password_hash
 from urllib3 import PoolManager
+import urllib.parse
 import json
 
 # CONFIGURATIONS
@@ -31,6 +32,9 @@ app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD', None)
 app.config['MAIL_PORT'] = getenv('MAIL_PORT')
 
 mail = Mail(app)
+
+# STATIC
+LIMIT_SEARCH = 3
 
 # END CONFIGURATIONS
 
@@ -244,7 +248,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/panel/busquedas')
+@app.route('/panel/busquedas', methods=('GET', 'POST'))
 @login_required
 def dashboard():
     '''
@@ -253,14 +257,75 @@ def dashboard():
     '''
     form = SearchForm()
     http = PoolManager()
-    url_api = 'http://es.wallapop.com/rest/items?minPrice=&maxPrice=&dist=0_&order=creationDate-des&lat=41.398077&lng=2.170432&kws=gameboy'
-    results = http.request('GET', url_api)
-    results = json.loads(results.data.decode('utf-8'))['items'][:10]
+    results = False
+    if request.method == 'POST':
+        # Search
+        if 'search' in request.form:
+            if form.validate_on_submit():
+                url_api = 'http://es.wallapop.com/rest/items?minPrice=&maxPrice=&dist=0_&order=creationDate-des&lat=41.398077&lng=2.170432&kws=' + urllib.parse.quote(form.name.data, safe='')
+                results = http.request('GET', url_api)
+                results = json.loads(
+                    results.data.decode('utf-8')
+                )['items'][:10]
+        # Add
+        elif 'add' in request.form:
+            searchs = Search.query.filter_by(user_id=session['user']['id']).all()
+            searchs_len = len(searchs)
+            if searchs_len < LIMIT_SEARCH:
+                my_search = Search(
+                    request.form['name'],
+                    request.form['last_id'],
+                    session['user']['id']
+                )
+                db.session.add(my_search)
+                try:
+                    db.session.commit()
+                    flash(
+                        '¡Busqueda programada! Te avisaremos con novedades.',
+                        'success'
+                    )
+                except:
+                    db.session.rollback()
+                    flash(
+                        '''¡Ups! Algo ha pasado.
+                        ¿Puedes volver a intentarlo?.''',
+                        'danger'
+                        )
+                form.name.data = ''
+            else:
+                flash(
+                    'No puedes tener más de {limit} busquedas programadas. ¿Por qué no borras una que no uses?'.format(
+                        limit=LIMIT_SEARCH
+                    ),
+                    'danger'
+                )
+        # Remove
+        elif 'delete' in request.form:
+            my_search = Search.query.filter_by(id=request.form['id'], user_id=session['user']['id']).first()
+            db.session.delete(my_search)
+            try:
+                db.session.commit()
+                flash(
+                    '¡Busqueda Eliminada!',
+                    'success'
+                )
+            except:
+                db.session.rollback()
+                flash(
+                    '''¡Ups! Algo ha pasado.
+                    ¿Puedes volver a intentarlo?.''',
+                    'danger'
+                    )
+    searchs = Search.query.filter_by(user_id=session['user']['id']).all()
+    searchs_len = len(searchs)
     return render_template(
         'web/dashboard/searchs.html',
         form=form,
+        searchs=searchs,
+        searchs_len=searchs_len,
         results=results
     )
+
 
 @app.route('/email')
 def email():

@@ -1,5 +1,6 @@
 @import 'colors';
 @import 'fonts';
+@import 'animations';
 @import 'mixins';
 @import 'mediaquery';
 @import 'bootstrap';
@@ -7,14 +8,7 @@
 @import 'vendor/vex';
 @import 'vendor/vex-theme-os';
 
-@keyframes vibrate
-{
-  0%   {transform: rotate(10deg)}
-  25%  {transform: rotate(-10deg)}
-  50%  {transform: rotate(0)}
-  75%  {transform: rotate(10deg)}
-  100% {transform: rotate(0)}
-}
+
 
 body {
 	font-family: fuente_contenido;
@@ -226,6 +220,34 @@ body#searchs {
 	}
 	table {
 		margin-top: 3em;
+	}
+	.form-inline {
+		.form-group {
+			width: 80%;
+			label {
+				@include mobile {
+					text-align: center;
+				}
+			}
+			input {
+				width: 86%;
+				@include mobile {
+					width: 100%;
+				}
+			}
+		}
+		@include mobile {
+			width: 100%;
+		}
+	}
+	button[name="add"] {
+		animation: highlight .5s infinite alternate;
+		&:hover {
+			animation: none;
+		}	
+	}
+	.badge {
+		font-size: 1em;
 	}
 }
 

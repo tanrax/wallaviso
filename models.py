@@ -48,6 +48,7 @@ class Search(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, unique=False)
+    last_id = db.Column(db.Integer, primary_key=True)
     create_at = db.Column(db.DateTime, nullable=False, unique=False)
 
     user_id = db.Column(
@@ -60,7 +61,10 @@ class Search(db.Model):
         backref=db.backref('Search', lazy=True)
         )
 
-    def __init__(self):
+    def __init__(self, name, last_id, user_id):
+        self.name = name
+        self.last_id = last_id
+        self.user_id = user_id
         self.create_at = datetime.utcnow()
 
     def __repr__(self):

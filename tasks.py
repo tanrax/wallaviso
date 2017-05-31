@@ -1,12 +1,16 @@
 from flask_script import Manager
 
+from os import getenv
 from app import app
-from models import db, Search
+from flask import render_template
+from models import db, Search, User
 import json
+from flask_mail import Mail, Message
 from urllib3 import PoolManager
 import urllib.parse
 
 
+mail = Mail(app)
 manager = Manager(app)
 http = PoolManager()
 
@@ -29,8 +33,28 @@ def notify():
                 if validate:
                     if item['itemId'] != search.last_id:
                         # Send email
-                        print(item['itemId'])
-                        print(item['title'])
+                        my_user = User.query.filter_by(
+                            id=search.user_id
+                        ).first()
+                        msg = Message(
+                            '¡Nuevo aviso!',
+                            sender='no-repy@' + getenv('DOMAIN'),
+                            recipients=[my_user.email]
+                            )
+                        msg.body = render_template(
+                            'emails/notify.txt', domain=getenv('DOMAIN'),
+                            search=search.name,
+                            item=item,
+                            username=my_user.username
+                        )
+                        msg.html = render_template(
+                            'emails/notify.html',
+                            domain=getenv('DOMAIN'),
+                            search=search.name,
+                            item=item,
+                            username=my_user.username
+                        )
+                        mail.send(msg)
                     else:
                         validate = False
             # Update last id
@@ -41,9 +65,6 @@ def notify():
                 db.session.commit()
             except:
                 db.session.rollback()
-
-
-
 
 
 if __name__ == "__main__":

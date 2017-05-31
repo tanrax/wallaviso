@@ -1,0 +1,10 @@
+Wallaviso
+
+Hola {{ username }},
+hemos encontrado un nuevo artículo.
+
+{{ item.title }}
+{{ item.price }}
+
+Ver
+http://{{ domain }}/?app={{ item.itemId }}

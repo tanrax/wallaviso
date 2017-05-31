@@ -205,23 +205,24 @@ body#searchs {
 	form .btn {
 		width: 3em;
 		border-radius: .3em;
-
+		&.btn-success {
+			@include mobile {
+				width: 100%;
+				margin-bottom: 3em;
+			}
+		}
 	}
-	
 	.list-group-item {
 		padding: {
 			top: 2em;
 			bottom: 2em;
-			@include mobile {
-				width: 100%;
-			}
+		}
+		@include mobile {
+			width: 100%;
 		}
 		.btn {
 			margin-top: -10px;
 			border-radius: .3em;
-			@include mobile {
-				width: 100%;
-			}
 		}
 	}
 	table {
@@ -230,6 +231,9 @@ body#searchs {
 	.form-inline {
 		.form-group {
 			width: 80%;
+			@include mobile {
+				width: 100%;
+			}
 			label {
 				@include mobile {
 					text-align: center;
@@ -244,6 +248,12 @@ body#searchs {
 		}
 		@include mobile {
 			width: 100%;
+		}
+	}
+	#help_programa {
+		@include mobile {
+			text-align: center;
+    		width: 100%;
 		}
 	}
 	button[name="add"] {

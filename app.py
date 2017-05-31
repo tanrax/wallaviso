@@ -61,6 +61,11 @@ def index():
     '''
     Index page
     '''
+    # Redirect App
+    if request.args.get('app'):
+        return redirect('http://p.wallapop.com/i/{0}?_pid=web&_me=www&campaign=mobile_item'.format(request.args.get('app')))
+
+    # Home 
     return render_template('web/home.html')
 
 
@@ -333,7 +338,14 @@ def email():
     Page dashboard.
     Protected area. Only accessible with login.
     '''
-    return render_template('emails/activate.html', domain=getenv('DOMAIN'))
+    http = PoolManager()
+    url_api = 'http://es.wallapop.com/rest/items?minPrice=&maxPrice=&dist=0_&order=creationDate-des&lat=41.398077&lng=2.170432&kws=' + urllib.parse.quote('gameboy', safe='')
+    results = http.request('GET', url_api)
+    results = json.loads(
+        results.data.decode('utf-8')
+    )['items'][0]
+
+    return render_template('emails/notify.html', domain=getenv('DOMAIN'), search='gameboy', item=results, username=session['user']['username'])
 
 
 # END VIEWS
@@ -341,5 +353,5 @@ def email():
 # MAIN
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
 # END MAIN

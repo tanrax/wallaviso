@@ -17,8 +17,16 @@ python3 models.py db upgrade
  
 # Run
  
+## Web
+ 
 ```bash
 python3 app.py
+```
+
+## Tasks (send notifications)
+
+```bash
+python3 tasks.py notify
 ```
 
 # Test

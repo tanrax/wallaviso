@@ -18,8 +18,14 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 text-center">
+			<a class="btn btn-success" id="button_signup" href="{{ url_for('signup') }}">Crear cuenta</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 text-center">
 			<a class="btn btn-danger" href="{{ url_for('forgot_password') }}">He olvidado la contraseña</a>
 		</div>
 	</div>
+
 </div>
 {% endblock %}

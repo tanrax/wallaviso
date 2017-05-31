@@ -196,7 +196,7 @@ body#home {
 }
 
 body#login {
-	.btn.btn-danger {
+	.btn.btn-danger, #button_signup {
 		margin-top: 1em;
 	}
 }
@@ -247,7 +247,7 @@ body#searchs {
 		}	
 	}
 	.badge {
-		font-size: 1em;
+		font-size: .7em;
 	}
 }
 

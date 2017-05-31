@@ -1,3 +1,12 @@
+import fcntl, sys
+pid_file = 'tasks.pid'
+fp = open(pid_file, 'w')
+try:
+    fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
+except IOError:
+    # another instance is running
+    sys.exit(0)
+
 from flask_script import Manager
 
 from os import getenv
@@ -25,7 +34,6 @@ def notify():
         results = json.loads(
             results.data.decode('utf-8')
         )['items'][:10]
-        #results = results[::-1]
         # Check new items
         if results[0]['itemId'] != search.last_id:
             validate = True

@@ -332,22 +332,6 @@ def dashboard():
     )
 
 
-@app.route('/email')
-def email():
-    '''
-    Page dashboard.
-    Protected area. Only accessible with login.
-    '''
-    http = PoolManager()
-    url_api = 'http://es.wallapop.com/rest/items?minPrice=&maxPrice=&dist=0_&order=creationDate-des&lat=41.398077&lng=2.170432&kws=' + urllib.parse.quote('gameboy', safe='')
-    results = http.request('GET', url_api)
-    results = json.loads(
-        results.data.decode('utf-8')
-    )['items'][0]
-
-    return render_template('emails/notify.html', domain=getenv('DOMAIN'), search='gameboy', item=results, username=session['user']['username'])
-
-
 # END VIEWS
 
 # MAIN

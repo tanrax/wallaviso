@@ -9,7 +9,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<h2>Avisos activos <span class="badge">{{ searchs_len }}</span></h2>
 			<ul class="list-group">
 				{% if searchs %}
@@ -26,8 +26,6 @@
 					</form>
 				{% endif %}
 			</ul>
-		</div>
-		<div class="col-sm-6">
 			<form method="post" class="form-inline">
 				{{ generate_fields(form) }}
 				<button type="submit" name="search" class="btn btn-success">
@@ -35,45 +33,47 @@
 				</button>
 			</form>
 		</div>
-	</div>
-	{% if results %}
-	<div class="row">
-		<div class="col-xs-12">
-			<form method="post">
-				<input type="hidden" name="name" value="{{ form.name.data }}">
-				<input type="hidden" name="last_id" value="{{ results[0].itemId }}">
-				<button name="add" class="btn btn-success pull-right" data-toggle="tooltip" data-placement="left" title="Programa la busqueda">
-					<i class="fa fa-plus" aria-hidden="true"></i>
-				</button>
-			</form>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Título</th>
-						<th>Descripción</th>
-						<th>Precio</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for item in results %}
-					<tr>
-						<td><img class="img-responsive" src="{{ item.pictureURL }}" alt="Imagen"></td>
-						<td>{{ item.title }}</td>
-						<td>{{ item.description }}</td>
-						<td>{{ item.price }}</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</div>
-	{% else %}
-		<div class="row">
-			<div class="col-xs-12 text-center">
-				<h2>No hay resultados</h2>
+		<div class="col-sm-8">
+			{% if results %}
+			<div class="row">
+				<div class="col-xs-12">
+					<form method="post">
+						<input type="hidden" name="name" value="{{ form.name.data }}">
+						<input type="hidden" name="last_id" value="{{ results[0].itemId }}">
+						<button name="add" class="btn btn-success pull-right" data-toggle="tooltip" data-placement="left" title="Programa la busqueda">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+						</button>
+					</form>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Título</th>
+								<th>Descripción</th>
+								<th>Precio</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in results %}
+							<tr>
+								<td><img class="img-responsive" src="{{ item.pictureURL }}" alt="Imagen"></td>
+								<td>{{ item.title }}</td>
+								<td>{{ item.description }}</td>
+								<td>{{ item.price }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			</div>
+			{% else %}
+				<div class="row">
+					<div class="col-xs-12 text-center">
+						<h2>No hay resultados</h2>
+					</div>
+				</div>
+			{% endif %}
 		</div>
-	{% endif %}
+	</div>
 </div>
 {% endblock %}

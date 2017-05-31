@@ -212,10 +212,16 @@ body#searchs {
 		padding: {
 			top: 2em;
 			bottom: 2em;
+			@include mobile {
+				width: 100%;
+			}
 		}
 		.btn {
 			margin-top: -10px;
 			border-radius: .3em;
+			@include mobile {
+				width: 100%;
+			}
 		}
 	}
 	table {

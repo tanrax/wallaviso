@@ -3,4 +3,5 @@ Flask-Mail==0.9.1
 Flask-Migrate==2.0.3
 Flask-SQLAlchemy==2.2
 Flask-WTF==0.14.2
+urllib3
 pymysql

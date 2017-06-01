@@ -48,7 +48,6 @@ class Search(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, unique=False)
-    last_id = db.Column(db.Integer, primary_key=True)
     create_at = db.Column(db.DateTime, nullable=False, unique=False)
 
     user_id = db.Column(
@@ -58,13 +57,37 @@ class Search(db.Model):
         )
     user = db.relationship(
         'User',
-        backref=db.backref('Search', lazy=True)
+        backref=db.backref('Search', cascade="all, delete-orphan")
         )
 
-    def __init__(self, name, last_id, user_id):
-        self.name = name
-        self.last_id = last_id
-        self.user_id = user_id
+    def __init__(self):
+        self.create_at = datetime.utcnow()
+
+    def __repr__(self):
+        return '<Search %r>' % self.username
+
+
+class OldSearch(db.Model):
+    '''
+    Table send history
+    '''
+    __tablename__ = 'old_searchs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, nullable=False)
+    create_at = db.Column(db.DateTime, nullable=False, unique=False)
+
+    search_id = db.Column(
+        db.Integer,
+        db.ForeignKey('searchs.id'),
+        nullable=False
+        )
+    search = db.relationship(
+        'Search',
+        backref=db.backref('OldSearch', cascade="all, delete-orphan")
+        )
+
+    def __init__(self):
         self.create_at = datetime.utcnow()
 
     def __repr__(self):

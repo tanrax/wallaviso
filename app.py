@@ -2,17 +2,15 @@ from os import getenv
 from ast import literal_eval
 from flask import Flask, redirect, url_for, render_template, flash, session, request
 from functools import wraps
+from utils import UtilSearch
 from forms import LoginForm, SignupForm, \
         EmailResetPasswordForm, ResetPasswordForm, \
         SearchForm
-from models import db, User, Search
+from models import db, User, Search, OldSearch
 from flask_mail import Mail, Message
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
      check_password_hash
-from urllib3 import PoolManager
-import urllib.parse
-import json
 
 # CONFIGURATIONS
 # Flask
@@ -35,6 +33,7 @@ mail = Mail(app)
 
 # STATIC
 LIMIT_SEARCH = 3
+LIMIT_RESULTS = 10
 
 # END CONFIGURATIONS
 
@@ -261,28 +260,32 @@ def dashboard():
     Protected area. Only accessible with login.
     '''
     form = SearchForm()
-    http = PoolManager()
     results = False
+    util_search = UtilSearch()
     if request.method == 'POST':
         # Search
         if 'search' in request.form:
             if form.validate_on_submit():
-                url_api = 'http://es.wallapop.com/rest/items?minPrice=&maxPrice=&dist=0_&order=creationDate-des&lat=41.398077&lng=2.170432&kws=' + urllib.parse.quote(form.name.data, safe='')
-                results = http.request('GET', url_api)
-                results = json.loads(
-                    results.data.decode('utf-8')
-                )['items'][:10]
+                results = util_search.get(form.name.data)
         # Add
         elif 'add' in request.form:
             searchs = Search.query.filter_by(user_id=session['user']['id']).all()
             searchs_len = len(searchs)
             if searchs_len < LIMIT_SEARCH:
-                my_search = Search(
-                    request.form['name'],
-                    request.form['last_id'],
-                    session['user']['id']
-                )
+                # Search
+                my_search = Search()
+                my_search.name = request.form['name']
+                my_search.user_id = session['user']['id']
                 db.session.add(my_search)
+                db.session.flush()
+                db.session.commit()
+                # Old searchs
+                results = util_search.get(form.name.data)
+                for item in results:
+                    my_old = OldSearch()
+                    my_old.item_id = item['itemId']
+                    my_old.search_id = my_search.id
+                    db.session.add(my_old)
                 try:
                     db.session.commit()
                     flash(
@@ -306,7 +309,10 @@ def dashboard():
                 )
         # Remove
         elif 'delete' in request.form:
-            my_search = Search.query.filter_by(id=request.form['id'], user_id=session['user']['id']).first()
+            my_search = Search.query.filter_by(
+                id=request.form['id'],
+                user_id=session['user']['id']
+            ).first()
             db.session.delete(my_search)
             try:
                 db.session.commit()

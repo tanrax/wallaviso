@@ -8,8 +8,6 @@
 @import 'vendor/vex';
 @import 'vendor/vex-theme-os';
 
-
-
 body {
 	font-family: fuente_contenido;
 	font-size: 16px;
@@ -258,6 +256,7 @@ body#searchs {
 	}
 	button[name="add"] {
 		animation: highlight .5s infinite alternate;
+		width: 100px;
 		&:hover {
 			animation: none;
 		}	

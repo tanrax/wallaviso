@@ -84,7 +84,7 @@ def signup():
             # Prepare the account activation email
             msg = Message(
                 'Activar cuenta',
-                sender='no-repy@' + getenv('DOMAIN'),
+                sender='no-reply@' + getenv('DOMAIN'),
                 recipients=[my_user.email]
                 )
             link = 'http://' + getenv('DOMAIN') + url_for(
@@ -107,7 +107,7 @@ def signup():
                 # Send confirmation email
                 mail.send(msg)
                 # Informamos al usuario
-                flash('Te acabamos de enviado un email para activar la cuenta. Si no lo encuentras, revisa tu bandeja de Spam.', 'warning')
+                flash('Te acabamos de enviar un email para activar la cuenta. Si no lo encuentras en tu bandeja de entrada, revisa Spam.', 'warning')
                 flash('¡Cuenta creada!', 'success')
                 return redirect(url_for('login'))
             except:
@@ -162,7 +162,7 @@ def forgot_password():
                     )
             msg = Message(
                 'Recuperar contraseña',
-                sender='no-repy@' + getenv('DOMAIN'),
+                sender='no-reply@' + getenv('DOMAIN'),
                 recipients=[form.email.data]
                 )
             msg.body = render_template(
@@ -289,7 +289,7 @@ def dashboard():
                 try:
                     db.session.commit()
                     flash(
-                        '¡Busqueda programada! Te avisaremos con novedades.',
+                        '¡Wallaviso activado! Te avisaremos al instante con nuevos productos.',
                         'success'
                     )
                 except:
@@ -302,7 +302,7 @@ def dashboard():
                 form.name.data = ''
             else:
                 flash(
-                    'No puedes tener más de {limit} busquedas programadas. ¿Por qué no borras una que no uses?'.format(
+                    'No puedes tener más de {limit} Wallavisos. ¿Por qué no borras una que no uses?'.format(
                         limit=LIMIT_SEARCH
                     ),
                     'danger'
@@ -317,7 +317,7 @@ def dashboard():
             try:
                 db.session.commit()
                 flash(
-                    '¡Busqueda Eliminada!',
+                    '¡Wallaviso borrado!',
                     'success'
                 )
             except:

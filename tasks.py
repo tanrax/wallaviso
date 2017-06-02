@@ -41,7 +41,7 @@ def notify():
                 ).first()
                 msg = Message(
                     '¡Nuevo aviso!',
-                    sender='no-repy@' + getenv('DOMAIN'),
+                    sender='no-reply@' + getenv('DOMAIN'),
                     recipients=[my_user.email]
                     )
                 msg.body = render_template(

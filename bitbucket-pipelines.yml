@@ -9,4 +9,11 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
+          - source /root/venv/bin/activate
           - pip install -r requirements.txt
+          - python3 models.py db init
+          - python3 models.py db migrate
+          - python3 models.py db upgrade
+          - systemctl restart wallaviso
+
+

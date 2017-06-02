@@ -68,6 +68,11 @@ def index():
     return render_template('web/home.html')
 
 
+@app.route('/robots.txt')
+def robotstxt():
+    return render_template('robots.txt')
+
+
 @app.route('/signup', methods=('GET', 'POST'))
 def signup():
     '''

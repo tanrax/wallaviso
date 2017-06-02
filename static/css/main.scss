@@ -31,6 +31,10 @@ a {
 	}
 }
 
+.color_wallaviso {
+	color: $color_wallapop;	
+}
+
 .container .jumbotron, .container-fluid .jumbotron {
 	border-radius: 0;
 }
@@ -209,6 +213,16 @@ body#searchs {
 				margin-bottom: 3em;
 			}
 		}
+		
+	}
+	.btn.next {
+		margin-top: 1.6em;
+		border-radius: .5em;
+		width: 3em;
+		height: 3em;
+		@include mobile {
+			width: 100%;
+		}
 	}
 	.list-group-item {
 		padding: {
@@ -254,20 +268,34 @@ body#searchs {
     		width: 100%;
 		}
 	}
-	button[name="add"] {
-		animation: highlight .5s infinite alternate;
-		width: 100px;
-		&:hover {
-			animation: none;
-		}	
-	}
-	.badge {
-		font-size: .7em;
+	#number_wallavisos {
+		@include mobile {
+			text-align: center;
+		}
+		.badge {
+			font-size: .7em;
+		}
 	}
 	.price {
 		padding-top: 2em;
 		font-weight: bold;
 		font-size: 1.2em;
+	}
+	section#confirm {
+		h3, .row>div {
+			margin: 0;
+			padding: .7em;
+			@include mobile {
+				text-align: center;
+			}
+			.btn {
+				margin-top: .6em;
+				@include mobile {
+					text-align: center;
+					width: 100%;
+				}
+			}
+		}
 	}
 }
 

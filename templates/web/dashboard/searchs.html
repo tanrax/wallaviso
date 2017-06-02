@@ -2,22 +2,22 @@
 {% block page %}searchs{% endblock %}
 {% block title %}Busquedas | {% endblock %}
 {% block body %}
-<div class="container">
+<div class="container" id="appSearchs">
 	<div class="row">
 		<div class="col-xs-12">
 			<h1>Avisos programados</h1>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-4">
+		<div v-if="results" class="col-sm-4">
 			<h2>Buscar</h2>
-			<form method="post" class="form-inline">
+			<form method="post" class="form-inline" id="form_search">
 				{{ generate_fields(form) }}
 				<button type="submit" name="search" class="btn btn-success">
 					<i class="fa fa-search" aria-hidden="true"></i>
 				</button>
 			</form>
-			<h2>Wallavisos activos <span class="badge">{{ searchs_len }}</span></h2>
+			<h2 id="number_wallavisos"><span class="color_wallaviso">Wallavisos</span> activos <span class="badge">{{ searchs_len }}</span></h2>
 			<ul class="list-group">
 				{% if searchs %}
 					<form method="post">
@@ -34,25 +34,15 @@
 				{% endif %}
 			</ul>
 		</div>
-		<div class="col-sm-8">
+		<main class="col-sm-8">
+			<form method="post" id="form_add">
+				<input type="hidden" name="name" value="{{ form.name.data }}">
+				<input type="hidden" name="add" value="">
+			</form>
 			{% if results %}
-			<div class="row">
+			<section v-if="results" class="row">
 				<div class="col-xs-12">
-					<form method="post">
-						<input type="hidden" name="name" value="{{ form.name.data }}">
-						<div class="row">
-							<div class="col-sm-10">
-								<h3 class="pull-right" id="help_programa">Programa la busqueda</h3>
-							</div>
-							<div class="col-sm-2">
-								<button name="add" class="btn btn-success pull-right">
-									Wallaviso <i class="fa fa-plus" aria-hidden="true"></i>
-								</button>
-							</div>
-						</div>
-					</form>
-
-					<h3>Previa de resultados a recibir</h3>
+					<h3>Crea nuevo <span class="color_wallaviso">Wallaviso</span></h3>
 					{% for item in results %}
 						<div class="row">
 							<div class="col-xs-12">
@@ -66,14 +56,61 @@
 									{{ item.description }}
 								</p>
 							</div>
-							<div class="col-sm-3 text-center price">
+							<div class="col-sm-2 text-center price">
 								{{ item.price }}
 							</div>
+							<div class="col-sm-1">
+								<button class="btn btn-success next pull-right"  v-on:click="next('{{ item.title }}')">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>
+								</button>
+							</div>
+
 						</div>
 						<hr>
 					{% endfor %}
 				</div>
-			</div>
+			</section>
+			<section v-if="confirm_add" id="confirm">
+				<div class="row">
+					<div class="col-xs-12">
+						<h2>Crear nuevo <span class="color_wallaviso">Wallaviso</span></h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">
+						<h3><strong>[[ search ]]</strong></h3>
+					</div>
+					<div class="col-sm-6">
+						<button class="btn btn-success pull-left"  v-on:click="add(search)">
+							<i class="fa fa-plus" aria-hidden="true"></i> Crear
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 text-center">
+						<h3>O</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">
+						<h3><strong>[[ search_item ]]</strong></h3>
+					</div>
+					<div class="col-sm-6">
+						<button class="btn btn-success pull-left"  v-on:click="add(search_item)">
+							<i class="fa fa-plus" aria-hidden="true"></i> Crear
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<hr>
+						<button class="btn btn-success"  v-on:click="back">
+							<i class="fa fa-arrow-left" aria-hidden="true"></i> Volver
+						</button>
+					</div>
+				</div>
+			</section>
+			</main>
 			{% else %}
 				<div class="row">
 					<div class="col-xs-12 text-center">

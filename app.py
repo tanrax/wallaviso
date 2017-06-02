@@ -304,6 +304,8 @@ def dashboard():
                         ¿Puedes volver a intentarlo?.''',
                         'danger'
                         )
+
+                results = False
                 form.name.data = ''
             else:
                 flash(

@@ -51,27 +51,27 @@
 							</div>
 						</div>
 					</form>
-					<table class="table table-hover">
-						<caption>Previa de resultados a recibir</caption>
-						<thead>
-							<tr>
-								<th></th>
-								<th>Título</th>
-								<th>Descripción</th>
-								<th>Precio</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for item in results %}
-							<tr>
-								<td><img class="img-responsive" src="{{ item.pictureURL }}" alt="Imagen"></td>
-								<td>{{ item.title }}</td>
-								<td>{{ item.description }}</td>
-								<td>{{ item.price }}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+
+					<h3>Previa de resultados a recibir</h3>
+					{% for item in results %}
+						<div class="row">
+							<div class="col-xs-12">
+								<h4><strong>{{ item.title }}</strong></h4>
+							</div>
+							<div class="col-sm-4">
+								<img class="img-responsive" src="{{ item.pictureURL }}" alt="Imagen">
+							</div>
+							<div class="col-sm-5">
+								<p>
+									{{ item.description }}
+								</p>
+							</div>
+							<div class="col-sm-3 text-center price">
+								{{ item.price }}
+							</div>
+						</div>
+						<hr>
+					{% endfor %}
 				</div>
 			</div>
 			{% else %}

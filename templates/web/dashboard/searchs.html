@@ -24,8 +24,7 @@
 					{% for item in searchs %}
 					<li class="list-group-item">
 						<strong>{{ item.name }}</strong>
-						<input type="hidden" name="id" value="{{ item.id }}">
-						<button type="submit" name="delete" class="btn btn-danger pull-right">
+						<button type="submit" name="delete" class="btn btn-danger pull-right" value="{{ item.id }}">
 							<i class="fa fa-trash" aria-hidden="true"></i>
 						</button>
 					</li>

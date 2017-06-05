@@ -323,7 +323,7 @@ def dashboard():
         # Remove
         elif 'delete' in request.form:
             my_search = Search.query.filter_by(
-                id=request.form['id'],
+                id=request.form['delete'],
                 user_id=session['user']['id']
             ).first()
             db.session.delete(my_search)

@@ -3,6 +3,11 @@
 {% block title %}Busquedas | {% endblock %}
 {% block body %}
 <div class="container" id="appSearchs">
+	<form method="post" id="form_add">
+		<input type="hidden" name="add" value="{{ form.name.data }}">
+		<input type="hidden" name="lat" value="0">
+		<input type="hidden" name="lng" value="0">
+	</form>
 	<div class="row">
 		<div class="col-xs-12">
 			<h1>Avisos programados</h1>
@@ -34,11 +39,7 @@
 			</ul>
 		</div>
 		<main class="col-sm-8">
-			<form method="post" id="form_add">
-				<input type="hidden" name="name" value="{{ form.name.data }}">
-				<input type="hidden" name="add" value="">
-			</form>
-			{% if results %}
+		{% if results %}
 			<section v-if="results" class="row">
 				<div class="col-xs-12">
 					<h3>Crea nuevo <span class="color_wallaviso">Wallaviso</span></h3>

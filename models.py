@@ -48,6 +48,8 @@ class Search(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, unique=False)
+    lat = db.Column(db.Float, nullable=False, unique=False, default=0)
+    lng = db.Column(db.Float, nullable=False, unique=False, default=0)
     create_at = db.Column(db.DateTime, nullable=False, unique=False)
 
     user_id = db.Column(

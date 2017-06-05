@@ -8,7 +8,6 @@ except IOError:
     sys.exit(0)
 
 from flask_script import Manager
-
 from os import getenv
 from app import app
 from utils import UtilSearch
@@ -20,13 +19,17 @@ from flask_mail import Mail, Message
 mail = Mail(app)
 manager = Manager(app)
 
+
 @manager.command
 def notify():
     util_search = UtilSearch()
     searchs = Search.query.all()
     for search in searchs:
         # Get data
-        results = util_search.get(search.name)
+        if search.lat != 0 and search.lng != 0:
+            results = util_search.get(search.name, search.lat, search.lng)
+        else:
+            results = util_search.get(search.name)
         my_olds = OldSearch.query.filter_by(search_id=search.id)
         # Check new items
         for item in results:

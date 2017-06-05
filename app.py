@@ -289,13 +289,19 @@ def dashboard():
             if searchs_len < LIMIT_SEARCH:
                 # Search
                 my_search = Search()
-                my_search.name = request.form['name']
+                my_search.name = request.form['add']
+                my_search.lat = request.form['lat']
+                my_search.lng = request.form['lng']
                 my_search.user_id = session['user']['id']
                 db.session.add(my_search)
                 db.session.flush()
                 db.session.commit()
                 # Old searchs
-                results = util_search.get(form.name.data)
+                results = util_search.get(
+                        my_search.name,
+                        my_search.lat,
+                        my_search.lng
+                    )
                 for item in results:
                     my_old = OldSearch()
                     my_old.item_id = item['itemId']

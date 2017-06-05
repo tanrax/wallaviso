@@ -4,13 +4,13 @@ from flask import Flask, redirect, url_for, render_template, flash, session, req
 from functools import wraps
 from utils import UtilSearch
 from forms import LoginForm, SignupForm, \
-        EmailResetPasswordForm, ResetPasswordForm, \
-        SearchForm
+    EmailResetPasswordForm, ResetPasswordForm, \
+    SearchForm
 from models import db, User, Search, OldSearch
 from flask_mail import Mail, Message
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
-     check_password_hash
+    check_password_hash
 
 # CONFIGURATIONS
 # Flask
@@ -62,9 +62,11 @@ def index():
     '''
     # Redirect App
     if request.args.get('app'):
-        return redirect('http://p.wallapop.com/i/{0}?_pid=web&_me=www&campaign=mobile_item'.format(request.args.get('app')))
+        return redirect(
+            'http://p.wallapop.com/i/{0}?_pid=web&_me=www&campaign=mobile_item'.format(
+                request.args.get('app')))
 
-    # Home 
+    # Home
     return render_template('web/home.html')
 
 
@@ -91,37 +93,39 @@ def signup():
                 'Activar cuenta',
                 sender='no-reply@' + getenv('DOMAIN'),
                 recipients=[my_user.email]
-                )
+            )
             link = 'http://' + getenv('DOMAIN') + url_for(
                 'activate_account',
                 token=my_user.token
-                )
+            )
             msg.body = render_template(
                 'emails/activate.txt', username=my_user.username,
                 token=link
-                )
+            )
             msg.html = render_template(
                 'emails/activate.html',
                 username=my_user.username,
                 token=link,
                 domain=getenv('DOMAIN')
-                )
+            )
             try:
                 # Save new User
                 db.session.commit()
                 # Send confirmation email
                 mail.send(msg)
                 # Informamos al usuario
-                flash('Te acabamos de enviar un email para activar la cuenta. Si no lo encuentras en tu bandeja de entrada, revisa Spam.', 'warning')
+                flash(
+                    'Te acabamos de enviar un email para activar la cuenta. Si no lo encuentras en tu bandeja de entrada, revisa Spam.',
+                    'warning')
                 flash('¡Cuenta creada!', 'success')
                 return redirect(url_for('login'))
-            except:
+            except BaseException:
                 db.session.rollback()
                 flash(
                     '''¡Ups! Algo ha pasado.
                     ¿Puedes volver a intentarlo?.''',
                     'danger'
-                    )
+                )
         else:
             flash('El email ya esta siendo utilizado.', 'danger')
     return render_template('web/signup.html', form=form)
@@ -162,24 +166,24 @@ def forgot_password():
             db.session.commit()
             # Send email with token
             link = 'http://' + getenv('DOMAIN') + url_for(
-                    'update_password',
-                    email=my_user.email, token=token
-                    )
+                'update_password',
+                email=my_user.email, token=token
+            )
             msg = Message(
                 'Recuperar contraseña',
                 sender='no-reply@' + getenv('DOMAIN'),
                 recipients=[form.email.data]
-                )
+            )
             msg.body = render_template(
                 'emails/forgot_password.txt', username=my_user.username,
                 token=link
-                )
+            )
             msg.html = render_template(
                 'emails/forgot_password.html',
                 username=my_user.username,
                 token=link,
                 domain=getenv('DOMAIN')
-                )
+            )
             mail.send(msg)
             flash('''
             Le acabamos de enviar un email para resetear la contraseña.
@@ -227,9 +231,12 @@ def login():
     if form.validate_on_submit():
         # Validate email and password
         email = form.email.data
-        my_user = User.query.filter_by(email=email).filter_by(is_active=1).first()
+        my_user = User.query.filter_by(
+            email=email).filter_by(is_active=1).first()
         if not my_user:
-            flash('No ha activado todavía su cuenta. Verifique su buzón.', 'danger')
+            flash(
+                'No ha activado todavía su cuenta. Verifique su buzón.',
+                'danger')
         else:
             if my_user and check_password_hash(
                     my_user.password,
@@ -242,7 +249,9 @@ def login():
                 }
                 return redirect(url_for('dashboard'))
             else:
-                flash('El email o la contraseña es incorrecto. Por favor, vuelva a intentarlo.', 'danger')
+                flash(
+                    'El email o la contraseña es incorrecto. Por favor, vuelva a intentarlo.',
+                    'danger')
     return render_template('web/login.html', form=form)
 
 
@@ -274,7 +283,8 @@ def dashboard():
                 results = util_search.get(form.name.data)
         # Add
         elif 'add' in request.form:
-            searchs = Search.query.filter_by(user_id=session['user']['id']).all()
+            searchs = Search.query.filter_by(
+                user_id=session['user']['id']).all()
             searchs_len = len(searchs)
             if searchs_len < LIMIT_SEARCH:
                 # Search
@@ -295,25 +305,21 @@ def dashboard():
                     db.session.commit()
                     flash(
                         '¡Wallaviso activado! Te avisaremos al instante con nuevos productos.',
-                        'success'
-                    )
-                except:
+                        'success')
+                except BaseException:
                     db.session.rollback()
                     flash(
                         '''¡Ups! Algo ha pasado.
                         ¿Puedes volver a intentarlo?.''',
                         'danger'
-                        )
+                    )
 
                 results = False
                 form.name.data = ''
             else:
                 flash(
                     'No puedes tener más de {limit} Wallavisos. ¿Por qué no borras una que no uses?'.format(
-                        limit=LIMIT_SEARCH
-                    ),
-                    'danger'
-                )
+                        limit=LIMIT_SEARCH), 'danger')
         # Remove
         elif 'delete' in request.form:
             my_search = Search.query.filter_by(
@@ -327,13 +333,13 @@ def dashboard():
                     '¡Wallaviso borrado!',
                     'success'
                 )
-            except:
+            except BaseException:
                 db.session.rollback()
                 flash(
                     '''¡Ups! Algo ha pasado.
                     ¿Puedes volver a intentarlo?.''',
                     'danger'
-                    )
+                )
     searchs = Search.query.filter_by(user_id=session['user']['id']).all()
     searchs_len = len(searchs)
     return render_template(
@@ -341,7 +347,8 @@ def dashboard():
         form=form,
         searchs=searchs,
         searchs_len=searchs_len,
-        results=results
+        results=results,
+        LIMIT_RESULTS=LIMIT_RESULTS
     )
 
 

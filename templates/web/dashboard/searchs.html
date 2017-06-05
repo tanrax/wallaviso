@@ -43,7 +43,7 @@
 			<section v-if="results" class="row">
 				<div class="col-xs-12">
 					<h3>Crea nuevo <span class="color_wallaviso">Wallaviso</span></h3>
-					{% for item in results %}
+					{% for item in results[:LIMIT_RESULTS] %}
 						<div class="row">
 							<div class="col-xs-12">
 								<h4><strong>{{ item.title }}</strong></h4>

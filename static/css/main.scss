@@ -28,11 +28,7 @@ input {
 }
 
 .select2 {
-
-		width: 100%;
-	@include mobile {
-		width: 100%;
-	}
+	width: 100%;
 }
 
 .form-control {
@@ -222,7 +218,6 @@ body#searchs {
 		border-radius: .3em;
 		&.btn-success {
 			@include mobile {
-				width: 100%;
 				margin-bottom: 3em;
 			}
 		}
@@ -253,21 +248,13 @@ body#searchs {
 	table {
 		margin-top: 3em;
 	}
-	.form-inline {
+	#form_search {
 		.form-group {
-			width: 80%;
-			@include mobile {
-				width: 100%;
-			}
+			margin-bottom: 1em;
+			width: 100%;
 			label {
 				@include mobile {
 					text-align: center;
-				}
-			}
-			input {
-				width: 86%;
-				@include mobile {
-					width: 100%;
 				}
 			}
 		}

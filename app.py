@@ -280,7 +280,12 @@ def dashboard():
         # Search
         if 'search' in request.form:
             if form.validate_on_submit():
-                results = util_search.get(form.name.data)
+                results = util_search.get(
+                    form.name.data,
+                    request.form['lat'],
+                    request.form['lng'],
+                    request.form['distance']
+                    )
         # Add
         elif 'add' in request.form:
             searchs = Search.query.filter_by(
@@ -292,6 +297,7 @@ def dashboard():
                 my_search.name = request.form['add']
                 my_search.lat = request.form['lat']
                 my_search.lng = request.form['lng']
+                my_search.distance = request.form['distance']
                 my_search.user_id = session['user']['id']
                 db.session.add(my_search)
                 db.session.flush()
@@ -300,7 +306,8 @@ def dashboard():
                 results = util_search.get(
                         my_search.name,
                         my_search.lat,
-                        my_search.lng
+                        my_search.lng,
+                        my_search.distance
                     )
                 for item in results:
                     my_old = OldSearch()

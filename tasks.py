@@ -27,9 +27,14 @@ def notify():
     for search in searchs:
         # Get data
         if search.lat != 0 and search.lng != 0:
-            results = util_search.get(search.name, search.lat, search.lng)
+            results = util_search.get(
+                search.name,
+                search.lat,
+                search.lng,
+                search.distance
+                )
         else:
-            results = util_search.get(search.name)
+            results = util_search.get(name=search.name, dist=search.distance)
         my_olds = OldSearch.query.filter_by(search_id=search.id)
         # Check new items
         for item in results:

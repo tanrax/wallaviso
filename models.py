@@ -50,6 +50,13 @@ class Search(db.Model):
     name = db.Column(db.String(100), nullable=False, unique=False)
     lat = db.Column(db.Float, nullable=False, unique=False, default=0)
     lng = db.Column(db.Float, nullable=False, unique=False, default=0)
+    distance = db.Column(
+        db.String(7),
+        nullable=False,
+        unique=False,
+        default='0_'
+        )
+    update_at = db.Column(db.DateTime, nullable=False, unique=False)
     create_at = db.Column(db.DateTime, nullable=False, unique=False)
 
     user_id = db.Column(
@@ -63,6 +70,7 @@ class Search(db.Model):
         )
 
     def __init__(self):
+        self.update_at = datetime.utcnow()
         self.create_at = datetime.utcnow()
 
     def __repr__(self):

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField
+from wtforms import StringField, PasswordField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
@@ -96,5 +96,9 @@ class SearchForm(FlaskForm):
             ],
         render_kw={"placeholder": "Buscar..."}
         )
-
-
+    distance = SelectField('Distancia', choices=[
+        ('0_1000', 'Muy cerca (1km)'),
+        ('0_5000', 'En mi zona (5km)'),
+        ('0_10000', 'En mi ciudad (10km)'),
+        ('0_', 'Sin límite')
+        ])

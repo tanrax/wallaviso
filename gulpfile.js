@@ -15,6 +15,7 @@ gulp.task('scripts', function () {
 		sURLResources + 'js/vendor/' + 'jquery-3.2.1.min.js',
 		sURLResources + 'js/vendor/' + 'bootstrap.min.js',
 		sURLResources + 'js/vendor/' + 'jquery.bootstrap-autohidingnavbar.min.js',
+		sURLResources + 'js/vendor/' + 'select2.full.min.js',
 		sURLResources + 'js/vendor/' + 'vex.min.js',
 		sURLResources + 'js/vendor/' + 'vue.min.js',
 		sURLResources + 'js/' + 'searchs.js',

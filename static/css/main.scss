@@ -257,10 +257,16 @@ body#searchs {
 					text-align: center;
 				}
 			}
+			#search_button {
+				@include mobile {
+					width: 100%;
+				}
+			}
 		}
 		@include mobile {
 			width: 100%;
 		}
+
 	}
 	#help_programa {
 		@include mobile {

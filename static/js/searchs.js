@@ -18,13 +18,20 @@
 			},
 			methods: {
 				mounted: () => {
-					// Get position
-					appSearchs.getLocation();
-				},
+					appSearchs.form_add = document.querySelector('#form_add');
+					if(appSearchs.form_add.elements.lat.value == 0 && appSearchs.form_add.elements.lng.value == 0 ) {
+						// Get position
+						appSearchs.getLocation();
+					} else {
+						appSearchs.enableButtonSearch();
+					}
+									},
 				next: (search_item) => {
 					appSearchs.results = false;
 					appSearchs.confirm_add = true;
 					appSearchs.search_item = search_item;
+					// Adjust columns
+					appSearchs.main = document.querySelector('main');
 					appSearchs.main.classList.add('col-sm-12');
 					appSearchs.main.classList.remove('col-sm-8');
 					// Move scroll to next step
@@ -55,11 +62,8 @@
 					// Search form
 					appSearchs.form_search.elements.lat.value = appSearchs.lat;
 					appSearchs.form_search.elements.lng.value = appSearchs.lng;
-					// Enable button search
-					let geoposition = document.querySelector('#geoposition');
-					geoposition.style.display = 'none';
-					let button_search = document.querySelector('#search_button');
-					button_search.disabled = false;
+					// Enable search
+					appSearchs.enableButtonSearch();
 				},
 				getLocation: () => {
 					if (navigator.geolocation) {
@@ -67,6 +71,12 @@
 					} else {
 						vex.dialog.alert({message: 'Imposible geolocalizar. Las busquedas serán globales.', className: 'vex-theme-os danger'});
 					}
+				},
+				enableButtonSearch: () => {
+					let geoposition = document.querySelector('#geoposition');
+					geoposition.style.display = 'none';
+					let button_search = document.querySelector('#search_button');
+					button_search.disabled = false;
 				}
 			}
 		});

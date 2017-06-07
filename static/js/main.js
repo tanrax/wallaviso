@@ -3,7 +3,11 @@ $(function () {
 	$(".navbar-fixed-top").autoHidingNavbar({});
 
 	// Select2
-	$('select').select2();
+	//$('select').select2();
+$("#mySelect").on("select2-open", function() { 
+    $("#mySelect").select2("close");
+    openNativeSelect($('#mySelect'));
+});
 
 	// Alerts
 	vex.dialog.buttons.YES.text = 'Vale';

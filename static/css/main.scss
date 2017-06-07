@@ -233,15 +233,20 @@ body#searchs {
 		}
 	}
 	.list-group-item {
+		h4 {
+			font-weight: bold;
+		}
+		strong {
+			color: $color_wallapop;
+		}
 		padding: {
-			top: 2em;
-			bottom: 2em;
+			top: 1em;
+			bottom: 1em;
 		}
 		@include mobile {
 			width: 100%;
 		}
 		.btn {
-			margin-top: -10px;
 			border-radius: .3em;
 		}
 	}

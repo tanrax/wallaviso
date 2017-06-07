@@ -5,8 +5,8 @@
 <div class="container" id="appSearchs">
 	<form method="post" id="form_add">
 		<input type="hidden" name="add" value="{{ form.name.data }}">
-		<input type="hidden" name="lat" value="0">
-		<input type="hidden" name="lng" value="0">
+		<input type="hidden" name="lat" value="{% if request.form['lat'] %}{{ request.form['lat'] }}{% else %}0{% endif %}">
+		<input type="hidden" name="lng" value="{% if request.form['lng'] %}{{ request.form['lng'] }}{% else %}0{% endif %}">
 		<input type="hidden" name="distance" value="">
 	</form>
 	<div class="row">
@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-4" v-if="results">
 			<h2>Buscar</h2>
 			<form method="post" class="form" id="form_search">
 				{{ generate_fields(form) }}
@@ -38,10 +38,26 @@
 					<form method="post">
 					{% for item in searchs %}
 					<li class="list-group-item">
-						<strong>{{ item.name }}</strong>
-						<button type="submit" name="delete" class="btn btn-danger pull-right" value="{{ item.id }}">
-							<i class="fa fa-trash" aria-hidden="true"></i>
-						</button>
+						<div class="row">
+							<div class="col-xs-10">
+								<h4>{{ item.name }}</h4>
+								<strong>Distancia:</strong> 
+								{% if item.distance == '0_1000' %}
+									Muy cerca
+								{% elif item.distance == '0_5000' %}
+									En mi zona
+								{% elif item.distance == '0_10000' %}
+									En mi ciudad
+								{% else %}
+									Sin límite
+								{% endif %}
+							</div>
+							<div class="col-xs-2">
+								<button type="submit" name="delete" class="btn btn-danger pull-right" value="{{ item.id }}">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</button>
+							</div>
+						</div>
 					</li>
 					{% endfor %}
 					</form>

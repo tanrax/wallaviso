@@ -5,7 +5,6 @@
 @import 'mediaquery';
 @import 'bootstrap';
 @import 'font-awesome/main';
-@import 'select2/select2';
 @import 'vendor/vex';
 @import 'vendor/vex-theme-os';
 
@@ -222,6 +221,20 @@ body#searchs {
 			}
 		}
 		
+	}
+	#separation {
+		border-right: 1px solid $color_wallapop;
+    	padding-right: 2em;
+		@include mobile {
+			padding-right: 0;
+			border: 0;
+		}
+	}
+	#not_results {
+		i.fa {
+			color: $color_wallapop;
+			font-size: 2em;
+		}
 	}
 	.btn.next {
 		margin-top: 1.6em;

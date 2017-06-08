@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-4" v-if="results">
+		<div class="col-sm-4" v-if="results" id="separation">
 			<h2>Buscar</h2>
 			<form method="post" class="form" id="form_search">
 				{{ generate_fields(form) }}
@@ -32,7 +32,9 @@
 					</button>
 				</div>
 			</form>
-			<h2 id="number_wallavisos"><span class="color_wallaviso">Wallavisos</span> activos <span class="badge">{{ searchs_len }}</span></h2>
+			<h2 id="number_wallavisos">
+				<span class="color_wallaviso">Wallavisos</span> activos <span class="badge">{{ searchs_len }}</span>
+			</h2>
 			<ul class="list-group">
 				{% if searchs %}
 					<form method="post">
@@ -138,9 +140,10 @@
 			</section>
 			</main>
 			{% else %}
-				<div class="row">
+				<div class="row" id="not_results">
 					<div class="col-xs-12 text-center">
-						<h2>No hay resultados</h2>
+						<i class="fa fa-bell-slash" aria-hidden="true"></i>
+						<h3>No hay resultados</h3>
 					</div>
 				</div>
 			{% endif %}

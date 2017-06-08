@@ -3,7 +3,7 @@
 		{% if field.type != 'CSRFTokenField' %}
 			<div class="form-group{%if field.errors %} has-error{% endif %}">
 			{{ field.label }} 
-			{% if field.type in ('StringField', 'PasswordField')  %}
+			{% if field.type in ('StringField', 'PasswordField', 'SelectField')  %}
 				{{ field(class='form-control') }}
 			{% else %}
 				{{ field() }}

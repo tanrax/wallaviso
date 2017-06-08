@@ -1,3 +1,6 @@
 migrations/
 test.sqlite
 tasks.pid
+# Static
+static/js/all.js
+static/css/main.css

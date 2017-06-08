@@ -281,6 +281,9 @@ body#searchs {
 				@include mobile {
 					width: 100%;
 				}
+				&[disabled] {
+					background: $color_gris;
+				}
 			}
 		}
 		@include mobile {

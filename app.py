@@ -280,12 +280,15 @@ def dashboard():
         # Search
         if 'search' in request.form:
             if form.validate_on_submit():
-                results = util_search.get(
-                    form.name.data,
-                    request.form['lat'],
-                    request.form['lng'],
-                    request.form['distance']
-                    )
+                try:
+                    results = util_search.get(
+                        form.name.data,
+                        request.form['lat'],
+                        request.form['lng'],
+                        request.form['distance']
+                        )
+                except:
+                    flash('Ha ocurrido un error al buscar. Por favor, vuelva a intentarlo.', 'danger')
         # Add
         elif 'add' in request.form:
             searchs = Search.query.filter_by(

@@ -92,11 +92,13 @@ input {
 }
 
 header {
+	&>nav {
+		border-bottom: 1px solid $color_blanco;
+	}
 	.navbar {
 		background: transparentize($color_wallapop, 0.4);
 	}
 	#collapse-main {
-		border-bottom: 1px solid $color_blanco;
 	}
 	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
 		margin-left: 0;
@@ -105,7 +107,7 @@ header {
 		margin-right: 0;
 	}
 	.navbar-toggle .icon-bar {
-		border: 1px solid $color_wallapop;
+		background: $color_blanco;
 	}
 	.navbar-brand {
 		font-family: fuente_logo;

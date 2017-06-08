@@ -150,4 +150,11 @@
 		</div>
 	</div>
 </div>
+{% if request.method == 'POST' %}
+<script>
+(function() {
+	if(window.innerWidth < 768) window.scrollTo(0, document.querySelector('#separation').scrollHeight);
+})();
+</script>
+{% endif %}
 {% endblock %}

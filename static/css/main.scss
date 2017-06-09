@@ -232,6 +232,9 @@ body#searchs {
 			border: 0;
 		}
 	}
+	#geoposition {
+		display: none;
+	}
 	#not_results {
 		i.fa {
 			color: $color_wallapop;

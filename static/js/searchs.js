@@ -19,6 +19,7 @@
 			methods: {
 				mounted: () => {
 					appSearchs.form_add = document.querySelector('#form_add');
+					appSearchs.disabledButtonSearch();
 					if(appSearchs.form_add.elements.lat.value == 0 && appSearchs.form_add.elements.lng.value == 0 ) {
 						// Get position
 						appSearchs.getLocation();
@@ -49,7 +50,6 @@
 					appSearchs.confirm_add = false;
 					appSearchs.main.classList.remove('col-sm-12');
 					appSearchs.main.classList.add('col-sm-8');
-
 				},
 				saveLocation: (position) => {
 					appSearchs.lat = position.coords.latitude;
@@ -77,6 +77,12 @@
 					geoposition.style.display = 'none';
 					let button_search = document.querySelector('#search_button');
 					button_search.disabled = false;
+				},
+				disabledButtonSearch: () => {
+					let geoposition = document.querySelector('#geoposition');
+					geoposition.style.display = 'block';
+					let button_search = document.querySelector('#search_button');
+					button_search.disabled = true;
 				}
 			}
 		});

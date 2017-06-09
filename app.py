@@ -51,6 +51,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 # END DECORATIONS
 
 # VIEWS
@@ -81,6 +82,9 @@ def signup():
     '''
     Signup page
     '''
+    # Redirigue to login if these logged in
+    if 'user' in session:
+        return redirect(url_for('dashboard'))
     form = SignupForm()
     if form.validate_on_submit():
         if not User.query.filter_by(email=form.email.data).all():

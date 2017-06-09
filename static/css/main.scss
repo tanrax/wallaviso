@@ -65,9 +65,14 @@ input {
    		background: lighten($color_wallapop, 10%);
 	}
 	&.btn-danger {
-		background: $color_rojo;
+		border: 1px solid transparent;
+		background: initial;
+		color: $color_rojo;
 		&:focus, &:active, &:hover {
-			background: lighten($color_rojo, 10%);
+			border: 1px solid $color_rojo;
+		}
+		&:active:hover {
+			background: $color_rojo;
 		}
 	}
 }
@@ -306,6 +311,9 @@ body#searchs {
 		}
 		.badge {
 			font-size: .7em;
+			background: initial;
+			color: $color_gris;
+			border: 1px solid $color_gris;
 		}
 	}
 	.price {

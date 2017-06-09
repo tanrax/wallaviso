@@ -11,6 +11,7 @@ from flask_mail import Mail, Message
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
     check_password_hash
+from datetime import datetime
 
 # CONFIGURATIONS
 # Flask
@@ -366,6 +367,33 @@ def dashboard():
         results=results,
         LIMIT_RESULTS=LIMIT_RESULTS
     )
+
+
+@app.route('/update_expiration/<id>/<token>')
+def update_expiration(id, token):
+    '''
+    Page update expiration
+    '''
+    my_search = Search.query.filter_by(
+        id=id,
+        token=token,
+        alert_expiration=True
+    ).first()
+    if my_search:
+        my_search.update_at = datetime.utcnow()
+        my_search.alert_expiration = False
+        db.session.add(my_search)
+        try:
+            db.session.commit()
+            flash('¡Busqueda actualizada!', 'success')
+        except:
+            db.session.rollback()
+            flash(
+                '''¡Ups! Algo ha pasado.
+                ¿Puedes volver a intentarlo?.''',
+                'danger'
+            )
+    return redirect(url_for('index'))
 
 
 # END VIEWS

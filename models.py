@@ -50,12 +50,15 @@ class Search(db.Model):
     name = db.Column(db.String(100), nullable=False, unique=False)
     lat = db.Column(db.Float, nullable=False, unique=False, default=0)
     lng = db.Column(db.Float, nullable=False, unique=False, default=0)
+    min_price = db.Column(db.Float, nullable=False, unique=False, default=0)
+    alert_expiration = db.Column(db.Boolean, nullable=False, default=False)
     distance = db.Column(
         db.String(7),
         nullable=False,
         unique=False,
         default='0_'
         )
+    token = db.Column(db.String(32), nullable=False, unique=False)
     update_at = db.Column(db.DateTime, nullable=False, unique=False)
     create_at = db.Column(db.DateTime, nullable=False, unique=False)
 
@@ -70,11 +73,12 @@ class Search(db.Model):
         )
 
     def __init__(self):
+        self.token = str(uuid4()).replace('-', '')
         self.update_at = datetime.utcnow()
         self.create_at = datetime.utcnow()
 
     def __repr__(self):
-        return '<Search %r>' % self.username
+        return '<Search %r>' % self.name
 
 
 class OldSearch(db.Model):

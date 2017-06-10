@@ -19,8 +19,8 @@
 			<h2>Buscar</h2>
 			<form method="post" class="form" id="form_search">
 				{{ generate_fields(form) }}
-				<input type="hidden" name="lat" value="{% if lat %}{{ lat }}{% else %}{% endif %}">
-				<input type="hidden" name="lng" value="{% if lng %}{{ lng }}{% else %}{% endif %}">
+				<input type="hidden" name="lat" value="{% if request.form['lat'] %}{{ request.form['lat'] }}{% endif %}">
+				<input type="hidden" name="lng" value="{% if request.form['lng'] %}{{ request.form['lng'] }}{% endif %}">
 				<div class="form-group text-right">
 					<span id="geoposition">
 						Obteniendo geolocalización

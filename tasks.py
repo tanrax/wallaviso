@@ -140,5 +140,23 @@ def remove_expiration():
             db.session.rollback()
 
 
+@manager.command
+def remove_inactive_users():
+    '''
+    Remove if the user is inactive and has more than one week
+    '''
+    current_time = datetime.utcnow()
+    week_ago = current_time - timedelta(weeks=1)
+    users = User.query.filter(
+        User.create_at < week_ago
+        ).filter_by(is_active=False).all()
+    for user in users:
+        db.session.delete(user)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+
+
 if __name__ == "__main__":
     manager.run()

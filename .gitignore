@@ -1,6 +1,7 @@
 migrations/
 test.sqlite
 tasks.pid
+package-lock.json
 # Static
 static/js/all.js
 static/css/main.css

@@ -34,7 +34,7 @@ app.config['MAIL_PORT'] = getenv('MAIL_PORT')
 mail = Mail(app)
 
 # STATIC
-LIMIT_SEARCH = 3
+LIMIT_SEARCH = 5
 LIMIT_RESULTS = 10
 LIMIT_NOTIFYS = 10
 

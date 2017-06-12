@@ -6,12 +6,13 @@ from utils import UtilSearch
 from forms import LoginForm, SignupForm, \
     EmailResetPasswordForm, ResetPasswordForm, \
     SearchForm
-from models import db, User, Search, OldSearch
+from models import db, User, Search, OldSearch, NotificationHistory
 from flask_mail import Mail, Message
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
     check_password_hash
-from datetime import datetime
+from datetime import datetime, date
+from sqlalchemy import Date, cast
 
 # CONFIGURATIONS
 # Flask
@@ -35,6 +36,7 @@ mail = Mail(app)
 # STATIC
 LIMIT_SEARCH = 3
 LIMIT_RESULTS = 10
+LIMIT_NOTIFYS = 10
 
 # END CONFIGURATIONS
 
@@ -363,13 +365,20 @@ def dashboard():
                 )
     searchs = Search.query.filter_by(user_id=session['user']['id']).all()
     searchs_len = len(searchs)
+    num_notifys = NotificationHistory.query.filter_by(
+        user_id=session['user']['id']
+        ).filter(
+            cast(NotificationHistory.create_at, Date) == date.today()
+        ).count()
     return render_template(
         'web/dashboard/searchs.html',
         form=form,
         searchs=searchs,
         searchs_len=searchs_len,
         results=results,
-        LIMIT_RESULTS=LIMIT_RESULTS
+        LIMIT_RESULTS=LIMIT_RESULTS,
+        LIMIT_NOTIFYS=LIMIT_NOTIFYS,
+        num_notifys=num_notifys
     )
 
 

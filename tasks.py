@@ -9,13 +9,15 @@ except IOError:
 
 from flask_script import Manager
 from os import getenv
-from app import app
+from app import app, LIMIT_NOTIFYS
 from utils import UtilSearch
 from flask import render_template
-from models import db, Search, User, OldSearch
+from models import db, Search, User, OldSearch, NotificationHistory
 from flask_mail import Mail, Message
 from datetime import datetime, timedelta
 from uuid import uuid4
+from datetime import datetime, date
+from sqlalchemy import Date, cast
 
 
 mail = Mail(app)
@@ -48,35 +50,49 @@ def notify():
                 if item['itemId'] == old.item_id:
                     notify = False
             if notify:
-                # Send email
-                msg = Message(
-                    '¡Nuevo aviso!',
-                    sender='no-reply@' + getenv('DOMAIN'),
-                    recipients=[search.user.email]
+                num_notifys = NotificationHistory.query.filter_by(
+                    user_id=search.user.id
+                    ).filter(
+                        cast(NotificationHistory.create_at, Date) == date.today()
+                    ).count()
+                if num_notifys < LIMIT_NOTIFYS:
+                    # Send email
+                    msg = Message(
+                        '¡Nuevo aviso!',
+                        sender='no-reply@' + getenv('DOMAIN'),
+                        recipients=[search.user.email]
+                        )
+                    msg.body = render_template(
+                        'emails/notify.txt', domain=getenv('DOMAIN'),
+                        search=search.name,
+                        item=item,
+                        username=search.user.username
                     )
-                msg.body = render_template(
-                    'emails/notify.txt', domain=getenv('DOMAIN'),
-                    search=search.name,
-                    item=item,
-                    username=search.user.username
-                )
-                msg.html = render_template(
-                    'emails/notify.html',
-                    domain=getenv('DOMAIN'),
-                    search=search.name,
-                    item=item,
-                    username=search.user.username
-                )
-                mail.send(msg)
-                # Add id in old_searchs table
-                my_new_old = OldSearch()
-                my_new_old.item_id = int(item['itemId'])
-                my_new_old.search_id = search.id
-                db.session.add(my_new_old)
-                try:
-                    db.session.commit()
-                except:
-                    db.session.rollback()
+                    msg.html = render_template(
+                        'emails/notify.html',
+                        domain=getenv('DOMAIN'),
+                        search=search.name,
+                        item=item,
+                        username=search.user.username
+                    )
+                    mail.send(msg)
+                    # Add id in old_searchs table
+                    my_new_old = OldSearch()
+                    my_new_old.item_id = int(item['itemId'])
+                    my_new_old.search_id = search.id
+                    db.session.add(my_new_old)
+                    # Add search to history
+                    my_history = NotificationHistory()
+                    my_history.item_id = int(item['itemId'])
+                    my_history.title = item['title']
+                    my_history.image = item['pictureURL']
+                    my_history.price = item['price']
+                    my_history.user_id = search.user.id
+                    db.session.add(my_history)
+                    try:
+                        db.session.commit()
+                    except:
+                        db.session.rollback()
 
 
 @manager.command

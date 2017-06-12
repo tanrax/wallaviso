@@ -26,8 +26,13 @@ input {
 	outline: none;
 }
 
-.select2 {
-	width: 100%;
+
+.progress-bar {
+	background: $color_wallapop;
+	color: $color_blanco;
+	&.progress-bar-danger {
+		background: $color_rojo;
+	}
 }
 
 .form-control {

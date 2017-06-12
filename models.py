@@ -47,6 +47,7 @@ class NotificationHistory(db.Model):
     __tablename__ = 'notifications_histories'
 
     id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, nullable=False, unique=False)
     title = db.Column(db.String(100), nullable=False, unique=False)
     image = db.Column(db.String(200), nullable=False, unique=False)
     create_at = db.Column(db.DateTime, nullable=False, unique=False)

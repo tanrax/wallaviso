@@ -40,6 +40,35 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 
+class NotificationHistory(db.Model):
+    '''
+    Table notify histories
+    '''
+    __tablename__ = 'notifications_histories'
+
+    id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, nullable=False, unique=False)
+    title = db.Column(db.String(100), nullable=False, unique=False)
+    image = db.Column(db.String(200), nullable=False, unique=False)
+    create_at = db.Column(db.DateTime, nullable=False, unique=False)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id'),
+        nullable=False
+        )
+    user = db.relationship(
+        'User',
+        backref=db.backref('NotificationHistory', cascade="all, delete-orphan")
+        )
+
+    def __init__(self):
+        self.create_at = datetime.utcnow()
+
+    def __repr__(self):
+        return '<NotificationHistory %r>' % self.title
+
+
 class Search(db.Model):
     '''
     Table search

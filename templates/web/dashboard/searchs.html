@@ -44,16 +44,26 @@
 						<div class="row">
 							<div class="col-xs-10">
 								<h4>{{ item.name }}</h4>
-								<strong>Distancia:</strong> 
-								{% if item.distance == '0_1000' %}
-									Muy cerca
-								{% elif item.distance == '0_5000' %}
-									En mi zona
-								{% elif item.distance == '0_10000' %}
-									En mi ciudad
-								{% else %}
-									Sin límite
-								{% endif %}
+								<p>
+									<strong>Distancia:</strong> 
+									{% if item.distance == '0_1000' %}
+										Muy cerca
+									{% elif item.distance == '0_5000' %}
+										En mi zona
+									{% elif item.distance == '0_10000' %}
+										En mi ciudad
+									{% else %}
+										Sin límite
+									{% endif %}
+								</p>
+								<p>
+									<strong>Precio máximo:</strong> 
+									{% if item.max_price == 0.0 %}
+										Ninguno
+									{% else %}
+										{{ "{:.2f}".format(item.max_price) | replace('.00','') | replace('.',',') }} &euro;
+									{% endif %}
+								</p>
 							</div>
 							<div class="col-xs-2">
 								<button type="submit" name="delete" class="btn btn-danger pull-right" value="{{ item.id }}">

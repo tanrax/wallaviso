@@ -120,5 +120,8 @@ class SearchForm(FlaskForm):
         validators=[
             is_positive
             ],
-        render_kw={'type': 'number'}
+        render_kw={
+            'type': 'number',
+            'step': '0.01'
+            }
         )

@@ -8,6 +8,7 @@
 		<input type="hidden" name="lat" value="{% if request.form['lat'] %}{{ request.form['lat'] }}{% else %}0{% endif %}">
 		<input type="hidden" name="lng" value="{% if request.form['lng'] %}{{ request.form['lng'] }}{% else %}0{% endif %}">
 		<input type="hidden" name="distance" value="">
+		<input type="hidden" name="max_price" value="{% if request.form['price_max'] %}{{ request.form['price_max'] }}{% else %}0{% endif %}">
 	</form>
 	<div class="row">
 		<div class="col-xs-12">

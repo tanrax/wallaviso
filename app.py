@@ -292,7 +292,8 @@ def dashboard():
                         form.name.data,
                         request.form['lat'],
                         request.form['lng'],
-                        request.form['distance']
+                        request.form['distance'],
+                        form.max_price.data
                         )
                 except:
                     flash('Ha ocurrido un error al buscar. Por favor, vuelva a intentarlo.', 'danger')
@@ -308,6 +309,7 @@ def dashboard():
                 my_search.lat = request.form['lat']
                 my_search.lng = request.form['lng']
                 my_search.distance = request.form['distance']
+                my_search.max_price = form.max_price.data
                 my_search.user_id = session['user']['id']
                 db.session.add(my_search)
                 db.session.flush()

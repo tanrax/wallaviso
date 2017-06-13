@@ -39,10 +39,13 @@
 					window.scrollTo(appSearchs.main.scrollTop, 0);
 				},
 				add: (search_send) => {
+					// Add values form search to form add
 					appSearchs.form_add = document.querySelector('#form_add');
 					appSearchs.form_add.elements.distance.value =  appSearchs.form_search.elements.distance.value;
+					appSearchs.form_add.elements.max_price.value =  appSearchs.form_search.elements.max_price.value;
 					appSearchs.search_send = search_send;
 					appSearchs.form_add.elements.add.value = search_send;
+					// Send form add
 					appSearchs.form_add.submit();
 				},
 				back: () => {

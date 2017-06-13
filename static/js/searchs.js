@@ -18,8 +18,8 @@
 			},
 			methods: {
 				mounted: () => {
-					appSearchs.form_add = document.querySelector('#form_add');
 					appSearchs.disabledButtonSearch();
+					appSearchs.form_add = document.querySelector('#form_add');
 					if(appSearchs.form_add.elements.lat.value == 0 && appSearchs.form_add.elements.lng.value == 0 ) {
 						// Get position
 						appSearchs.getLocation();
@@ -39,10 +39,13 @@
 					window.scrollTo(appSearchs.main.scrollTop, 0);
 				},
 				add: (search_send) => {
+					// Add values form search to form add
 					appSearchs.form_add = document.querySelector('#form_add');
 					appSearchs.form_add.elements.distance.value =  appSearchs.form_search.elements.distance.value;
+					appSearchs.form_add.elements.max_price.value =  appSearchs.form_search.elements.max_price.value;
 					appSearchs.search_send = search_send;
 					appSearchs.form_add.elements.add.value = search_send;
+					// Send form add
 					appSearchs.form_add.submit();
 				},
 				back: () => {
@@ -79,10 +82,12 @@
 					button_search.disabled = false;
 				},
 				disabledButtonSearch: () => {
-					let geoposition = document.querySelector('#geoposition');
-					geoposition.style.display = 'block';
-					let button_search = document.querySelector('#search_button');
-					button_search.disabled = true;
+					if(!appSearchs.confirm_add) {
+						let geoposition = document.querySelector('#geoposition');
+						geoposition.style.display = 'block';
+						let button_search = document.querySelector('#search_button');
+						button_search.disabled = true;
+					}
 				}
 			}
 		});

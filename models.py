@@ -79,7 +79,7 @@ class Search(db.Model):
     name = db.Column(db.String(100), nullable=False, unique=False)
     lat = db.Column(db.Float, nullable=False, unique=False, default=0)
     lng = db.Column(db.Float, nullable=False, unique=False, default=0)
-    min_price = db.Column(db.Float, nullable=False, unique=False, default=0)
+    max_price = db.Column(db.Float, nullable=False, unique=False, default=0)
     alert_expiration = db.Column(db.Boolean, nullable=False, default=False)
     distance = db.Column(
         db.String(7),

@@ -38,10 +38,11 @@ def notify():
                 search.name,
                 search.lat,
                 search.lng,
-                search.distance
+                search.distance,
+                search.max_price
                 )
         else:
-            results = util_search.get(name=search.name, dist=search.distance)
+            results = util_search.get(name=search.name, dist=search.distance, max_price=search.max_price)
         my_olds = OldSearch.query.filter_by(search_id=search.id)
         # Check new items
         for item in results:

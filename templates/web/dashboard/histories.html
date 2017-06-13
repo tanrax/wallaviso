@@ -1,0 +1,45 @@
+{% extends 'layouts/master.html' %}
+{% block page %}histories{% endblock %}
+{% block title %}Historial | {% endblock %}
+{% block body %}
+<div class="container">
+	<section class="row">
+		<div class="col-xs-12">
+			<h2 class="text-center">Historial de Notificaciones</h2>
+			<p class="text-center">Recibidas hoy por ti.</p>
+			{% for item in histories %}
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-6 col-sm-2 order">
+							{{ loop.index }}
+						</div>
+						<div class="col-xs-6 col-sm-2">
+							<img class="img-responsive" src="{{ item.image }}" alt="{{ item.title }}">
+						</div>
+						<div class="col-xs-12 col-sm-8">
+							<div class="container">
+								<div class="row">
+									<div class="col-xs-12">
+										<h3><strong>{{ item.title }}</strong></h3>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<p><span class="color_wallaviso">Hora de envio:</span> {{ item.create_at.strftime('%H:%M') }}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% else %}
+			<h3 id="empty">
+				<i class="fa fa-anchor" aria-hidden="true"></i> Por ahora nada. <br>A la espera.
+			</h3>
+			{% endfor %}
+		</div>
+	</section>
+</div>
+{% endblock %}

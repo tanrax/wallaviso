@@ -292,7 +292,8 @@ def dashboard():
                         form.name.data,
                         request.form['lat'],
                         request.form['lng'],
-                        request.form['distance']
+                        request.form['distance'],
+                        form.max_price.data
                         )
                 except:
                     flash('Ha ocurrido un error al buscar. Por favor, vuelva a intentarlo.', 'danger')
@@ -308,6 +309,7 @@ def dashboard():
                 my_search.lat = request.form['lat']
                 my_search.lng = request.form['lng']
                 my_search.distance = request.form['distance']
+                my_search.max_price = form.max_price.data
                 my_search.user_id = session['user']['id']
                 db.session.add(my_search)
                 db.session.flush()
@@ -407,6 +409,18 @@ def update_expiration(id, token):
                 'danger'
             )
     return redirect(url_for('index'))
+
+
+@app.route('/panel/historial')
+@login_required
+def notify_history():
+    histories = NotificationHistory.query.filter_by(
+        user_id=session['user']['id']
+        ).filter(
+            cast(NotificationHistory.create_at, Date) == date.today()
+        ).all()
+    return render_template('web/dashboard/histories.html', histories=histories)
+
 
 
 # END VIEWS

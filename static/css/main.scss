@@ -9,6 +9,7 @@
 @import 'vendor/vex-theme-os';
 
 body {
+	min-height: 100vh;
 	font-family: fuente_contenido;
 	font-size: 16px;
 	padding-top: 4em;
@@ -25,7 +26,6 @@ a {
 input {
 	outline: none;
 }
-
 
 .progress-bar {
 	background: $color_wallapop;
@@ -344,7 +344,29 @@ body#searchs {
 	}
 }
 
+body#histories {
+	.order {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: $color_wallapop;
+		font-size: 2em;
+    	padding-top: 1em;
+	}
+	#empty {
+		margin-top: 4em;
+		text-align: center;
+		.fa {
+			color: $color_wallapop;
+		}
+	}
+}
+
 footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 	text-align: center;
 	padding: 3em 0;
 }

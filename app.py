@@ -319,7 +319,8 @@ def dashboard():
                         my_search.name,
                         my_search.lat,
                         my_search.lng,
-                        my_search.distance
+                        my_search.distance,
+                        form.max_price.data
                     )
                 for item in results:
                     my_old = OldSearch()

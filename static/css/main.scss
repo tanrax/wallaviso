@@ -9,7 +9,6 @@
 @import 'vendor/vex-theme-os';
 
 body {
-	min-height: 100vh;
 	font-family: fuente_contenido;
 	font-size: 16px;
 	padding-top: 4em;
@@ -345,6 +344,9 @@ body#searchs {
 }
 
 body#histories {
+	.container {
+		width: initial;
+	}
 	.order {
 		display: flex;
 		justify-content: center;
@@ -363,10 +365,6 @@ body#histories {
 }
 
 footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
 	text-align: center;
 	padding: 3em 0;
 }

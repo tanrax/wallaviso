@@ -38,6 +38,7 @@
 							<li><a href="https://programadorwebvalencia.com/#contact" target="_blank">Contacto</a></li>
 						{% else %}
 							<li><a href="{{ url_for('dashboard') }}">Busquedas</a></li>
+							<li><a href="{{ url_for('notify_history') }}">Historial</a></li>
 							<li><a href="https://programadorwebvalencia.com/#contact" target="_blank">Contacto</a></li>
 							<li><a href="{{ url_for('logout') }}">Salir</a></li>
 						{% endif %}

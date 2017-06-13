@@ -411,6 +411,18 @@ def update_expiration(id, token):
     return redirect(url_for('index'))
 
 
+@app.route('/panel/historial')
+@login_required
+def notify_history():
+    histories = NotificationHistory.query.filter_by(
+        user_id=session['user']['id']
+        ).filter(
+            cast(NotificationHistory.create_at, Date) == date.today()
+        ).all()
+    return render_template('web/dashboard/histories.html', histories=histories)
+
+
+
 # END VIEWS
 
 # MAIN

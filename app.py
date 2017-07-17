@@ -310,6 +310,8 @@ def dashboard():
                 my_search.lng = request.form['lng']
                 my_search.distance = request.form['distance']
                 my_search.max_price = form.max_price.data
+                if form.max_price.data == '':
+                    my_search.max_price = 0
                 my_search.user_id = session['user']['id']
                 db.session.add(my_search)
                 db.session.flush()
@@ -342,6 +344,7 @@ def dashboard():
 
                 results = False
                 form.name.data = ''
+                return redirect(url_for('dashboard'))
             else:
                 flash(
                     'No puedes tener más de {limit} Wallavisos. ¿Por qué no borras una que no uses?'.format(

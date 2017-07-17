@@ -96,7 +96,8 @@
 			</div>
 		</div>
 		<main class="col-sm-8">
-		{% if results %}
+		{% if request.method == 'POST' %}
+			{% if results %}
 			<section v-if="results" class="row">
 				<div class="col-xs-12">
 					<h3>Crea nuevo <span class="color_wallaviso">Wallaviso</span></h3>
@@ -127,7 +128,8 @@
 					{% endfor %}
 				</div>
 			</section>
-			<section v-if="confirm_add" id="confirm">
+			{% endif %}
+			<section {% if results %}v-if="confirm_add"{% endif %} id="confirm">
 				<div class="row">
 					<div class="col-xs-12">
 						<h2>Crear nuevo <span class="color_wallaviso">Wallaviso</span></h2>
@@ -143,6 +145,14 @@
 						</button>
 					</div>
 				</div>
+				{% if not results %}
+				<div class="row">
+					<div class="col-xs-12 text-center">
+						<h3>No se ha encontrado nada. ¿Lo programas igualmente?</h3>
+					</div>
+				</div>
+				{% endif %}
+				{% if results %}
 				<div class="row">
 					<div class="col-xs-12 text-center">
 						<h3>O</h3>
@@ -166,13 +176,14 @@
 						</button>
 					</div>
 				</div>
+				{% endif %}
 			</section>
 			</main>
 			{% else %}
 				<div class="row" id="not_results">
 					<div class="col-xs-12 text-center">
 						<i class="fa fa-bell-slash" aria-hidden="true"></i>
-						<h3>No hay resultados</h3>
+						<h3>¿Buscamos algo?</h3>
 					</div>
 				</div>
 			{% endif %}

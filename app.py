@@ -1,6 +1,7 @@
-from os import getenv
-from ast import literal_eval
-from flask import Flask, redirect, url_for, render_template, flash, session, request
+from os import environ
+from dotenv import load_dotenv, find_dotenv
+from flask import Flask, redirect, url_for, render_template, \
+    flash, session, request
 from functools import wraps
 from utils import UtilSearch
 from forms import LoginForm, SignupForm, \
@@ -15,28 +16,30 @@ from datetime import datetime, date
 from sqlalchemy import Date, cast
 
 # CONFIGURATIONS
+load_dotenv(find_dotenv())
+
 # Flask
 app = Flask(__name__)
-app.config['SECRET_KEY'] = getenv('SECRET_KEY')
-app.config['DEBUG'] = literal_eval(getenv('DEBUG'))
+app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
+app.config['DEBUG'] = True if environ.get('DEBUG') == 'True' else False
 
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = getenv('SQLALCHEMY_DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Email
-app.config['MAIL_SERVER'] = getenv('MAIL_SERVER', 'localhost')
-app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME', None)
-app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD', None)
-app.config['MAIL_PORT'] = getenv('MAIL_PORT')
+app.config['MAIL_SERVER'] = environ.get('MAIL_SERVER', 'localhost')
+app.config['MAIL_USERNAME'] = environ.get('MAIL_USERNAME', None)
+app.config['MAIL_PASSWORD'] = environ.get('MAIL_PASSWORD', None)
+app.config['MAIL_PORT'] = environ.get('MAIL_PORT')
 
 mail = Mail(app)
 
 # STATIC
-LIMIT_SEARCH = 5
+LIMIT_SEARCH = 10
 LIMIT_RESULTS = 10
-LIMIT_NOTIFYS = 10
+LIMIT_NOTIFYS = 5 
 
 # END CONFIGURATIONS
 
@@ -98,10 +101,10 @@ def signup():
             # Prepare the account activation email
             msg = Message(
                 'Activar cuenta',
-                sender='no-reply@' + getenv('DOMAIN'),
+                sender='no-reply@' + environ.get('DOMAIN'),
                 recipients=[my_user.email]
             )
-            link = 'http://' + getenv('DOMAIN') + url_for(
+            link = 'http://' + environ.get('DOMAIN') + url_for(
                 'activate_account',
                 token=my_user.token
             )
@@ -113,7 +116,7 @@ def signup():
                 'emails/activate.html',
                 username=my_user.username,
                 token=link,
-                domain=getenv('DOMAIN')
+                domain=environ.get('DOMAIN')
             )
             try:
                 # Save new User
@@ -172,13 +175,13 @@ def forgot_password():
             db.session.add(my_user)
             db.session.commit()
             # Send email with token
-            link = 'http://' + getenv('DOMAIN') + url_for(
+            link = 'http://' + environ.get('DOMAIN') + url_for(
                 'update_password',
                 email=my_user.email, token=token
             )
             msg = Message(
                 'Recuperar contraseña',
-                sender='no-reply@' + getenv('DOMAIN'),
+                sender='no-reply@' + environ.get('DOMAIN'),
                 recipients=[form.email.data]
             )
             msg.body = render_template(
@@ -189,7 +192,7 @@ def forgot_password():
                 'emails/forgot_password.html',
                 username=my_user.username,
                 token=link,
-                domain=getenv('DOMAIN')
+                domain=environ.get('DOMAIN')
             )
             mail.send(msg)
             flash('''

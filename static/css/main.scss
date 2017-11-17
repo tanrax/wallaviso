@@ -233,6 +233,24 @@ body#searchs {
 		}
 		
 	}
+	.premium {
+		display: block;
+		padding: 2rem 4rem;
+		text-align: center;
+		color: black;
+		background: $color_amarillo;	
+		border-radius: 1rem;
+		@include mobile {
+			display: none;
+		}	
+		&:hover {
+			background: darken($color_amarillo, 10%);	
+		}
+		.premium__price {
+			font-weight: bold;
+			font-size: 2rem;
+		}
+	}
 	#separation {
 		border-right: 1px solid $color_wallapop;
     	padding-right: 2em;

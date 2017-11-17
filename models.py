@@ -1,4 +1,5 @@
-from os import getenv
+from os import environ
+from dotenv import load_dotenv, find_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
@@ -7,8 +8,9 @@ from uuid import uuid4
 from datetime import datetime
 
 app = Flask(__name__)
+load_dotenv(find_dotenv())
 
-app.config['SQLALCHEMY_DATABASE_URI'] = getenv('SQLALCHEMY_DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

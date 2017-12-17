@@ -18,6 +18,7 @@ from datetime import datetime, timedelta
 from uuid import uuid4
 from datetime import datetime, date
 from sqlalchemy import Date, cast
+import urllib3
 
 
 mail = Mail(app)
@@ -173,6 +174,27 @@ def remove_inactive_users():
             db.session.commit()
         except:
             db.session.rollback()
+
+
+@manager.command
+def alert_status_wallapop_API():
+    '''
+    Check Wallapop active
+    '''
+    http = urllib3.PoolManager()
+    url = ('https://es.wallapop.com/rest/items'
+           '?dist=3&kws=ps4&lat=1&lng=1&maxPrice=50'
+           '&minPrice=&order=creationDate-des')
+    r = http.request('GET', url)
+    if r.status != 200:
+        msg = Message(
+            'Wallapop caído',
+            sender='no-reply@' + getenv('DOMAIN'),
+            recipients='andros@fenollosa.email'
+        )
+        msg.body = 'Se ha caído Wallapop'
+        msg.html = 'Se ha caído Wallapop'
+        mail.send(msg)
 
 
 if __name__ == "__main__":

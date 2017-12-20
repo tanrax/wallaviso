@@ -56,12 +56,12 @@ def notify():
                     ).filter(
                         NotificationHistory.create_at >= date.today()
                     ).all()
+                # Add id in old_searchs table
+                my_new_old = OldSearch()
+                my_new_old.item_id = int(item['itemId'])
+                my_new_old.search_id = search.id
+                db.session.add(my_new_old)
                 if len(num_notifys) < LIMIT_NOTIFYS:
-                    # Add id in old_searchs table
-                    my_new_old = OldSearch()
-                    my_new_old.item_id = int(item['itemId'])
-                    my_new_old.search_id = search.id
-                    db.session.add(my_new_old)
                     # Add search to history
                     my_history = NotificationHistory()
                     my_history.item_id = int(item['itemId'])

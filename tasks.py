@@ -87,7 +87,7 @@ def notify():
                     my_history = NotificationHistory()
                     my_history.item_id = int(item['itemId'])
                     my_history.title = item['title']
-                    my_history.image = item['pictureURL']
+                    my_history.image = item['mainImage']['mediumURL']
                     my_history.price = item['price']
                     my_history.user_id = search.user.id
                     db.session.add(my_history)

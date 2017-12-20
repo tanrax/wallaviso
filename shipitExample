@@ -7,8 +7,7 @@ git push origin master
 [deploy]
 git checkout master
 git pull origin master
-source ../venv/bin/activate
-pip install -r requirements.txt
+/root/venv/bin/pip install -r requirements.txt
 npm install
 gulp build
 systemctl restart nginx
@@ -22,3 +21,8 @@ mysql -u root --password=9578 -h localhost -e 'SELECT name FROM searchs;' wallav
 
 [users]
 mysql -u root --password=9578 -h localhost -e 'SELECT * FROM users;' wallaviso
+
+[test]
+git checkout master
+git pull origin master
+

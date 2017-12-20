@@ -36,7 +36,7 @@ class User(db.Model):
     def __init__(self):
         self.is_active = False
         self.token = str(uuid4()).replace('-', '')
-        self.create_at = datetime.utcnow()
+        self.create_at = datetime.now()
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -65,7 +65,7 @@ class NotificationHistory(db.Model):
         )
 
     def __init__(self):
-        self.create_at = datetime.utcnow()
+        self.create_at = datetime.now()
 
     def __repr__(self):
         return '<NotificationHistory %r>' % self.title
@@ -105,8 +105,8 @@ class Search(db.Model):
 
     def __init__(self):
         self.token = str(uuid4()).replace('-', '')
-        self.update_at = datetime.utcnow()
-        self.create_at = datetime.utcnow()
+        self.update_at = datetime.now()
+        self.create_at = datetime.now()
 
     def __repr__(self):
         return '<Search %r>' % self.name
@@ -133,7 +133,7 @@ class OldSearch(db.Model):
         )
 
     def __init__(self):
-        self.create_at = datetime.utcnow()
+        self.create_at = datetime.now()
 
     def __repr__(self):
         return '<Search %r>' % self.username

@@ -13,7 +13,6 @@ from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
     check_password_hash
 from datetime import datetime, date
-from sqlalchemy import Date, cast
 
 # CONFIGURATIONS
 load_dotenv(find_dotenv())
@@ -377,7 +376,7 @@ def dashboard():
     num_notifys = NotificationHistory.query.filter_by(
         user_id=session['user']['id']
         ).filter(
-            cast(NotificationHistory.create_at, Date) == date.today()
+            NotificationHistory.create_at >= date.today()
         ).count()
     return render_template(
         'web/dashboard/searchs.html',
@@ -424,7 +423,7 @@ def notify_history():
     histories = NotificationHistory.query.filter_by(
         user_id=session['user']['id']
         ).filter(
-            cast(NotificationHistory.create_at, Date) == date.today()
+            NotificationHistory.create_at >= date.today()
         ).all()
     return render_template('web/dashboard/histories.html', histories=histories)
 

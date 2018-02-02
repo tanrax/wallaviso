@@ -31,15 +31,47 @@ class User(db.Model):
     password = db.Column(db.String(106), nullable=False, unique=False)
     is_active = db.Column(db.Boolean, nullable=False, unique=False)
     token = db.Column(db.String(32), nullable=False, unique=False)
+    rol_id = db.Column(
+        db.Integer,
+        db.ForeignKey('rols.id'),
+        nullable=False,
+        default=1
+        )
     create_at = db.Column(db.DateTime, nullable=False, unique=False)
+
+    # Relations
+
+    rol = db.relationship(
+        'Rol',
+        backref=db.backref('User')
+        )
 
     def __init__(self):
         self.is_active = False
         self.token = str(uuid4()).replace('-', '')
+        self.rol_id = 1
         self.create_at = datetime.now()
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+
+class Rol(db.Model):
+    '''
+    Table Rol
+    1 - Free (Gratuita)
+    2 - Premium (Premium)
+    '''
+    __tablename__ = 'rols'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), nullable=False, unique=False)
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return '<Rol %r>' % self.name
 
 
 class NotificationHistory(db.Model):

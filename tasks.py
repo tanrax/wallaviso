@@ -9,7 +9,7 @@ except IOError:
 
 from flask_script import Manager
 from os import getenv
-from app import app, LIMIT_NOTIFYS
+from app import app, LIMIT_NOTIFYS, LIMIT_NOTIFYS_PREMIUM
 from utils import UtilSearch
 from flask import render_template
 from models import db, Search, User, OldSearch, NotificationHistory
@@ -32,6 +32,11 @@ def notify():
     util_search = UtilSearch()
     searchs = Search.query.all()
     for search in searchs:
+        my_user = User.query.get(search.user.id)
+        # Limit emails
+        limit_notifys = LIMIT_NOTIFYS
+        if my_user.rol_id > 1:
+            limit_notifys = LIMIT_NOTIFYS_PREMIUM
         # Get data
         if search.lat != 0 and search.lng != 0:
             results = util_search.get(
@@ -42,7 +47,11 @@ def notify():
                 search.max_price
                 )
         else:
-            results = util_search.get(name=search.name, dist=search.distance, max_price=search.max_price)
+            results = util_search.get(
+                    name=search.name,
+                    dist=search.distance,
+                    max_price=search.max_price
+                    )
         my_olds = OldSearch.query.filter_by(search_id=search.id)
         # Check new items
         for item in results:
@@ -61,7 +70,7 @@ def notify():
                 my_new_old.item_id = int(item['itemId'])
                 my_new_old.search_id = search.id
                 db.session.add(my_new_old)
-                if len(num_notifys) < LIMIT_NOTIFYS:
+                if len(num_notifys) < limit_notifys:
                     # Add search to history
                     my_history = NotificationHistory()
                     my_history.item_id = int(item['itemId'])

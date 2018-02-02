@@ -80,11 +80,11 @@
 				<h2>
 					Avisos diarios permitidos
 				</h2>
-				<h3>Cuenta: gratuita</h3>
-				{% if num_notifys < LIMIT_NOTIFYS %}
+                <h3>Cuenta: {% if session['user']['rol_id'] == 1 %}gratuita{% else %}Premium{% endif %}</h3>
+				{% if num_notifys < session['user']['limit_notifys'] %}
 				<div class="progress">
-					<div class="progress-bar" role="progressbar" aria-valuenow="{{ LIMIT_NOTIFYS - num_notifys }}" aria-valuemin="0" aria-valuemax="{{ LIMIT_NOTIFYS }}" style="width: {{ 100 * LIMIT_NOTIFYS / (LIMIT_NOTIFYS - num_notifys) }}%;">
-					  {{ LIMIT_NOTIFYS - num_notifys }}/{{ LIMIT_NOTIFYS }}
+					<div class="progress-bar" role="progressbar" aria-valuenow="{{ LIMIT_SEARCHS - num_notifys }}" aria-valuemin="0" aria-valuemax="{{ LIMIT_SEARCHS }}" style="width: {{ 100 * LIMIT_SEARCHS / (LIMIT_SEARCHS - num_notifys) }}%;">
+					  {{ LIMIT_SEARCHS - num_notifys }}/{{ LIMIT_SEARCHS }}
 				  </div>
 				</div>
 				{% else %}
@@ -94,6 +94,7 @@
 				  </div>
 				</div>
 				{% endif %}
+                {% if session['user']['rol_id'] == 1 %}
 				<a href="https://programadorwebvalencia.com/#contact" class="premium">
 					<p>
 						<i class="fa fa-trophy" aria-hidden="true"></i>
@@ -103,6 +104,7 @@
 						5&euro;/mes
 					</p>
 				</a>
+				{% endif %}
 			</div>
 		</div>
 		<main class="col-sm-8">

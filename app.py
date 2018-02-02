@@ -35,10 +35,15 @@ app.config['MAIL_PORT'] = environ.get('MAIL_PORT')
 
 mail = Mail(app)
 
-# STATIC
-LIMIT_SEARCH = 10
+# Variables
+# Search actives in Dashboard
+LIMIT_SEARCH = 5
+LIMIT_SEARCH_PREMIUM = 20
+# Results in search
 LIMIT_RESULTS = 10
+# Emails in day
 LIMIT_NOTIFYS = 5
+LIMIT_NOTIFYS_PREMIUM = 40
 
 # END CONFIGURATIONS
 
@@ -250,11 +255,17 @@ def login():
             if my_user and check_password_hash(
                     my_user.password,
                     form.password.data):
+                # Notifys Limit
+                notifys = LIMIT_NOTIFYS
+                if my_user.rol_id > 1:
+                    notifys = LIMIT_NOTIFYS_PREMIUM
                 # Login de usuario
                 session['user'] = {
                     'id': my_user.id,
                     'username': my_user.username,
-                    'email': my_user.email
+                    'email': my_user.email,
+                    'rol_id': my_user.rol_id,
+                    'limit_notifys': notifys
                 }
                 return redirect(url_for('dashboard'))
             else:
@@ -299,12 +310,12 @@ def dashboard():
                         )
                 except:
                     flash('Ha ocurrido un error al buscar. Por favor, vuelva a intentarlo.', 'danger')
-        # Add
+        # Add Wallaviso
         elif 'add' in request.form:
             searchs = Search.query.filter_by(
                 user_id=session['user']['id']).all()
             searchs_len = len(searchs)
-            if searchs_len < LIMIT_SEARCH:
+            if searchs_len < session['user']['limit_notifys']:
                 # Search
                 my_search = Search()
                 my_search.name = request.form['add']
@@ -348,9 +359,15 @@ def dashboard():
                 form.name.data = ''
                 return redirect(url_for('dashboard'))
             else:
-                flash(
-                    'No puedes tener más de {limit} Wallavisos. ¿Por qué no borras una que no uses?'.format(
-                        limit=LIMIT_SEARCH), 'danger')
+                if session['user']['rol_id'] == 1:
+                    flash(
+                        'No puedes tener más de {limit} Wallavisos. ¿Por qué no pasas a cuenta Premium  con {premium} Wallaviso?'.format(
+                            limit=LIMIT_SEARCH, premium=LIMIT_SEARCH_PREMIUM), 'danger')
+                else:
+                    flash(
+                        'No puedes tener más de {limit} Wallavisos. ¿Por qué no borras alguno?'.format(
+                            limit=LIMIT_SEARCH), 'danger')
+
         # Remove
         elif 'delete' in request.form:
             my_search = Search.query.filter_by(
@@ -378,6 +395,11 @@ def dashboard():
         ).filter(
             NotificationHistory.create_at >= date.today()
         ).count()
+    # Search Limit
+    limit_searchs = LIMIT_SEARCH
+    if session['user']['rol_id'] > 1:
+        limit_searchs = LIMIT_SEARCH_PREMIUM
+
     return render_template(
         'web/dashboard/searchs.html',
         form=form,
@@ -385,7 +407,7 @@ def dashboard():
         searchs_len=searchs_len,
         results=results,
         LIMIT_RESULTS=LIMIT_RESULTS,
-        LIMIT_NOTIFYS=LIMIT_NOTIFYS,
+        LIMIT_SEARCHS=limit_searchs,
         num_notifys=num_notifys
     )
 

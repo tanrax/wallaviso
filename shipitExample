@@ -12,6 +12,8 @@ npm install
 gulp build
 systemctl restart nginx
 systemctl restart wallaviso
+touch /root/web-wallaviso/tasks.pid
+rm /root/web-wallaviso/tasks.pid
 
 [users_count]
 mysql -u root --password=9578 -h localhost -e 'SELECT COUNT(*) FROM users;' wallaviso

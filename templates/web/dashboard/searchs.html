@@ -83,8 +83,8 @@
                 <h3>Cuenta: {% if session['user']['rol_id'] == 1 %}gratuita{% else %}Premium{% endif %}</h3>
 				{% if num_notifys < session['user']['limit_notifys'] %}
 				<div class="progress">
-					<div class="progress-bar" role="progressbar" aria-valuenow="{{ LIMIT_SEARCHS - num_notifys }}" aria-valuemin="0" aria-valuemax="{{ LIMIT_SEARCHS }}" style="width: {{ 100 * LIMIT_SEARCHS / (LIMIT_SEARCHS - num_notifys) }}%;">
-					  {{ LIMIT_SEARCHS - num_notifys }}/{{ LIMIT_SEARCHS }}
+					<div class="progress-bar" role="progressbar" aria-valuenow="{{ session['user']['limit_notifys'] - num_notifys }}" aria-valuemin="0" aria-valuemax="{{ session['user']['limit_notifys'] }}" style="width: {{ 100 * session['user']['limit_notifys'] / (session['user']['limit_notifys'] - num_notifys) }}%;">
+					  {{ session['user']['limit_notifys'] - num_notifys }}/{{ session['user']['limit_notifys'] }}
 				  </div>
 				</div>
 				{% else %}

@@ -39,6 +39,10 @@
 						{% else %}
 							<li><a href="{{ url_for('dashboard') }}">Busquedas</a></li>
 							<li><a href="{{ url_for('notify_history') }}">Historial</a></li>
+                            <li><a href="https://twitter.com/@wallaviso">Noticias</a></li>
+                            {% if 'user' in session and session['user']['rol_id'] > 1 %}
+                            <li><a href="https://github.com/tanrax/wallaviso" target="_blank">Soporte</a></li>
+						    {% endif %}
 							<li><a href="https://programadorwebvalencia.com/#contact" target="_blank">Contacto</a></li>
 							<li><a href="{{ url_for('logout') }}">Salir</a></li>
 						{% endif %}

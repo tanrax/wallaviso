@@ -20,6 +20,7 @@ flask-wtf = "==0.14.2"
 PyMySQL = "==0.7.11"
 requests = "==2.18.4"
 python-dotenv = "==0.7.1"
+gunicorn = "*"
 
 
 [requires]

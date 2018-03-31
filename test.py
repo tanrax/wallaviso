@@ -111,7 +111,6 @@ class FlaskTestCase(unittest.TestCase):
 
 
     def test_login(self):
-
         db.create_all()
         post = self.app.post('/login', data=dict(
             email='test@test.test',
@@ -123,3 +122,4 @@ class FlaskTestCase(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

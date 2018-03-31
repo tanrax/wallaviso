@@ -2,7 +2,6 @@
 This file demonstrates common uses for the Python unittest module with Flask
 
 Documentation:
-
 * https://docs.python.org/3/library/unittest.html
 * http://flask.pocoo.org/docs/latest/testing/
 """

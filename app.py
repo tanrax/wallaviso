@@ -1,5 +1,4 @@
 from os import environ
-from dotenv import load_dotenv, find_dotenv
 from flask import Flask, redirect, url_for, render_template, \
     flash, session, request
 from functools import wraps
@@ -13,9 +12,6 @@ from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
     check_password_hash
 from datetime import datetime, date
-
-# CONFIGURATIONS
-load_dotenv(find_dotenv())
 
 # Flask
 app = Flask(__name__)

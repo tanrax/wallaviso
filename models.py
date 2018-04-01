@@ -8,7 +8,6 @@ from uuid import uuid4
 from datetime import datetime
 
 app = Flask(__name__)
-load_dotenv(find_dotenv())
 
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

@@ -27,7 +27,7 @@ db.init_app(app)
 app.config['MAIL_SERVER'] = environ.get('MAIL_SERVER', 'localhost')
 app.config['MAIL_USERNAME'] = environ.get('MAIL_USERNAME', None)
 app.config['MAIL_PASSWORD'] = environ.get('MAIL_PASSWORD', None)
-app.config['MAIL_PORT'] = environ.get('MAIL_PORT')
+app.config['MAIL_PORT'] = environ.get('MAIL_PORT', 25)
 
 mail = Mail(app)
 

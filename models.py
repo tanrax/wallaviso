@@ -1,5 +1,4 @@
 from os import environ
-from dotenv import load_dotenv, find_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager

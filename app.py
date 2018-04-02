@@ -67,7 +67,6 @@ def index():
     '''
     Index page
     '''
-    print(environ.get('SECRET_KEY'))
     # Redirect App
     if request.args.get('app'):
         return redirect(

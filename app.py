@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
 app.config['DEBUG'] = True if environ.get('DEBUG') == 'True' else False
 
+
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -67,6 +68,7 @@ def index():
     '''
     Index page
     '''
+    print(app)
     # Redirect App
     if request.args.get('app'):
         return redirect(

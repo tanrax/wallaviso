@@ -242,11 +242,8 @@ def login():
     if form.validate_on_submit():
         # Validate email and password
         email = form.email.data
-        print('llega')
         my_user = User.query.filter_by(
             email=email).filter_by(is_active=1).first()
-        print('y aqui llega')
-        print(my_user)
         if not my_user:
             flash(
                 'No ha activado todavía su cuenta. Verifique su buzón.',

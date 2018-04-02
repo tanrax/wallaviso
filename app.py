@@ -68,7 +68,7 @@ def index():
     '''
     Index page
     '''
-    print(app)
+    print(environ.get('SQLALCHEMY_DATABASE_URI'))
     # Redirect App
     if request.args.get('app'):
         return redirect(

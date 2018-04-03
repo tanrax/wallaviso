@@ -63,10 +63,6 @@ def login_required(f):
 
 # VIEWS
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ecbb6c99a73fa98c807432e5a70d7379134e677f
 @app.route('/')
 def index():
     '''

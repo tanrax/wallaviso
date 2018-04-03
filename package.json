@@ -8,10 +8,11 @@
     "gulp-concat": "^2.6.1",
     "gulp-purifycss": "^0.2.0",
     "gulp-sass": "^3.1.0",
-    "gulp": "^3.9.1",
     "gulp-sourcemaps": "^2.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
   "scripts": {
     "postinstall": "gulp build"
   },

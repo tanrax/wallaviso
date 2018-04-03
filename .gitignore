@@ -8,3 +8,4 @@ static/js/all.js
 static/css/main.css
 
 database\.sqlite
+node_modules/

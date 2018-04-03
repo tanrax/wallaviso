@@ -69,11 +69,21 @@
 					appSearchs.enableButtonSearch();
 				},
 				getLocation: () => {
-					if (navigator.geolocation) {
-						navigator.geolocation.getCurrentPosition(appSearchs.saveLocation);
-					} else {
-						vex.dialog.alert({message: 'Imposible geolocalizar. Las busquedas serán globales.', className: 'vex-theme-os danger'});
-					}
+                                    // GMaps geoposition
+                                    GMaps.geolocate({
+                                      success: function(position) {
+                                        console.log(position) 
+                                        appSearchs.saveLocation(position);
+                                      },
+                                      error: function(error) {
+                                        vex.dialog.alert({message: 'Imposible geolocalizar. Las busquedas serán globales.', className: 'vex-theme-os danger'});
+                                        appSearchs.enableButtonSearch();
+                                      },
+                                      not_supported: function() {
+                                        vex.dialog.alert({message: 'Imposible geolocalizar. Las busquedas serán globales.', className: 'vex-theme-os danger'});
+                                        appSearchs.enableButtonSearch();
+                                      }
+                                    });
 				},
 				enableButtonSearch: () => {
 					let geoposition = document.querySelector('#geoposition');

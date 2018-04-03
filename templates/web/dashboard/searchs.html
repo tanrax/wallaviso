@@ -5,8 +5,8 @@
 <div class="container" id="appSearchs">
 	<form method="post" id="form_add">
 		<input type="hidden" name="add" value="{{ form.name.data }}">
-		<input type="hidden" name="lat" value="{% if request.form['lat'] %}{{ request.form['lat'] }}{% else %}0{% endif %}">
-		<input type="hidden" name="lng" value="{% if request.form['lng'] %}{{ request.form['lng'] }}{% else %}0{% endif %}">
+                <input type="hidden" name="lat" value="{{ lat }}">
+                <input type="hidden" name="lng" value="{{ lng }}">
 		<input type="hidden" name="distance" value="">
 		<input type="hidden" name="max_price" value="{% if request.form['price_max'] %}{{ request.form['price_max'] }}{% else %}0{% endif %}">
 	</form>
@@ -203,8 +203,6 @@
 		</div>
 	</div>
 </div>
-<script src="https://maps.google.com/maps/api/js?key=AIzaSyDWUamD7jT1xM7HcLrp_IoulF-fyBiu-z8"></script>
-<script src="{{ url_for('static', filename='js/vendor/gmaps.js') }}"></script>
 {% if request.method == 'POST' %}
 <script>
 (function() {

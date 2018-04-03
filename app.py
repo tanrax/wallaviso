@@ -12,6 +12,7 @@ from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
     check_password_hash
 from datetime import datetime, date
+import requests
 
 # Flask
 app = Flask(__name__)
@@ -61,10 +62,6 @@ def login_required(f):
 # END DECORATIONS
 
 # VIEWS
-
-@app.route('/.well-known/acme-challenge/GR8jfL6dU7XewwQLv4HCab0LJEa-NP1KH4j2s8NJzfk')
-def cert():
-    return 'GR8jfL6dU7XewwQLv4HCab0LJEa-NP1KH4j2s8NJzfk.OctItpzPwrSAvT-6uY11yHdkMAH5jK3gCKyAroWHoQo'
 
 @app.route('/')
 def index():
@@ -295,6 +292,15 @@ def dashboard():
     '''
     form = SearchForm()
     results = False
+    # Get lat and lng
+    if app.config['DEBUG']:
+        ip_info = requests.get('http://ipinfo.io/8.8.8.8').json()
+    else:
+        ip_info = requests.get('http://ipinfo.io/' + request.remote_addr).json()
+    temp_location = ip_info['loc'].split(',')
+    lat = temp_location[0]
+    lng = temp_location[1]
+    # Search
     util_search = UtilSearch()
     if request.method == 'POST':
         # Search
@@ -303,8 +309,8 @@ def dashboard():
                 try:
                     results = util_search.get(
                         form.name.data,
-                        request.form['lat'],
-                        request.form['lng'],
+                        lat,
+                        lng,
                         request.form['distance'],
                         form.max_price.data
                         )
@@ -319,8 +325,8 @@ def dashboard():
                 # Search
                 my_search = Search()
                 my_search.name = request.form['add']
-                my_search.lat = request.form['lat']
-                my_search.lng = request.form['lng']
+                my_search.lat = lat
+                my_search.lng = lng
                 my_search.distance = request.form['distance']
                 my_search.max_price = form.max_price.data
                 if form.max_price.data == '':

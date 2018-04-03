@@ -62,9 +62,6 @@ def login_required(f):
 
 # VIEWS
 
-@app.route('/.well-known/acme-challenge/GR8jfL6dU7XewwQLv4HCab0LJEa-NP1KH4j2s8NJzfk')
-def cert():
-    return 'GR8jfL6dU7XewwQLv4HCab0LJEa-NP1KH4j2s8NJzfk.OctItpzPwrSAvT-6uY11yHdkMAH5jK3gCKyAroWHoQo'
 
 @app.route('/')
 def index():

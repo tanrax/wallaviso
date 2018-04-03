@@ -293,13 +293,15 @@ def dashboard():
     form = SearchForm()
     results = False
     # Get lat and lng
-    if app.config['DEBUG']:
-        ip_info = requests.get('http://ipinfo.io/8.8.8.8').json()
-    else:
-        ip_info = requests.get('http://ipinfo.io/' + request.remote_addr).json()
-    temp_location = ip_info['loc'].split(',')
-    lat = temp_location[0]
-    lng = temp_location[1]
+    # if app.config['DEBUG']:
+        # ip_info = requests.get('http://ipinfo.io/8.8.8.8').json()
+    # else:
+        # ip_info = requests.get('http://ipinfo.io/' + request.remote_addr).json()
+    # temp_location = ip_info['loc'].split(',')
+    # lat = temp_location[0]
+    # lng = temp_location[1]
+    lat = '-3.7025600'
+    lng = '40.41'
     # Search
     util_search = UtilSearch()
     if request.method == 'POST':

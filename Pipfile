@@ -7,6 +7,7 @@ name = "pypi"
 
 [dev-packages]
 
+ipdb = "*"
 
 
 [packages]
@@ -20,7 +21,6 @@ flask-wtf = "==0.14.2"
 MySQL-connector-python = "*"
 requests = "==2.18.4"
 gunicorn = "*"
-
 
 [requires]
 

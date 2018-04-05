@@ -20,6 +20,9 @@
 			<h2>Buscar</h2>
 			<form method="post" class="form" id="form_search">
 				{{ generate_fields(form) }}
+                                <datalist id="locations">
+                                    <option v-for="item in listLocations" :value="[[ item.postal_code ]]">[[ item.poblacion ]]</option> 
+                                </datalist>
 				<input type="hidden" name="lat" value="{% if request.form['lat'] %}{{ request.form['lat'] }}{% endif %}">
 				<input type="hidden" name="lng" value="{% if request.form['lng'] %}{{ request.form['lng'] }}{% endif %}">
 				<div class="form-group text-right">
@@ -203,6 +206,7 @@
 		</div>
 	</div>
 </div>
+<div id="globals" data-urlapipostalcode="{{ URL_API_POSTAL_CODE }}"></div>
 {% if request.method == 'POST' %}
 <script>
 (function() {
@@ -211,4 +215,10 @@
 })();
 </script>
 {% endif %}
+<script>
+(function() {
+    // Statics
+    var URL_API_POSTAL_CODE = ''
+})();
+</script>
 {% endblock %}

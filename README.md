@@ -13,6 +13,7 @@ Config *.env*
 python3 models.py db init
 python3 models.py db migrate
 python3 models.py db upgrade
+python3 models.py init_data
 ```
  
 # Run

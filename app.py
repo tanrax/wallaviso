@@ -42,6 +42,8 @@ LIMIT_RESULTS = 10
 # Emails in day
 LIMIT_NOTIFYS = 5
 LIMIT_NOTIFYS_PREMIUM = 40
+# URLs
+URL_API_POSTAL_CODE = environ.get('URL_API_POSTAL_CODE')
 
 # END CONFIGURATIONS
 
@@ -133,8 +135,7 @@ def signup():
             except BaseException:
                 db.session.rollback()
                 flash(
-                    '''¡Ups! Algo ha pasado.
-                    ¿Puedes volver a intentarlo?.''',
+                    '¡Ups! Algo ha pasado. ¿Puedes volver a intentarlo?.',
                     'danger'
                 )
         else:
@@ -292,16 +293,6 @@ def dashboard():
     '''
     form = SearchForm()
     results = False
-    # Get lat and lng
-    # if app.config['DEBUG']:
-        # ip_info = requests.get('http://ipinfo.io/8.8.8.8').json()
-    # else:
-        # ip_info = requests.get('http://ipinfo.io/' + request.remote_addr).json()
-    # temp_location = ip_info['loc'].split(',')
-    # lat = temp_location[0]
-    # lng = temp_location[1]
-    lat = '-3.7025600'
-    lng = '40.41'
     # Search
     util_search = UtilSearch()
     if request.method == 'POST':
@@ -331,8 +322,11 @@ def dashboard():
                 my_search.lng = lng
                 my_search.distance = request.form['distance']
                 my_search.max_price = form.max_price.data
+                my_search.min_price = form.min_price.data
                 if form.max_price.data == '':
                     my_search.max_price = 0
+                if form.min_price.data == '':
+                    my_search.min_price = 0
                 my_search.user_id = session['user']['id']
                 db.session.add(my_search)
                 db.session.flush()
@@ -343,7 +337,8 @@ def dashboard():
                         my_search.lat,
                         my_search.lng,
                         my_search.distance,
-                        form.max_price.data
+                        form.max_price.data,
+                        form.min_price.data
                     )
                 for item in results:
                     my_old = OldSearch()
@@ -358,8 +353,7 @@ def dashboard():
                 except BaseException:
                     db.session.rollback()
                     flash(
-                        '''¡Ups! Algo ha pasado.
-                        ¿Puedes volver a intentarlo?.''',
+                        '¡Ups! Algo ha pasado. ¿Puedes volver a intentarlo?.',
                         'danger'
                     )
 
@@ -392,8 +386,7 @@ def dashboard():
             except BaseException:
                 db.session.rollback()
                 flash(
-                    '''¡Ups! Algo ha pasado.
-                    ¿Puedes volver a intentarlo?.''',
+                    '¡Ups! Algo ha pasado. ¿Puedes volver a intentarlo?.',
                     'danger'
                 )
     searchs = Search.query.filter_by(user_id=session['user']['id']).all()
@@ -416,6 +409,7 @@ def dashboard():
         results=results,
         LIMIT_RESULTS=LIMIT_RESULTS,
         LIMIT_SEARCHS=limit_searchs,
+        URL_API_POSTAL_CODE=URL_API_POSTAL_CODE,
         num_notifys=num_notifys
     )
 
@@ -440,8 +434,7 @@ def update_expiration(id, token):
         except:
             db.session.rollback()
             flash(
-                '''¡Ups! Algo ha pasado.
-                ¿Puedes volver a intentarlo?.''',
+                '¡Ups! Algo ha pasado. ¿Puedes volver a intentarlo?.',
                 'danger'
             )
     return redirect(url_for('index'))

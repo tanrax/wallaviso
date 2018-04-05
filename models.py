@@ -112,6 +112,7 @@ class Search(db.Model):
     lat = db.Column(db.Float, nullable=False, unique=False, default=0)
     lng = db.Column(db.Float, nullable=False, unique=False, default=0)
     max_price = db.Column(db.Float, nullable=False, unique=False, default=0)
+    min_price = db.Column(db.Float, nullable=False, unique=False, default=0)
     alert_expiration = db.Column(db.Boolean, nullable=False, default=False)
     distance = db.Column(
         db.String(7),
@@ -168,6 +169,21 @@ class OldSearch(db.Model):
     def __repr__(self):
         return '<Search %r>' % self.username
 
+@manager.command
+def init_data():
+    # Reload tables
+    db.drop_all()
+    db.create_all()
+
+    my_rol_1 = Rol()
+    my_rol_1.name='Gratuita'
+    db.session.add(my_rol_1)
+
+    my_rol_2 = Rol()
+    my_rol_2.name='Premium'
+    db.session.add(my_rol_2)
+
+    db.session.commit()
 
 if __name__ == '__main__':
     manager.run()

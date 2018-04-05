@@ -5,6 +5,7 @@
 			el: main_el,
 			delimiters: ['[[', ']]'],
 			data: {
+                                globals: document.querySelector('#globals'),
 				form_search: document.querySelector('#form_search'),
 				search: document.querySelector('#form_search input#name').value,
 				main: document.querySelector('main'),
@@ -14,11 +15,19 @@
 				results: true,
 				confirm_add: false,
 				lat: 0,
-				lng: 0
+				lng: 0,
+                                listLocations: []
 			},
 			methods: {
-				mounted: () => {
-				},
+                                searchPostalCode: function() {
+                                    let url = appSearchs.globals.dataset.urlapipostalcode + '/api/v1/postal_code/46017'
+                                    this.$http.get(url).then(response => {
+                                        // Get data
+                                        appSearchs.listLocations = response.body;
+                                    }, response => {
+                                        // error callback
+                                    });
+                                },
 				next: (search_item) => {
 					appSearchs.results = false;
 					appSearchs.confirm_add = true;
@@ -48,6 +57,5 @@
 				}
 			}
 		});
-		appSearchs.mounted();
 	}
 })();

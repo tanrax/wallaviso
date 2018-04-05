@@ -6,6 +6,7 @@ package-lock.json
 # Static
 static/js/all.js
 static/css/main.css
+.env
 
 database\.sqlite
 node_modules/

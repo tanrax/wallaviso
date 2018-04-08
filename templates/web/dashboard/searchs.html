@@ -5,10 +5,10 @@
 <div class="container" id="appSearchs">
 	<form method="post" id="form_add">
 		<input type="hidden" name="add" value="{{ form.name.data }}">
-                <input type="hidden" name="lat" value="{{ lat }}">
-                <input type="hidden" name="lng" value="{{ lng }}">
+                <input type="hidden" name="lat" value="[[ lat ]]">
+                <input type="hidden" name="lng" value="[[ lng ]]">
 		<input type="hidden" name="distance" value="">
-		<input type="hidden" name="max_price" value="{% if request.form['price_max'] %}{{ request.form['price_max'] }}{% else %}0{% endif %}">
+		<input type="hidden" name="max_price" value="">
 	</form>
 	<div class="row">
 		<div class="col-xs-12">
@@ -19,22 +19,38 @@
 		<div class="col-sm-4" v-if="results" id="separation">
 			<h2>Buscar</h2>
 			<form method="post" class="form" id="form_search">
-				{{ generate_fields(form) }}
-                                <datalist id="locations">
-                                    <option v-for="item in listLocations" :value="[[ item.postal_code ]]">[[ item.poblacion ]]</option> 
-                                </datalist>
-				<input type="hidden" name="lat" value="{% if request.form['lat'] %}{{ request.form['lat'] }}{% endif %}">
-				<input type="hidden" name="lng" value="{% if request.form['lng'] %}{{ request.form['lng'] }}{% endif %}">
-				<div class="form-group text-right">
-					<span id="geoposition">
-						Obteniendo geolocalización
-						<i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
-						<span class="sr-only">Obteniendo posi</span>
-					</span>
-					<button id="search_button" type="submit" name="search" class="btn btn-success">
-						<i class="fa fa-search" aria-hidden="true"></i>
-					</button>
-				</div>
+                                <div class="form-group">
+                                    <label for="name">Nombre</label>
+                                    <input v-model="name" class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="postal_code">Código postal</label>
+                                    <input v-model="postal_code" @keyup="searchPostalCode" id="postal_code" class="form-control" type="number">
+                                </div>
+                                <div v-if="listLocations.length > 0" class="form-group">
+                                    <label for="location">Ciudad o pueblo</label>
+                                    <select @change="setLocation" id="location" class="form-control">
+                                        <option v-for="item in listLocations" :value="item.index">[[ item.poblacion ]]</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="distance">Distancia</label>
+                                    <select v-model="distance" id="distance" class="form-control">
+                                        <option v-for="item in listDistance" :value="item.key">[[ item.value ]]</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="max_price">Precio máximo</label>
+                                    <input v-model="max_price" id="max_price" class="form-control" type="number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="min_price">Precio mínimo</label>
+                                    <input v-model="min_price" id="min_price" class="form-control" type="number">
+                                </div>
+
+                                <button id="search_button" type="submit" name="search" class="btn btn-success w-100">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
 			</form>
 			<h2 id="number_wallavisos">
 				<span class="color_wallaviso">Wallavisos</span> activos <span class="badge">{{ searchs_len }}</span>

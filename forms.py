@@ -109,18 +109,6 @@ class SearchForm(FlaskForm):
             ],
         render_kw={"placeholder": "Buscar..."}
         )
-    location = StringField(
-        'Código postal',
-        validators=[
-            DataRequired('Campo obligatorio'),
-            Length(5, 5, 'No puede contaner más de 5 números.')
-            ],
-        render_kw={
-            "placeholder": "46007",
-            "list": "locations",
-            "@keyUp": "searchPostalCode"
-            }
-        )
     distance = SelectField('Distancia', choices=[
         ('0_1000', 'Muy cerca (1km)'),
         ('0_5000', 'En mi zona (5km)'),

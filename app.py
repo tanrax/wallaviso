@@ -1,6 +1,6 @@
 from os import environ
 from flask import Flask, redirect, url_for, render_template, \
-    flash, session, request
+    flash, session, request, jsonify
 from functools import wraps
 from utils import UtilSearch
 from forms import LoginForm, SignupForm, \
@@ -16,9 +16,9 @@ import requests
 
 # Flask
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
 app.config['DEBUG'] = True if environ.get('DEBUG') == 'True' else False
-
 
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
@@ -450,6 +450,17 @@ def notify_history():
         ).all()
     return render_template('web/dashboard/histories.html', histories=histories)
 
+
+# API
+
+@app.route('/api/search', methods=('POST',))
+@login_required
+def api_searchs():
+    data = request.get_json()
+    urlSearch = f'https://es.wallapop.com/rest/items?dist={data["dist"]}&kws={data["kws"]}&lat={data["lat"]}&lng={data["lng"]}&maxPrice={data["maxPrice"]}&minPrice={data["minPrice"]}&order=creationDate-des&publishDate=24'
+    results = requests.get(urlSearch)
+    print(urlSearch)
+    return results.text
 
 
 # END VIEWS

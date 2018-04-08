@@ -19,15 +19,12 @@
                                 postal_code: '',
                                 location: '',
                                 name: '',
-                                listDistance: [
-                                    { key: '0_1000', value: 'Muy cerca (1km)'},
-                                    { key: '0_5000', value: 'En mi zona (5km)'},
-                                    { key: '0_10000', value: 'En mi ciudad (10km)'},
-                                    { key: '0_', value: 'Sin límite'}
-                                ],
-                                distance: '0_',
+                                listDistance: Array.from(Array(401).keys()),
+                                distance: '10',
                                 max_price: '',
-                                min_price: ''
+                                min_price: '',
+                                results: [],
+                                loading: false
 			},
 			methods: {
                                 searchPostalCode: function() {
@@ -43,8 +40,30 @@
                                     let url = appSearchs.globals.dataset.urlapipostalcode + '/api/v1/index/' + e.target.options.selectedIndex;
                                     this.$http.get(url).then(response => {
                                         // Get data
-                                        appSearchs.lat = response.body[0]['lat'];
-                                        appSearchs.lng = response.body[0]['lng'];
+                                        appSearchs.lng = response.body[0]['lat'];
+                                        appSearchs.lat = response.body[0]['lng'];
+                                    }, response => {
+                                        // error callback
+                                    });
+                                },
+                                getSearchs: function() {
+                                    appSearchs.loading = true;
+                                    // Clear results
+                                    appSearchs.results = [];
+                                    // Scroll to top
+	                            window.scroll(0, 0);
+                                    // Get results
+                                    this.$http.post('/api/search', {
+                                        kws: appSearchs.name,
+                                        dist: appSearchs.distance,
+                                        lat: appSearchs.lat,
+                                        lng: appSearchs.lng,
+                                        maxPrice: appSearchs.max_price,
+                                        minPrice: appSearchs.min_price
+                                    }).then(response => {
+                                        // Get data
+                                        appSearchs.loading = false;
+                                        appSearchs.results = response.body['items'].splice(0, 5);
                                     }, response => {
                                         // error callback
                                     });

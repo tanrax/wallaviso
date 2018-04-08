@@ -36,7 +36,7 @@
                                 <div class="form-group">
                                     <label for="distance">Distancia</label>
                                     <select v-model="distance" id="distance" class="form-control">
-                                        <option v-for="item in listDistance" :value="item.key">[[ item.value ]]</option>
+                                        <option v-for="item in listDistance" :value="item">[[ item ]] km</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -48,8 +48,8 @@
                                     <input v-model="min_price" id="min_price" class="form-control" type="number">
                                 </div>
 
-                                <button id="search_button" type="submit" name="search" class="btn btn-success w-100">
-                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                <button @click.prevent="getSearchs" id="search_button" type="submit" name="search" class="btn btn-success w-100">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
                                 </button>
 			</form>
 			<h2 id="number_wallavisos">
@@ -65,15 +65,6 @@
 								<h4>{{ item.name }}</h4>
 								<p>
 									<strong>Distancia:</strong> 
-									{% if item.distance == '0_1000' %}
-										Muy cerca
-									{% elif item.distance == '0_5000' %}
-										En mi zona
-									{% elif item.distance == '0_10000' %}
-										En mi ciudad
-									{% else %}
-										Sin límite
-									{% endif %}
 								</p>
 								<p>
 									<strong>Precio máximo:</strong> 
@@ -117,7 +108,7 @@
 				<a href="https://programadorwebvalencia.com/#contact" class="premium">
 					<p>
 						<i class="fa fa-trophy" aria-hidden="true"></i>
-						¿Necesitas más avisos diarios y más filtros?
+						¿Necesitas más avisos diarios?
 					</p>
 					<p class="premium__price">
 						5&euro;/mes
@@ -128,98 +119,94 @@
 			</div>
 		</div>
 		<main class="col-sm-8">
-		{% if request.method == 'POST' %}
-			{% if results %}
-			<section v-if="results" class="row">
-				<div class="col-xs-12">
-					<h3>Crea nuevo <span class="color_wallaviso">Wallaviso</span></h3>
-					{% for item in results[:LIMIT_RESULTS] %}
-						<div class="row">
-							<div class="col-xs-12">
-								<h4><strong>{{ item.title }}</strong></h4>
-							</div>
-							<div class="col-sm-4">
-								<img class="img-responsive" src="{{ item.mainImage.smallURL }}" alt="Imagen">
-							</div>
-							<div class="col-sm-5">
-								<p>
-									{{ item.description }}
-								</p>
-							</div>
-							<div class="col-sm-2 text-center price">
-								{{ item.price }}
-							</div>
-							<div class="col-sm-1">
-								<button class="btn btn-success next pull-right"  v-on:click="next('{{ item.title }}')">
-									<i class="fa fa-arrow-right" aria-hidden="true"></i>
-								</button>
-							</div>
+                    <section v-if="results.length > 0" class="row">
+                            <div class="col-xs-12">
+                                    <h3>Crea nuevo <span class="color_wallaviso">Wallaviso</span></h3>
+                                        <div v-for="item in results" class="row">
+                                                <div class="col-xs-12">
+                                                        <h4><strong>[[ item.title ]]</strong></h4>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                        <img class="img-responsive" :src="[[ item.mainImage.smallURL ]]" alt="Imagen">
+                                                </div>
+                                                <div class="col-sm-5">
+                                                        <p>
+                                                                [[ item.description ]]
+                                                        </p>
+                                                </div>
+                                                <div class="col-sm-2 text-center price">
+                                                        [[ item.price ]]
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <button class="btn btn-success next pull-right">
+                                                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
 
-						</div>
-						<hr>
-					{% endfor %}
-				</div>
-			</section>
-			{% endif %}
-			<section {% if results %}v-if="confirm_add"{% endif %} id="confirm">
-				<div class="row">
-					<div class="col-xs-12">
-						<h2>Crear nuevo <span class="color_wallaviso">Wallaviso</span></h2>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 text-right">
-						<h3><strong>[[ search ]]</strong></h3>
-					</div>
-					<div class="col-sm-6">
-						<button class="btn btn-success pull-left"  v-on:click="add(search)">
-							<i class="fa fa-plus" aria-hidden="true"></i> Crear
-						</button>
-					</div>
-				</div>
-				{% if not results %}
-				<div class="row">
-					<div class="col-xs-12 text-center">
-						<h3>No se ha encontrado nada. ¿Lo programas igualmente?</h3>
-					</div>
-				</div>
-				{% endif %}
-				{% if results %}
-				<div class="row">
-					<div class="col-xs-12 text-center">
-						<h3>O</h3>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 text-right">
-						<h3><strong>[[ search_item ]]</strong></h3>
-					</div>
-					<div class="col-sm-6">
-						<button class="btn btn-success pull-left" v-on:click="add(search_item)">
-							<i class="fa fa-plus" aria-hidden="true"></i> Crear
-						</button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<hr>
-						<button class="btn btn-success" v-on:click="back">
-							<i class="fa fa-arrow-left" aria-hidden="true"></i> Volver
-						</button>
-					</div>
-				</div>
-				{% endif %}
-			</section>
-			</main>
-			{% else %}
-				<div class="row" id="not_results">
-					<div class="col-xs-12 text-center">
-						<i class="fa fa-bell-slash" aria-hidden="true"></i>
-						<h3>¿Buscamos algo?</h3>
-					</div>
-				</div>
-			{% endif %}
-		</div>
+                                        </div>
+                                        <hr>
+                            </div>
+                    </section>
+                    <section v-if="results.length > 0" id="confirm">
+                            <div class="row">
+                                    <div class="col-xs-12">
+                                            <h2>Crear nuevo <span class="color_wallaviso">Wallaviso</span></h2>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-sm-6 text-right">
+                                            <h3><strong>[[ name ]]</strong></h3>
+                                    </div>
+                                    <div class="col-sm-6">
+                                            <button class="btn btn-success pull-left"  v-on:click="add(search)">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i> Crear
+                                            </button>
+                                    </div>
+                            </div>
+                            {% if not results %}
+                            <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                            <h3>No se ha encontrado nada. ¿Lo programas igualmente?</h3>
+                                    </div>
+                            </div>
+                            {% endif %}
+                            {% if results %}
+                            <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                            <h3>O</h3>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-sm-6 text-right">
+                                            <h3><strong>[[ search_item ]]</strong></h3>
+                                    </div>
+                                    <div class="col-sm-6">
+                                            <button class="btn btn-success pull-left" v-on:click="add(search_item)">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i> Crear
+                                            </button>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-xs-12">
+                                            <hr>
+                                            <button class="btn btn-success" v-on:click="back">
+                                                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Volver
+                                            </button>
+                                    </div>
+                            </div>
+                            {% endif %}
+                    </section>
+                    <v-else div class="row" id="not_results">
+                            <div v-if="loading == false" class="col-xs-12 text-center">
+                                    <i class="fa fa-bell-slash" aria-hidden="true"></i>
+                                    <h3>¿Buscamos algo?</h3>
+                            </div>
+                            <div v-else class="loading">
+                                <i class="fa fa-spinner fa-pulse"></i>
+                            </div>
+                    </div>
+                </main>
+	    </div>
 	</div>
 </div>
 <div id="globals" data-urlapipostalcode="{{ URL_API_POSTAL_CODE }}"></div>

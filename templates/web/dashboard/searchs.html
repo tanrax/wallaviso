@@ -4,11 +4,13 @@
 {% block body %}
 <div class="container" id="appSearchs">
 	<form method="post" id="form_add">
-		<input type="hidden" name="add" value="{{ form.name.data }}">
-                <input type="hidden" name="lat" value="[[ lat ]]">
-                <input type="hidden" name="lng" value="[[ lng ]]">
-		<input type="hidden" name="distance" value="">
-		<input type="hidden" name="max_price" value="">
+		<input type="hidden" name="add" value="">
+		<input type="hidden" name="name" value="">
+                <input type="hidden" name="lat" :value="lat">
+                <input type="hidden" name="lng" :value="lng">
+		<input type="hidden" name="distance" :value="distance">
+		<input type="hidden" name="max_price" :value="max_price">
+		<input type="hidden" name="min_price" :value="min_price">
 	</form>
 	<div class="row">
 		<div class="col-xs-12">
@@ -178,14 +180,14 @@
                         <h2 class="text-center">¿Qué programo?</h2>  
                         <div class="text-center">
                             <h3><strong>[[ search_select ]]</strong></h3>
-                            <button class="btn btn-success" @click="back">
+                            <button class="btn btn-success" @click="add(search_select)">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Crear
                             </button>
                         </div>
                         <div class="text-center">o tal vez...</div>
                         <div class="text-center">
                             <h3><strong>[[ name ]]</strong></h3>
-                            <button class="btn btn-success" @click="back">
+                            <button class="btn btn-success" @click="add(name)">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Crear
                             </button>
                         </div>

@@ -80,13 +80,10 @@
                                     // Move scroll to next step
                                     window.scroll(0, 0);
 				},
-				add: function () {
+				add: function (name) {
                                     // Add values form search to form add
                                     appSearchs.form_add = document.querySelector('#form_add');
-                                    appSearchs.form_add.elements.distance.value =  appSearchs.form_search.elements.distance.value;
-                                    appSearchs.form_add.elements.max_price.value =  appSearchs.form_search.elements.max_price.value;
-                                    //appSearchs.search_send = search_send;
-                                    //appSearchs.form_add.elements.add.value = search_send;
+                                    appSearchs.form_add.elements.name.value = name;
                                     // Send form add
                                     appSearchs.form_add.submit();
 				},

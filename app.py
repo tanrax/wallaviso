@@ -296,33 +296,20 @@ def dashboard():
     # Search
     util_search = UtilSearch()
     if request.method == 'POST':
-        # Search
-        if 'search' in request.form:
-            if form.validate_on_submit():
-                try:
-                    results = util_search.get(
-                        form.name.data,
-                        lat,
-                        lng,
-                        request.form['distance'],
-                        form.max_price.data
-                        )
-                except:
-                    flash('Ha ocurrido un error al buscar. Por favor, vuelva a intentarlo.', 'danger')
         # Add Wallaviso
-        elif 'add' in request.form:
+        if 'add' in request.form:
             searchs = Search.query.filter_by(
                 user_id=session['user']['id']).all()
             searchs_len = len(searchs)
             if searchs_len < session['user']['limit_notifys']:
                 # Search
                 my_search = Search()
-                my_search.name = request.form['add']
-                my_search.lat = lat
-                my_search.lng = lng
+                my_search.name = request.form['name']
+                my_search.lat = request.form['lat']
+                my_search.lng = request.form['lng']
                 my_search.distance = request.form['distance']
-                my_search.max_price = form.max_price.data
-                my_search.min_price = form.min_price.data
+                my_search.max_price = request.form['max_price']
+                my_search.min_price = request.form['min_price']
                 if form.max_price.data == '':
                     my_search.max_price = 0
                 if form.min_price.data == '':
@@ -330,7 +317,10 @@ def dashboard():
                 my_search.user_id = session['user']['id']
                 db.session.add(my_search)
                 db.session.flush()
-                db.session.commit()
+                try:
+                    db.session.commit()
+                except BaseException:
+                    db.session.rollback()
                 # Old searchs
                 results = util_search.get(
                         my_search.name,

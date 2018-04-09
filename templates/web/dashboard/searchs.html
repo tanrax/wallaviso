@@ -122,7 +122,8 @@
                     <section v-if="results.length > 0" class="row">
                             <div class="col-xs-12">
                                     <h3>Crea nuevo <span class="color_wallaviso">Wallaviso</span></h3>
-                                        <div v-for="item in results" class="row">
+                                        <!--Results-->
+                                        <div v-for="item in results" v-if="step == 1" class="row">
                                                 <div class="col-xs-12">
                                                         <h4><strong>[[ item.title ]]</strong></h4>
                                                 </div>
@@ -138,63 +139,32 @@
                                                         [[ item.price ]]
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <button class="btn btn-success next pull-right">
+                                                    <button @click.prevent="next(item.title)" v-if="name != ''" class="btn btn-success next pull-right">
                                                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
 
                                         </div>
+                                        <!--End Results-->
                                         <hr>
                             </div>
                     </section>
-                    <section v-if="!first_search && results.length == 0 && !loading" class="row">
+                    <!-- No results -->
+                    <section v-if="!first_search && results.length == 0 && !loading" class="row unsuccessful">
                         <div class="col-xs-12 text-center">
                                 <h3>No se ha encontrado nada. ¿Lo programas igualmente?</h3>
                         </div>
+                        <div class="col-xs-12 text-center">
+                                <h3><strong>[[ name ]]</strong></h3>
+                        </div>
+                        <div class="col-xs-12 text-center">
+                                <button class="btn btn-success" @click="add">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> Crear
+                                </button>
+                        </div>
                     </section>
-                    <section v-if="results.length > 0" id="confirm">
-                            <div class="row">
-                                    <div class="col-xs-12">
-                                            <h2>Crear nuevo <span class="color_wallaviso">Wallaviso</span></h2>
-                                    </div>
-                            </div>
-                            <div class="row">
-                                    <div class="col-sm-6 text-right">
-                                            <h3><strong>[[ name ]]</strong></h3>
-                                    </div>
-                                    <div class="col-sm-6">
-                                            <button class="btn btn-success pull-left"  v-on:click="add(search)">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i> Crear
-                                            </button>
-                                    </div>
-                            </div>
-                                                        {% if results %}
-                            <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                            <h3>O</h3>
-                                    </div>
-                            </div>
-                            <div class="row">
-                                    <div class="col-sm-6 text-right">
-                                            <h3><strong>[[ search_item ]]</strong></h3>
-                                    </div>
-                                    <div class="col-sm-6">
-                                            <button class="btn btn-success pull-left" v-on:click="add(search_item)">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i> Crear
-                                            </button>
-                                    </div>
-                            </div>
-                            <div class="row">
-                                    <div class="col-xs-12">
-                                            <hr>
-                                            <button class="btn btn-success" v-on:click="back">
-                                                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Volver
-                                            </button>
-                                    </div>
-                            </div>
-                            {% endif %}
-                    </section>
-                    <div v-else class="row" class="not_results">
+                    <!-- End No results -->
+                    <div class="row" class="not_results">
                             <div v-if="loading" class="loading">
                                 <i class="fa fa-spinner fa-pulse"></i>
                             </div>
@@ -203,6 +173,29 @@
                             <i class="fa fa-bell-slash" aria-hidden="true"></i>
                             <h3>¿Buscamos algo?</h3>
                     </div>
+                    <!-- Step 2 -->
+                    <section v-if="step == 2" class="step2">
+                        <h2 class="text-center">¿Qué programo?</h2>  
+                        <div class="text-center">
+                            <h3><strong>[[ search_select ]]</strong></h3>
+                            <button class="btn btn-success" @click="back">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Crear
+                            </button>
+                        </div>
+                        <div class="text-center">o tal vez...</div>
+                        <div class="text-center">
+                            <h3><strong>[[ name ]]</strong></h3>
+                            <button class="btn btn-success" @click="back">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Crear
+                            </button>
+                        </div>
+                        <p>
+                            <button class="btn btn-success" @click="back">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i> Volver
+                            </button>
+                        </p>
+                    </section>
+                    <!-- End Step 2 -->
                 </main>
 	    </div>
 	</div>

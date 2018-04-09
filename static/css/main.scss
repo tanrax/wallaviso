@@ -268,9 +268,15 @@ body#searchs {
 			border: 0;
 		}
 	}
+        .step2 > div {
+            margin-top: 4rem;
+        }
 	#geoposition {
 		display: none;
 	}
+        .unsuccessful > div {
+            margin-top: 7rem;
+        }
 	.not_results, .loading {
 		i.fa {
 			color: $color_wallapop;

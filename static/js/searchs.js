@@ -13,8 +13,7 @@
                                 globals: document.querySelector('#globals'),
 				main: document.querySelector('main'),
 				form_add: document.querySelector('#form_add'),
-				search_item: '',
-				search_send: '',
+				search_select: '',
 				results: true,
 				confirm_add: false,
 				lat: 0,
@@ -29,7 +28,8 @@
                                 min_price: '',
                                 results: [],
                                 loading: false,
-                                first_search: true
+                                first_search: true,
+                                step: 1
 			},
 			methods: {
                                 searchPostalCode: function() {
@@ -74,32 +74,24 @@
                                         // error callback
                                     });
                                 },
-				next: (search_item) => {
-					appSearchs.results = false;
-					appSearchs.confirm_add = true;
-					appSearchs.search_item = search_item;
-					// Adjust columns
-					appSearchs.main = document.querySelector('main');
-					appSearchs.main.classList.add('col-sm-12');
-					appSearchs.main.classList.remove('col-sm-8');
-					// Move scroll to next step
-					window.scrollTo(appSearchs.main.scrollTop, 0);
+				next: function (search) {
+                                    appSearchs.search_select = search;
+                                    appSearchs.step = 2;
+                                    // Move scroll to next step
+                                    window.scroll(0, 0);
 				},
-				add: (search_send) => {
-					// Add values form search to form add
-					appSearchs.form_add = document.querySelector('#form_add');
-					appSearchs.form_add.elements.distance.value =  appSearchs.form_search.elements.distance.value;
-					appSearchs.form_add.elements.max_price.value =  appSearchs.form_search.elements.max_price.value;
-					appSearchs.search_send = search_send;
-					appSearchs.form_add.elements.add.value = search_send;
-					// Send form add
-					appSearchs.form_add.submit();
+				add: function () {
+                                    // Add values form search to form add
+                                    appSearchs.form_add = document.querySelector('#form_add');
+                                    appSearchs.form_add.elements.distance.value =  appSearchs.form_search.elements.distance.value;
+                                    appSearchs.form_add.elements.max_price.value =  appSearchs.form_search.elements.max_price.value;
+                                    //appSearchs.search_send = search_send;
+                                    //appSearchs.form_add.elements.add.value = search_send;
+                                    // Send form add
+                                    appSearchs.form_add.submit();
 				},
-				back: () => {
-					appSearchs.results = true;
-					appSearchs.confirm_add = false;
-					appSearchs.main.classList.remove('col-sm-12');
-					appSearchs.main.classList.add('col-sm-8');
+				back: function () {
+                                    appSearchs.step = 1;
 				}
 			}
 		});

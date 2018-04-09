@@ -271,7 +271,7 @@ body#searchs {
 	#geoposition {
 		display: none;
 	}
-	#not_results {
+	.not_results, .loading {
 		i.fa {
 			color: $color_wallapop;
 			font-size: 2em;

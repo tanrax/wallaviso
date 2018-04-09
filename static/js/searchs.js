@@ -1,6 +1,10 @@
 (function() {
 	let main_el = '#appSearchs'; 
-        Vue.config.devtools = true
+        // Load globals
+        var globals = document.querySelector('#globals');
+        // Enable devtools Vuejs
+        if (globals.dataset.debug) Vue.config.devtools = true;
+        // Load VueJS
 	if(document.querySelector(main_el) !== null) {
 		let appSearchs = new Vue({
 			el: main_el,
@@ -24,11 +28,12 @@
                                 max_price: '',
                                 min_price: '',
                                 results: [],
-                                loading: false
+                                loading: false,
+                                first_search: true
 			},
 			methods: {
                                 searchPostalCode: function() {
-                                    let url = appSearchs.globals.dataset.urlapipostalcode + '/api/v1/postal_code/' + appSearchs.postal_code;
+                                    let url = globals.dataset.urlapipostalcode + '/api/v1/postal_code/' + appSearchs.postal_code;
                                     this.$http.get(url).then(response => {
                                         // Get data
                                         appSearchs.listLocations = response.body;
@@ -37,7 +42,7 @@
                                     });
                                 },
                                 setLocation: function(e) {
-                                    let url = appSearchs.globals.dataset.urlapipostalcode + '/api/v1/index/' + e.target.options.selectedIndex;
+                                    let url = globals.dataset.urlapipostalcode + '/api/v1/index/' + e.target.options.selectedIndex;
                                     this.$http.get(url).then(response => {
                                         // Get data
                                         appSearchs.lng = response.body[0]['lat'];
@@ -48,6 +53,7 @@
                                 },
                                 getSearchs: function() {
                                     appSearchs.loading = true;
+                                    appSearchs.first_search = false;
                                     // Clear results
                                     appSearchs.results = [];
                                     // Scroll to top
@@ -63,7 +69,7 @@
                                     }).then(response => {
                                         // Get data
                                         appSearchs.loading = false;
-                                        appSearchs.results = response.body['items'].splice(0, 5);
+                                        appSearchs.results = response.body['items'].splice(0, appSearchs.globals.dataset.limitresults);
                                     }, response => {
                                         // error callback
                                     });

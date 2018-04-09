@@ -147,6 +147,11 @@
                                         <hr>
                             </div>
                     </section>
+                    <section v-if="!first_search && results.length == 0 && !loading" class="row">
+                        <div class="col-xs-12 text-center">
+                                <h3>No se ha encontrado nada. ¿Lo programas igualmente?</h3>
+                        </div>
+                    </section>
                     <section v-if="results.length > 0" id="confirm">
                             <div class="row">
                                     <div class="col-xs-12">
@@ -163,14 +168,7 @@
                                             </button>
                                     </div>
                             </div>
-                            {% if not results %}
-                            <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                            <h3>No se ha encontrado nada. ¿Lo programas igualmente?</h3>
-                                    </div>
-                            </div>
-                            {% endif %}
-                            {% if results %}
+                                                        {% if results %}
                             <div class="row">
                                     <div class="col-xs-12 text-center">
                                             <h3>O</h3>
@@ -196,32 +194,18 @@
                             </div>
                             {% endif %}
                     </section>
-                    <v-else div class="row" id="not_results">
-                            <div v-if="loading == false" class="col-xs-12 text-center">
-                                    <i class="fa fa-bell-slash" aria-hidden="true"></i>
-                                    <h3>¿Buscamos algo?</h3>
-                            </div>
-                            <div v-else class="loading">
+                    <div v-else class="row" class="not_results">
+                            <div v-if="loading" class="loading">
                                 <i class="fa fa-spinner fa-pulse"></i>
                             </div>
+                    </div>
+                    <div v-if="!loading && first_search" class="col-xs-12 text-center not_results">
+                            <i class="fa fa-bell-slash" aria-hidden="true"></i>
+                            <h3>¿Buscamos algo?</h3>
                     </div>
                 </main>
 	    </div>
 	</div>
 </div>
-<div id="globals" data-urlapipostalcode="{{ URL_API_POSTAL_CODE }}"></div>
-{% if request.method == 'POST' %}
-<script>
-(function() {
-        // Scroll animation
-	if(window.innerWidth < 768) window.scrollTo(0, document.querySelector('#separation').scrollHeight);
-})();
-</script>
-{% endif %}
-<script>
-(function() {
-    // Statics
-    var URL_API_POSTAL_CODE = ''
-})();
-</script>
+<div id="globals" data-urlapipostalcode="{{ URL_API_POSTAL_CODE }}" data-limitresults="{{ LIMIT_RESULTS }}" data-debug="{{ DEBUG }}"></div>
 {% endblock %}

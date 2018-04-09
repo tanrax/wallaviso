@@ -38,7 +38,7 @@ mail = Mail(app)
 LIMIT_SEARCH = 5
 LIMIT_SEARCH_PREMIUM = 20
 # Results in search
-LIMIT_RESULTS = 10
+LIMIT_RESULTS = 5
 # Emails in day
 LIMIT_NOTIFYS = 5
 LIMIT_NOTIFYS_PREMIUM = 40
@@ -410,6 +410,7 @@ def dashboard():
         LIMIT_RESULTS=LIMIT_RESULTS,
         LIMIT_SEARCHS=limit_searchs,
         URL_API_POSTAL_CODE=URL_API_POSTAL_CODE,
+        DEBUG=app.config['DEBUG'],
         num_notifys=num_notifys
     )
 

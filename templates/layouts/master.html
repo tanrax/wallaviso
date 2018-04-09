@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>{% block title %}{% endblock %}Wallaviso</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+                <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?ver={{ range(1, 100000) | random }}">
 		<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
 		<meta name="author" content="Andros Fenollosa">			
 		<meta name="description" content="Se el primero en comprar en Wallapop. Programa tus busquedas y recibe avisos a tu email cuando un producto sea publicado. Compra a los mejores precios.">
@@ -59,7 +59,7 @@
 				2017 | Autor: <a href="https://programadorwebvalencia.com">Andros Fenollosa</a>
 			</footer>
 		</div>
-		<script src="{{ url_for('static', filename='js/all.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/all.js') }}?ver={{ range(1, 100000) | random }}"></script>
 		{# Flashed messages #}
 			{% with messages = get_flashed_messages(with_categories=true) %}
 			  {% if messages %}

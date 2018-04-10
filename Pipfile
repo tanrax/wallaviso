@@ -17,6 +17,8 @@ mysql-connector-python = "*"
 requests = "==2.18.4"
 gunicorn = "*"
 Flask-Cors = "*"
+"PyRSS2Gen" = "*"
+rfeed = "*"
 
 [requires]
 python_version = "3.6"

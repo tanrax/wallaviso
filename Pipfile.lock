@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ea9de543a873f9c606e2e62204acf6a944007778dd40f8a18554012f5c5b2281"
+            "sha256": "13a30d5c2dc80c5ac2a87e8ec2b7d49dadb01fec2494c84df5aeac44500b8316"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -167,6 +167,13 @@
             "index": "pypi",
             "version": "==8.0.6"
         },
+        "pyrss2gen": {
+            "hashes": [
+                "sha256:7960aed7e998d2482bf58716c316509786f596426f879b05f8d84e98b82c6ee7"
+            ],
+            "index": "pypi",
+            "version": "==1.1"
+        },
         "python-dateutil": {
             "hashes": [
                 "sha256:3220490fb9741e2342e1cf29a503394fdac874bc39568288717ee67047ff29df",
@@ -187,6 +194,13 @@
             ],
             "index": "pypi",
             "version": "==2.18.4"
+        },
+        "rfeed": {
+            "hashes": [
+                "sha256:aa9506f2866b74f5a322d394a14a63c19a6825c2d94755ff19d46dd1e2434819"
+            ],
+            "index": "pypi",
+            "version": "==1.1.1"
         },
         "six": {
             "hashes": [

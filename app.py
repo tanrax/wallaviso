@@ -13,6 +13,9 @@ from werkzeug.security import generate_password_hash, \
     check_password_hash
 from datetime import datetime, date
 import requests
+import PyRSS2Gen
+from rfeed import Item, Feed, Guid
+
 
 # Flask
 app = Flask(__name__)
@@ -442,6 +445,39 @@ def notify_history():
     return render_template('web/dashboard/histories.html', histories=histories)
 
 
+# RSS
+
+@app.route('/rss/<int:id>')
+def rss_view(id):
+    # Get all searchs from user
+    search = Search.query.get(id)
+    # Generate RSS
+    urlSearch = f'https://es.wallapop.com/rest/items?dist={search.distance}&kws={search.name}&lat={search.lat}&lng={search.lng}&maxPrice={search.max_price}&minPrice={search.min_price}'
+    results = requests.get(urlSearch).json()['items']
+    items = []
+    for result in results:
+        items.append(Item(
+                title = f"{result['title']} - {result['salePrice']}{result['currency']['symbol']}",
+                link = f"https://es.wallapop.com/item/{result['url']}",
+                description = result['description'],
+                author = result['sellerUser']['microName'],
+                guid = Guid(result['itemId']),
+                pubDate = datetime.utcfromtimestamp(int(str(result['publishDate'])[:-3]))
+                )
+            )
+    lastBuildDate = datetime.now()
+    if results:
+        lastBuildDate = datetime.utcfromtimestamp(int(str(results[0]['publishDate'])[:-3]))
+    feed = Feed(
+        title = "Wallaviso RSS",
+        link = "http://www.wallaviso.com",
+        description = "Se el primero en Wallapop. Programa tus busquedas y recibe una notificacion al instante.",
+        language = "es-ES",
+        lastBuildDate = lastBuildDate,
+        items = items
+    )
+    return feed.rss()
+
 # API
 
 @app.route('/api/search', methods=('POST',))
@@ -450,7 +486,6 @@ def api_searchs():
     data = request.get_json()
     urlSearch = f'https://es.wallapop.com/rest/items?dist={data["dist"]}&kws={data["kws"]}&lat={data["lat"]}&lng={data["lng"]}&maxPrice={data["maxPrice"]}&minPrice={data["minPrice"]}&order=creationDate-des&publishDate=24'
     results = requests.get(urlSearch)
-    print(urlSearch)
     return results.text
 
 

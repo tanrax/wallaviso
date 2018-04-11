@@ -469,12 +469,12 @@ def rss_view(id):
     if results:
         lastBuildDate = datetime.utcfromtimestamp(int(str(results[0]['publishDate'])[:-3]))
     feed = Feed(
-        title = "Wallaviso RSS",
-        link = "http://www.wallaviso.com",
-        description = "Se el primero en Wallapop. Programa tus busquedas y recibe una notificacion al instante.",
-        language = "es-ES",
-        lastBuildDate = lastBuildDate,
-        items = items
+        title=f"{search.name} - Wallaviso RSS",
+        link="http://www.wallaviso.com",
+        description="Se el primero en Wallapop. Programa tus busquedas y recibe una notificacion al instante.",
+        language="es-ES",
+        lastBuildDate=lastBuildDate,
+        items=items
     )
     return feed.rss()
 

@@ -433,8 +433,15 @@ def notify_history():
 def rss_view(id):
     # Get all searchs from user
     search = Search.query.get(id)
+    # Fix prices
+    min_price = search.min_price
+    if min_price == 0:
+        min_price = ''
+    max_price = search.max_price
+    if max_price == 0:
+        max_price = ''
     # Generate RSS
-    urlSearch = f'https://es.wallapop.com/rest/items?dist={search.distance}&kws={search.name}&lat={search.lat}&lng={search.lng}&maxPrice={search.max_price}&minPrice={search.min_price}'
+    urlSearch = f'https://es.wallapop.com/rest/items?dist={search.distance}&kws={search.name}&lat={search.lat}&lng={search.lng}&maxPrice={max_price}&minPrice={min_price}'
     results = requests.get(urlSearch).json()['items']
     items = []
     for result in results:

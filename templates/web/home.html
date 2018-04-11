@@ -2,9 +2,9 @@
 {% block page %}home{% endblock %}
 {% block body %}
 <div class="jumbotron" id="portada">
-	<h1>Se el primero en <span id="titulo_wallapop">Wallapop</span></h1>
+	<h1><span id="titulo_wallapop">Wallapop<span> <i class="fa fa-arrow-right"></i></span> <i class="fa fa-rss-square rss"></i></h1> 
 	<p>
-		Programa tus busquedas y recibe un email cuando se venda el artículo en Wallapop.
+		Programa tus busquedas y recibe un feed. Se el primero en comprar en Wallapop.
 	</p>
 	<a href="{{ url_for('login') }}" class="btn btn-primary">Entrar</a>
 </div>
@@ -13,10 +13,10 @@
 		<div class="row">
 			<div class="col-xs-1 col-sm-3"></div>
 			<div class="col-xs-10 col-sm-6">
-				<i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                <i class="fa fa-cog fa-spin"></i>
 				<h2>Deja que trabaje por ti</h2>
 				<p>
-					La plataforma esta atenta a cualquier cambio. Te llegará un email con toda la información importante. A un solo clic para comprar o regatear.
+					La plataforma esta atenta a cualquier cambio. Te llegará un aviso a tu lector de RSS con toda la información importante. A un solo clic para comprar o regatear.
 				</p>
 			</div>
 			<div class="col-xs-1 col-sm-3"></div>
@@ -32,7 +32,7 @@
 			<div class="col-sm-6">
 				<h2>Gratis</h2>
 				<p>
-					Te damos una cuenta sin ningún coste. No nos mueve el dinero, solo que tengas un buen servicio. Sin anuncios, sin micropagos, sin vender tu información. A no ser que quieras más avisos y filtros. ¡Tenemos cuentas premium! Solo queremos mantener los servidores.
+					Te damos una cuenta sin ningún coste. No nos mueve el dinero, solo que tengas un buen servicio. Sin anuncios, sin micropagos, sin vender tu información. A no ser que quieras más Wallavisos. ¡Tenemos cuentas premium! Solo queremos mantener los servidores.
 				</p>
 				<p>Si no nos cree pregunte a nuestro jefe programador gatuno.</p>
 				<a href="{{ url_for('signup') }}" class="btn btn-primary">Únete</a>
@@ -57,7 +57,7 @@
 					<li>Pide un Martini revuelto, no agitado.</li>
 					<li>Túmbate en un hamaca.</li>
 					<li>Ponte unas gafas de Sol.</li>
-					<li>Espera el sonido de nuevo email.</li>
+					<li>Espera el sonido de nuevo artículo.</li>
 				</ul>
 			</div>
 			<div class="col-sm-6 text-center">

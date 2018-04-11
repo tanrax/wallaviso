@@ -178,6 +178,12 @@ body#home {
 		margin-bottom: 0;
 		#titulo_wallapop {
 			color: $color_wallapop;
+                        .fa-arrow-right {
+                            color: white;
+                        }
+                        .rss {
+                            color: orange;
+                        }
 			@include border_text($color_blanco);
 		}
 		
@@ -188,7 +194,6 @@ body#home {
 		background: $color_wallapop;
 		color: $color_blanco;
 		i {
-			padding-top: .5em;
 			font-size: 3em;
 		}
 

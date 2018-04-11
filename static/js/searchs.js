@@ -42,11 +42,12 @@
                                     });
                                 },
                                 setLocation: function(e) {
-                                    let url = globals.dataset.urlapipostalcode + '/api/v1/index/' + e.target.options.selectedIndex;
+                                    let url = globals.dataset.urlapipostalcode + '/api/v1/index/' + appSearchs.location;
                                     this.$http.get(url).then(response => {
                                         // Get data
-                                        appSearchs.lng = response.body[0]['lat'];
-                                        appSearchs.lat = response.body[0]['lng'];
+                                        console.log(response.body)
+                                        appSearchs.lng = response.body[0]['lng'];
+                                        appSearchs.lat = response.body[0]['lat'];
                                     }, response => {
                                         // error callback
                                     });

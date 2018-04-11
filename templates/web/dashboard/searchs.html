@@ -31,7 +31,7 @@
                                 </div>
                                 <div v-if="listLocations.length > 0" class="form-group">
                                     <label for="location">Ciudad o pueblo</label>
-                                    <select @change="setLocation" id="location" class="form-control">
+                                    <select v-model="location" @change="setLocation" id="location" class="form-control">
                                         <option v-for="item in listLocations" :value="item.index">[[ item.poblacion ]]</option>
                                     </select>
                                 </div>

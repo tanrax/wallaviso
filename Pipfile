@@ -19,6 +19,7 @@ gunicorn = "*"
 Flask-Cors = "*"
 "PyRSS2Gen" = "*"
 rfeed = "*"
+ipdb = "*"
 
 [requires]
 python_version = "3.6"

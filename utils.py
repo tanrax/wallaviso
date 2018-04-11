@@ -2,7 +2,7 @@ import requests
 
 class UtilSearch():
 
-    def get(self, name, lat=41.398077, lng=2.170432, dist='0_', max_price=0, min_price=0):
+    def get(self, name, lat=41.398077, lng=2.170432, dist='400', max_price=0, min_price=0):
         url_api = ('http://es.wallapop.com/rest/items?minPrice={min_price}'
                    '&maxPrice={max_price}&dist={dist}&order=creationDate-des'
                    '&lat={lat}&lng={lng}&kws={kws}'

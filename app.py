@@ -322,26 +322,8 @@ def dashboard():
                 db.session.flush()
                 try:
                     db.session.commit()
-                except BaseException:
-                    db.session.rollback()
-                # Old searchs
-                results = util_search.get(
-                        my_search.name,
-                        my_search.lat,
-                        my_search.lng,
-                        my_search.distance,
-                        form.max_price.data,
-                        form.min_price.data
-                    )
-                for item in results:
-                    my_old = OldSearch()
-                    my_old.item_id = item['itemId']
-                    my_old.search_id = my_search.id
-                    db.session.add(my_old)
-                try:
-                    db.session.commit()
                     flash(
-                        '¡Wallaviso activado! Te avisaremos al instante con nuevos productos.',
+                        f"¡Wallaviso activado! Ya puedes añadir el siguiente enlace en tu lector de RSS: http://www.wallaviso.com{ url_for('rss_view', id=my_search.id) }",
                         'success')
                 except BaseException:
                     db.session.rollback()

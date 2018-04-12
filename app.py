@@ -13,7 +13,6 @@ from werkzeug.security import generate_password_hash, \
     check_password_hash
 from datetime import datetime, date
 import requests
-import PyRSS2Gen
 from rfeed import Item, Feed, Guid
 
 
@@ -473,6 +472,7 @@ def rss_view(id):
 @login_required
 def api_searchs():
     data = request.get_json()
+    # https://es.wallapop.com/rest/items?kws=ps3&catIds=12900&minPrice=2.00&maxPrice=20000.00&dist=400&markAsIds=&publishDate=any&verticalId=
     urlSearch = f'https://es.wallapop.com/rest/items?dist={data["dist"]}&kws={data["kws"]}&lat={data["lat"]}&lng={data["lng"]}&maxPrice={data["maxPrice"]}&minPrice={data["minPrice"]}&order=creationDate-des&publishDate=24'
     results = requests.get(urlSearch)
     return results.text

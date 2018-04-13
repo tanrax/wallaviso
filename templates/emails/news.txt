@@ -1,0 +1,24 @@
+Hola {{ username }}!,
+tengo 3 asuntos importantes que tratar contigo.
+
+Nuevo dominio
+
+El primero es que se ha cambiado el dominio. Ya no encontrarás la web en wallaviso.com sino en www.wallaviso.com. Un cambio necesario para conservar la plataforma en marcha.
+
+http://www.wallaviso.com
+
+Código liberado
+
+La plataforma se vuelve Opensource. Todo el código esta en un repositorio de Gitlab. Si quieres colaborar, es el momento.
+
+https://gitlab.com/wallaviso
+
+Carta de despedida
+
+Wallaviso seguirá funcionado, nos hemos encargado de ello. El matiz esta en la forma de recibir notificaciones. Se ha desactivado los emails, y ahora necesitarás tener un cliente de RSS. Al crear una busqueda se generará un enlace personalizado para ti que podrás añadir a tu lector de feed favorito.
+Cualquier nueva actualización vendrá de colaboradores voluntarios. Por lo que plataforma seguirá viva.
+Y como regalo final se ha añadido nuevos filtros, se ha optimizado las busquedas y se ha dejado detallado la historia de la plataforma. Podéis verlo en el siguiente enlace.
+
+https://programadorwebvalencia.com/wallaviso-por-que-no-funciono-un-servicio-de-avisos-para-wallapop/
+
+Un saludo y ¡gracias a todos!

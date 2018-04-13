@@ -1,0 +1,61 @@
+{% extends 'layouts/email.html' %}
+{% block title %}Noticia importante{% endblock %}
+{% block body %}
+<p>Hola {{ username }}!,</p>
+<p>tengo 3 asuntos importantes que tratar contigo.</p>
+<h2>Nuevo dominio</h2>
+<p>El primero es que se ha cambiado el dominio. Ya no encontrarás la web en <em>wallaviso.com</em> sino en <em>www.wallaviso.com</em>. Un cambio necesario para conservar la plataforma en marcha.</p>
+<p>Puedes pulsar en el siguiente enlace para acudir a ella.</p>
+<table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+  <tbody>
+	<tr>
+	  <td align="center">
+		<table border="0" cellpadding="0" cellspacing="0">
+		  <tbody>
+			<tr>
+				<td> <a href="http://www.wallaviso.com" target="_blank">Nuevo dominio.</a> </td>
+			</tr>
+		  </tbody>
+		</table>
+	  </td>
+	</tr>
+  </tbody>
+</table>
+<h2>Código liberado</h2>
+<p>La plataforma se vuelve Opensource. Todo el código esta en un repositorio de Gitlab. Si quieres colaborar, es el momento.</p>
+<table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+  <tbody>
+	<tr>
+	  <td align="center">
+		<table border="0" cellpadding="0" cellspacing="0">
+		  <tbody>
+			<tr>
+				<td> <a href="https://gitlab.com/wallaviso" target="_blank">Código fuente</a> </td>
+			</tr>
+		  </tbody>
+		</table>
+	  </td>
+	</tr>
+  </tbody>
+</table>
+<h2>Carta de despedida</h2>
+<p>Wallaviso seguirá funcionado, nos hemos encargado de ello. El matiz esta en la forma de recibir notificaciones. Se ha desactivado los emails, y ahora necesitarás tener un cliente de RSS. Al crear una busqueda se generará un enlace personalizado para ti que podrás añadir a tu lector de feed favorito.</p>
+<p>Cualquier nueva actualización vendrá de colaboradores voluntarios. Por lo que plataforma seguirá viva.</p>
+<p>Y como regalo final se ha añadido nuevos filtros, se ha optimizado las busquedas y se ha dejado detallado la historia de la plataforma. Podéis verlo en el siguiente enlace.</p>
+<table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+  <tbody>
+	<tr>
+	  <td align="center">
+		<table border="0" cellpadding="0" cellspacing="0">
+		  <tbody>
+			<tr>
+				<td> <a href="https://programadorwebvalencia.com/wallaviso-por-que-no-funciono-un-servicio-de-avisos-para-wallapop/" target="_blank">Ver historia</a> </td>
+			</tr>
+		  </tbody>
+		</table>
+	  </td>
+	</tr>
+  </tbody>
+</table>
+<h3>Un saludo y ¡gracias a todos!</h3>
+{% endblock %}

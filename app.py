@@ -439,18 +439,26 @@ def rss_view(id):
     max_price = search.max_price
     if max_price == 0:
         max_price = ''
-    # Generate RSS
+    # Get Data
+    cookies = {
+            'searchLat': str(search.lat),
+            'searchLng': str(search.lng),
+            'content': str(search.name),
+            'hideCookieMessage': 'true',
+            'userHasLogged': '%7B%22hasLogged%22%3Afalse%2C%22times%22%3A1%7D	'
+    }
     urlSearch = f'https://es.wallapop.com/rest/items?dist={search.distance}&kws={search.name}&lat={search.lat}&lng={search.lng}&maxPrice={max_price}&minPrice={min_price}'
-    results = requests.get(urlSearch).json()['items']
+    results = requests.get(urlSearch, cookies=cookies).json()['items']
+    # Generate RSS
     items = []
     for result in results:
         items.append(Item(
-                title = f"{result['title']} - {result['salePrice']}{result['currency']['symbol']}",
-                link = f"https://es.wallapop.com/item/{result['url']}",
-                description = result['description'],
-                author = result['sellerUser']['microName'],
-                guid = Guid(result['itemId']),
-                pubDate = datetime.utcfromtimestamp(int(str(result['publishDate'])[:-3]))
+                title=f"{result['title']} - {result['salePrice']}{result['currency']['symbol']}",
+                link=f"https://es.wallapop.com/item/{result['url']}",
+                description=result['description'],
+                author=result['sellerUser']['microName'],
+                guid=Guid(result['itemId']),
+                pubDate=datetime.utcfromtimestamp(int(str(result['publishDate'])[:-3]))
                 )
             )
     lastBuildDate = datetime.now()
@@ -468,13 +476,20 @@ def rss_view(id):
 
 # API
 
+
 @app.route('/api/search', methods=('POST',))
 @login_required
 def api_searchs():
     data = request.get_json()
-    # https://es.wallapop.com/rest/items?kws=ps3&catIds=12900&minPrice=2.00&maxPrice=20000.00&dist=400&markAsIds=&publishDate=any&verticalId=
+    cookies = {
+            'searchLat': str(data["lat"]),
+            'searchLng': str(data["lng"]),
+            'content': str(data["kws"]),
+            'hideCookieMessage': 'true',
+            'userHasLogged': '%7B%22hasLogged%22%3Afalse%2C%22times%22%3A1%7D	'
+    }
     urlSearch = f'https://es.wallapop.com/rest/items?dist={data["dist"]}&kws={data["kws"]}&lat={data["lat"]}&lng={data["lng"]}&maxPrice={data["maxPrice"]}&minPrice={data["minPrice"]}&order=creationDate-des&publishDate=24'
-    results = requests.get(urlSearch)
+    results = requests.get(urlSearch, cookies=cookies)
     return results.text
 
 

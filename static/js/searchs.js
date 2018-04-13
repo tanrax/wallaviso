@@ -45,7 +45,6 @@
                                     let url = globals.dataset.urlapipostalcode + '/api/v1/index/' + appSearchs.location;
                                     this.$http.get(url).then(response => {
                                         // Get data
-                                        console.log(response.body)
                                         appSearchs.lng = response.body[0]['lng'];
                                         appSearchs.lat = response.body[0]['lat'];
                                     }, response => {
@@ -70,7 +69,11 @@
                                     }).then(response => {
                                         // Get data
                                         appSearchs.loading = false;
-                                        appSearchs.results = response.body['items'].splice(0, appSearchs.globals.dataset.limitresults);
+                                        if (response.body['items'] !== undefined) {
+                                            appSearchs.results = response.body['items'].splice(0, appSearchs.globals.dataset.limitresults);
+                                        } else {
+                                            appSearchs.results = [];
+                                        }
                                     }, response => {
                                         // error callback
                                     });

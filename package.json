@@ -4,11 +4,11 @@
   "description": "",
   "main": "gulpfile.js",
   "dependencies": {
-    "browser-sync": "^2.18.12",
+    "browser-sync": "^2.23.6",
     "gulp-concat": "^2.6.1",
     "gulp-purifycss": "^0.2.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.0"
+    "gulp-sass": "^3.2.1",
+    "gulp-sourcemaps": "^2.6.4"
   },
   "devDependencies": {
     "gulp": "^3.9.1"

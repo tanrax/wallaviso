@@ -2,7 +2,6 @@ from os import environ
 from flask import Flask, redirect, url_for, render_template, \
     flash, session, request, jsonify
 from functools import wraps
-from utils import UtilSearch
 from forms import LoginForm, SignupForm, \
     EmailResetPasswordForm, ResetPasswordForm, \
     SearchForm
@@ -296,7 +295,6 @@ def dashboard():
     form = SearchForm()
     results = False
     # Search
-    util_search = UtilSearch()
     if request.method == 'POST':
         # Add Wallaviso
         if 'add' in request.form:
@@ -380,6 +378,7 @@ def dashboard():
         form=form,
         searchs=searchs,
         searchs_len=searchs_len,
+        searchs_res=searchs_len - session['user']['limit_notifys'],
         results=results,
         LIMIT_RESULTS=LIMIT_RESULTS,
         LIMIT_SEARCHS=limit_searchs,
@@ -387,44 +386,6 @@ def dashboard():
         DEBUG=app.config['DEBUG'],
         num_notifys=num_notifys
     )
-
-
-@app.route('/update_expiration/<id>/<token>')
-def update_expiration(id, token):
-    '''
-    Page update expiration
-    '''
-    my_search = Search.query.filter_by(
-        id=id,
-        token=token,
-        alert_expiration=True
-    ).first()
-    if my_search:
-        my_search.update_at = datetime.utcnow()
-        my_search.alert_expiration = False
-        db.session.add(my_search)
-        try:
-            db.session.commit()
-            flash('¡Busqueda actualizada!', 'success')
-        except:
-            db.session.rollback()
-            flash(
-                '¡Ups! Algo ha pasado. ¿Puedes volver a intentarlo?.',
-                'danger'
-            )
-    return redirect(url_for('index'))
-
-
-@app.route('/panel/historial')
-@login_required
-def notify_history():
-    histories = NotificationHistory.query.filter_by(
-        user_id=session['user']['id']
-        ).filter(
-            NotificationHistory.create_at >= date.today()
-        ).all()
-    return render_template('web/dashboard/histories.html', histories=histories)
-
 
 # RSS
 

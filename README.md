@@ -1,7 +1,7 @@
 # Install
 
 ```bash
-pip install -r requirements.txt
+pipenv install
 cp envExample .env
 ```
 
@@ -10,6 +10,7 @@ Config *.env*
 ## Database
 
 ```bash
+pipenv shell
 python3 models.py db init
 python3 models.py db migrate
 python3 models.py db upgrade
@@ -18,20 +19,7 @@ python3 models.py init_data
  
 # Run
  
-## Web
- 
 ```bash
+pipenv shell
 python3 app.py
-```
-
-## Tasks (send notifications)
-
-```bash
-python3 tasks.py notify
-```
-
-# Test
- 
-```bash
-python3 test.py
 ```

@@ -99,7 +99,7 @@
 			</ul>
 			<div id="count_notifys">
                 <h3>Cuenta: {% if session['user']['rol_id'] == 1 %}gratuita{% else %}Premium{% endif %}</h3>
-				{% if num_notifys < session['user']['limit_notifys'] %}
+				{% if searchs_len < session['user']['limit_notifys'] %}
 				<div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="{{ search_res }}" aria-valuemin="0" aria-valuemax="{{ session['user']['limit_notifys'] }}" style="width: {{ 100 - (100 * searchs_len / session['user']['limit_notifys']) }}%;">
 					  {{ searchs_len }}/{{ session['user']['limit_notifys'] }}

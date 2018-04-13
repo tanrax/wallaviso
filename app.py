@@ -5,7 +5,7 @@ from functools import wraps
 from forms import LoginForm, SignupForm, \
     EmailResetPasswordForm, ResetPasswordForm, \
     SearchForm
-from models import db, User, Search, OldSearch, NotificationHistory
+from models import db, User, Search
 from flask_mail import Mail, Message
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, \
@@ -363,11 +363,6 @@ def dashboard():
                 )
     searchs = Search.query.filter_by(user_id=session['user']['id']).all()
     searchs_len = len(searchs)
-    num_notifys = NotificationHistory.query.filter_by(
-        user_id=session['user']['id']
-        ).filter(
-            NotificationHistory.create_at >= date.today()
-        ).count()
     # Search Limit
     limit_searchs = LIMIT_SEARCH
     if session['user']['rol_id'] > 1:
@@ -383,11 +378,11 @@ def dashboard():
         LIMIT_RESULTS=LIMIT_RESULTS,
         LIMIT_SEARCHS=limit_searchs,
         URL_API_POSTAL_CODE=URL_API_POSTAL_CODE,
-        DEBUG=app.config['DEBUG'],
-        num_notifys=num_notifys
+        DEBUG=app.config['DEBUG']
     )
 
 # RSS
+
 
 @app.route('/rss/<int:id>')
 def rss_view(id):

@@ -72,35 +72,6 @@ class Rol(db.Model):
         return '<Rol %r>' % self.name
 
 
-class NotificationHistory(db.Model):
-    '''
-    Table notify histories
-    '''
-    __tablename__ = 'notifications_histories'
-
-    id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, nullable=False, unique=False)
-    title = db.Column(db.String(100), nullable=False, unique=False)
-    image = db.Column(db.String(200), nullable=False, unique=False)
-    create_at = db.Column(db.DateTime, nullable=False, unique=False)
-
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey('users.id'),
-        nullable=False
-        )
-    user = db.relationship(
-        'User',
-        backref=db.backref('NotificationHistory', cascade="all, delete-orphan")
-        )
-
-    def __init__(self):
-        self.create_at = datetime.now()
-
-    def __repr__(self):
-        return '<NotificationHistory %r>' % self.title
-
-
 class Search(db.Model):
     '''
     Table search
@@ -143,32 +114,6 @@ class Search(db.Model):
         return '<Search %r>' % self.name
 
 
-class OldSearch(db.Model):
-    '''
-    Table send history
-    '''
-    __tablename__ = 'old_searchs'
-
-    id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, nullable=False)
-    create_at = db.Column(db.DateTime, nullable=False, unique=False)
-
-    search_id = db.Column(
-        db.Integer,
-        db.ForeignKey('searchs.id'),
-        nullable=False
-        )
-    search = db.relationship(
-        'Search',
-        backref=db.backref('OldSearch', cascade="all, delete-orphan")
-        )
-
-    def __init__(self):
-        self.create_at = datetime.now()
-
-    def __repr__(self):
-        return '<Search %r>' % self.username
-
 @manager.command
 def init_data():
     # Reload tables
@@ -176,14 +121,16 @@ def init_data():
     db.create_all()
 
     my_rol_1 = Rol()
-    my_rol_1.name='Gratuita'
+    my_rol_1.name = 'Gratuita'
     db.session.add(my_rol_1)
 
     my_rol_2 = Rol()
-    my_rol_2.name='Premium'
+    my_rol_2.name = 'Premium'
     db.session.add(my_rol_2)
 
     db.session.commit()
 
+
 if __name__ == '__main__':
     manager.run()
+

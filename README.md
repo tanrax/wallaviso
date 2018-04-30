@@ -1,4 +1,8 @@
-# Install
+# [Wallaviso](http://www.wallaviso.com/) ![wallaviso](/static/img/favicon.png) 
+
+Instrucciones de instalación.
+
+## Install
 
 ```bash
 pipenv install
@@ -17,7 +21,7 @@ python3 models.py db upgrade
 python3 models.py init_data
 ```
  
-# Run
+## Run
  
 ```bash
 pipenv shell

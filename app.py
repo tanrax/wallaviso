@@ -99,39 +99,16 @@ def signup():
         if not User.query.filter_by(email=form.email.data).all():
             my_user = User()
             form.populate_obj(my_user)
+            # Enable user
+            my_user.is_active = True
             # Encrypt password
             my_user.password = generate_password_hash(form.password.data)
             db.session.add(my_user)
-            # Prepare the account activation email
-            msg = Message(
-                'Activar cuenta',
-                sender='no-reply@' + environ.get('DOMAIN'),
-                recipients=[my_user.email]
-            )
-            link = 'http://' + environ.get('DOMAIN') + url_for(
-                'activate_account',
-                token=my_user.token
-            )
-            msg.body = render_template(
-                'emails/activate.txt', username=my_user.username,
-                token=link
-            )
-            msg.html = render_template(
-                'emails/activate.html',
-                username=my_user.username,
-                token=link,
-                domain=environ.get('DOMAIN')
-            )
             try:
                 # Save new User
                 db.session.commit()
-                # Send confirmation email
-                mail.send(msg)
                 # Informamos al usuario
-                flash(
-                    'Te acabamos de enviar un email para activar la cuenta. Si no lo encuentras en tu bandeja de entrada, revisa Spam.',
-                    'warning')
-                flash('¡Cuenta creada!', 'success')
+                flash('¡Cuenta creada! Entra cuando quieras.', 'success')
                 return redirect(url_for('login'))
             except BaseException:
                 db.session.rollback()

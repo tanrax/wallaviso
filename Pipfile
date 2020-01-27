@@ -7,7 +7,7 @@ name = "pypi"
 ipdb = "*"
 
 [packages]
-Flask = "==0.12.1"
+Flask = "==1.0"
 Flask-Mail = "==0.9.1"
 Flask-Migrate = "==2.0.3"
 Flask-Script = "==2.0.5"

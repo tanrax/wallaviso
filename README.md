@@ -1,5 +1,5 @@
 ![wallaviso](/static/img/favicon.png)
-# [Wallaviso](http://www.wallaviso.com/)  
+# Wallaviso
 
 Instrucciones de instalación.
 
